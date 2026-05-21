@@ -61,8 +61,8 @@ export function EventsSection() {
               <Link href={`/events/${event.id}`}>
                 <motion.div
                   whileHover={{ y: -8, scale: 1.02 }}
-                  transition={{ duration: 0.3 }}
-                  className="group bg-card rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-border h-full flex flex-col"
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  className="group bg-card rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-200 border border-border h-full flex flex-col"
                 >
                   {/* Image Placeholder with Gradient */}
                   <div className={`relative h-48 bg-gradient-to-br ${categoryColors[event.category]} overflow-hidden`}>

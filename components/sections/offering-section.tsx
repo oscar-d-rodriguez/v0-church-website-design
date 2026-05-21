@@ -85,10 +85,10 @@ export function OfferingSection() {
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    transition={{ duration: 0.2, delay: index * 0.05 }}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`flex items-center gap-2 px-6 py-3 rounded-full border-2 transition-all ${
+                    className={`flex items-center gap-2 px-6 py-3 rounded-full border-2 transition-colors duration-150 ${
                       index === 0
                         ? "bg-primary text-primary-foreground border-primary"
                         : "bg-transparent border-border hover:border-primary hover:bg-primary/5"
@@ -108,10 +108,10 @@ export function OfferingSection() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                    transition={{ duration: 0.2, delay: index * 0.03 }}
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`py-4 px-4 rounded-xl font-bold text-lg border-2 transition-all ${
+                    className={`py-4 px-4 rounded-xl font-bold text-lg border-2 transition-colors duration-150 ${
                       amount === 100
                         ? "bg-primary text-primary-foreground border-primary"
                         : "bg-muted/50 border-border hover:border-primary"
@@ -170,9 +170,10 @@ export function OfferingSection() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.3, delay: index * 0.08 }}
                 whileHover={{ y: -5 }}
-                className={`p-6 rounded-2xl border transition-all ${
+                whileTap={{ scale: 0.98 }}
+                className={`p-6 rounded-2xl border transition-colors duration-150 ${
                   way.highlight
                     ? "bg-primary/5 border-primary/30"
                     : "bg-card border-border hover:border-primary/30"

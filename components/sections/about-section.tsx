@@ -80,6 +80,7 @@ export function AboutSection() {
             {/* Main Large Image */}
             <motion.div
               whileHover={{ scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
               className="col-span-12 md:col-span-7 row-span-2 bg-gradient-to-br from-primary/30 via-primary/20 to-accent/30 rounded-2xl overflow-hidden relative group"
             >
               <div className="absolute inset-0 bg-[url('/placeholder.svg')] bg-cover bg-center opacity-60" />
@@ -96,7 +97,8 @@ export function AboutSection() {
             
             {/* Small Images */}
             <motion.div
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.03 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
               className="col-span-6 md:col-span-5 bg-gradient-to-br from-accent/40 to-accent/20 rounded-2xl overflow-hidden relative"
             >
               <div className="absolute inset-0 flex items-center justify-center">
@@ -104,7 +106,8 @@ export function AboutSection() {
               </div>
             </motion.div>
             <motion.div
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.03 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
               className="col-span-6 md:col-span-5 bg-gradient-to-br from-primary/40 to-primary/20 rounded-2xl overflow-hidden relative"
             >
               <div className="absolute inset-0 flex items-center justify-center">
@@ -122,12 +125,13 @@ export function AboutSection() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.4, delay: index * 0.08 }}
               whileHover={{ y: -5 }}
-              className="bg-card rounded-2xl p-8 shadow-lg border border-border hover:border-primary/30 transition-all group"
+              whileTap={{ scale: 0.98 }}
+              className="bg-card rounded-2xl p-8 shadow-lg border border-border hover:border-primary/30 transition-colors duration-150 group"
             >
               <div
-                className={`w-14 h-14 rounded-xl ${card.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}
+                className={`w-14 h-14 rounded-xl ${card.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-150`}
               >
                 <card.icon className="w-7 h-7" />
               </div>

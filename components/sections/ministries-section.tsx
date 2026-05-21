@@ -83,22 +83,21 @@ export function MinistriesSection() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.4, delay: index * 0.08 }}
               whileHover={{ scale: 1.02, y: -5 }}
-              className={`bg-gradient-to-br ${ministry.gradient} bg-card rounded-2xl p-8 border border-border hover:border-primary/30 transition-all cursor-pointer group relative overflow-hidden`}
+              whileTap={{ scale: 0.98 }}
+              className={`bg-gradient-to-br ${ministry.gradient} bg-card rounded-2xl p-8 border border-border hover:border-primary/30 transition-colors duration-150 cursor-pointer group relative overflow-hidden`}
             >
               {/* Hover Effect */}
               <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
               
               <div className="relative z-10">
-                <motion.div
-                  whileHover={{ rotate: [0, -10, 10, 0] }}
-                  transition={{ duration: 0.5 }}
-                  className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors"
+                <div
+                  className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors duration-150"
                 >
                   <ministry.icon className="w-8 h-8 text-primary" />
-                </motion.div>
-                <h3 className="text-xl font-bold mb-3 font-serif group-hover:text-primary transition-colors">
+                </div>
+                <h3 className="text-xl font-bold mb-3 font-serif group-hover:text-primary transition-colors duration-150">
                   {ministry.title}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
