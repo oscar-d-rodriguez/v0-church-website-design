@@ -63,8 +63,8 @@ export function HeroSection() {
               priority
               sizes="100vw"
             />
-            {/* Overlay gradient */}
-            <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/50 to-background" />
+            {/* Overlay gradient - reduced white */}
+            <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-transparent to-background/80" />
           </motion.div>
         </AnimatePresence>
 
@@ -139,7 +139,7 @@ export function HeroSection() {
           >
             <Button
               size="lg"
-              className="text-sm uppercase tracking-widest font-semibold px-10 py-6 rounded-full bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all"
+              className="text-sm uppercase tracking-widest font-semibold px-10 py-6 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all"
               asChild
             >
               <a href="#contact">{t.hero.cta}</a>
@@ -147,7 +147,7 @@ export function HeroSection() {
             <Button
               variant="outline"
               size="lg"
-              className="text-sm uppercase tracking-widest font-semibold px-10 py-6 rounded-full border-2 border-foreground/20 hover:bg-foreground/5 transition-all group"
+              className="text-sm uppercase tracking-widest font-semibold px-10 py-6 rounded-full border-2 border-primary/30 text-primary hover:bg-primary/10 transition-all group"
             >
               <Play className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
               {t.hero.watchLive}
@@ -173,8 +173,8 @@ export function HeroSection() {
         </motion.div>
       </motion.div>
 
-      {/* Bottom Fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent z-10" />
+      {/* Bottom Fade - reduced */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background/90 to-transparent z-10" />
     </section>
   );
 }

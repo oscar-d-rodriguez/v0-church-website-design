@@ -52,7 +52,7 @@ export function OfferingSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
-          <span className="text-accent font-semibold text-xs uppercase tracking-[0.2em]">
+          <span className="text-primary font-semibold text-xs uppercase tracking-[0.2em]">
             {t.offering.subtitle}
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 mb-6 text-balance tracking-tight">
@@ -90,8 +90,8 @@ export function OfferingSection() {
                     whileTap={{ scale: 0.95 }}
                     className={`flex items-center gap-2 px-6 py-3 rounded-full border-2 transition-colors duration-150 text-sm uppercase tracking-wider font-semibold ${
                       index === 0
-                        ? "bg-foreground text-background border-foreground"
-                        : "bg-transparent border-border hover:border-foreground hover:bg-foreground/5"
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-transparent border-border hover:border-primary hover:bg-primary/5"
                     }`}
                   >
                     <type.icon className="w-5 h-5" />
@@ -113,8 +113,8 @@ export function OfferingSection() {
                     whileTap={{ scale: 0.95 }}
                     className={`py-4 px-4 rounded-2xl font-bold text-lg border-2 transition-colors duration-150 ${
                       amount === 100
-                        ? "bg-foreground text-background border-foreground"
-                        : "bg-muted/30 border-border hover:border-foreground"
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-muted/30 border-border hover:border-primary"
                     }`}
                   >
                     ${amount}
@@ -131,12 +131,12 @@ export function OfferingSection() {
                   <input
                     type="number"
                     placeholder="Custom Amount"
-                    className="w-full pl-12 pr-4 py-4 rounded-2xl bg-muted/30 border-2 border-border focus:border-foreground focus:outline-none text-lg font-medium transition-colors"
+                    className="w-full pl-12 pr-4 py-4 rounded-2xl bg-muted/30 border-2 border-border focus:border-primary focus:outline-none text-lg font-medium transition-colors"
                   />
                 </div>
                 <Button
                   size="lg"
-                  className="px-12 py-4 text-sm uppercase tracking-widest font-semibold rounded-2xl bg-foreground text-background hover:bg-foreground/90 shadow-lg"
+                  className="px-12 py-4 text-sm uppercase tracking-widest font-semibold rounded-2xl bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg"
                 >
                   Give Now
                 </Button>
@@ -175,16 +175,16 @@ export function OfferingSection() {
                 whileTap={{ scale: 0.98 }}
                 className={`p-8 rounded-3xl border transition-colors duration-150 ${
                   way.highlight
-                    ? "bg-accent/5 border-accent/30"
-                    : "bg-card border-border hover:border-accent/30"
+                    ? "bg-primary/5 border-primary/30"
+                    : "bg-card border-border hover:border-primary/30"
                 }`}
               >
                 <div
                   className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-6 ${
-                    way.highlight ? "bg-accent/10" : "bg-muted/50"
+                    way.highlight ? "bg-primary/10" : "bg-muted/50"
                   }`}
                 >
-                  <way.icon className={`w-5 h-5 ${way.highlight ? "text-accent" : "text-foreground/50"}`} />
+                  <way.icon className={`w-5 h-5 ${way.highlight ? "text-primary" : "text-foreground/50"}`} />
                 </div>
                 <h4 className="font-bold text-lg mb-3 tracking-tight">{way.title}</h4>
                 <p className="text-muted-foreground text-sm leading-relaxed">{way.description}</p>

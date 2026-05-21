@@ -28,7 +28,7 @@ export function AboutSection() {
       icon: Sparkles,
       title: t.about.vision,
       description: t.about.visionText,
-      color: "bg-accent/10 text-accent",
+      color: "bg-primary/10 text-primary",
     },
     {
       icon: Heart,
@@ -59,7 +59,7 @@ export function AboutSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
-          <span className="text-accent font-semibold text-xs uppercase tracking-[0.2em]">
+          <span className="text-primary font-semibold text-xs uppercase tracking-[0.2em]">
             {t.about.subtitle}
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 mb-6 text-balance tracking-tight">
@@ -149,7 +149,7 @@ export function AboutSection() {
               transition={{ duration: 0.4, delay: index * 0.08 }}
               whileHover={{ y: -5 }}
               whileTap={{ scale: 0.98 }}
-              className="bg-card rounded-3xl p-10 shadow-sm border border-border hover:border-accent/30 transition-colors duration-150 group"
+              className="bg-card rounded-3xl p-10 shadow-sm border border-border hover:border-primary/30 transition-colors duration-150 group"
             >
               <div
                 className={`w-14 h-14 rounded-2xl ${card.color} flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-150`}

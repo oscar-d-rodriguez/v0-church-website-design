@@ -60,7 +60,7 @@ export function ContactSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
-          <span className="text-accent font-semibold text-xs uppercase tracking-[0.2em]">
+          <span className="text-primary font-semibold text-xs uppercase tracking-[0.2em]">
             {t.contact.subtitle}
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 text-balance tracking-tight">
@@ -85,10 +85,10 @@ export function ContactSection() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
-                  className="flex items-center gap-4 p-5 bg-card rounded-2xl border border-border hover:border-accent/30 transition-all group"
+                  className="flex items-center gap-4 p-5 bg-card rounded-2xl border border-border hover:border-primary/30 transition-all group"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-foreground/5 flex items-center justify-center group-hover:bg-accent/10 transition-colors">
-                    <info.icon className="w-5 h-5 text-foreground/60 group-hover:text-accent transition-colors" />
+                  <div className="w-12 h-12 rounded-xl bg-primary/5 flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                    <info.icon className="w-5 h-5 text-primary/60 group-hover:text-primary transition-colors" />
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">{info.label}</p>
@@ -107,7 +107,7 @@ export function ContactSection() {
               className="bg-muted/30 rounded-3xl p-8 border border-border"
             >
               <div className="flex items-center gap-3 mb-6">
-                <Clock className="w-5 h-5 text-accent" />
+                <Clock className="w-5 h-5 text-primary" />
                 <h3 className="font-bold text-sm uppercase tracking-[0.15em]">{t.contact.hours}</h3>
               </div>
               <div className="space-y-3">
@@ -153,7 +153,7 @@ export function ContactSection() {
                   onClick={() => setFormState({ ...formState, isPrayer: !formState.isPrayer })}
                   className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs uppercase tracking-[0.15em] font-semibold transition-all ${
                     formState.isPrayer
-                      ? "bg-foreground text-background"
+                      ? "bg-primary text-primary-foreground"
                       : "bg-muted text-muted-foreground hover:bg-muted/80"
                   }`}
                 >
@@ -172,7 +172,7 @@ export function ContactSection() {
                     type="text"
                     value={formState.name}
                     onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                    className="w-full px-5 py-4 rounded-2xl bg-muted/30 border-2 border-border focus:border-accent focus:outline-none transition-colors"
+                    className="w-full px-5 py-4 rounded-2xl bg-muted/30 border-2 border-border focus:border-primary focus:outline-none transition-colors"
                     required
                   />
                 </div>
@@ -185,7 +185,7 @@ export function ContactSection() {
                     type="email"
                     value={formState.email}
                     onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                    className="w-full px-5 py-4 rounded-2xl bg-muted/30 border-2 border-border focus:border-accent focus:outline-none transition-colors"
+                    className="w-full px-5 py-4 rounded-2xl bg-muted/30 border-2 border-border focus:border-primary focus:outline-none transition-colors"
                     required
                   />
                 </div>
@@ -198,7 +198,7 @@ export function ContactSection() {
                     value={formState.message}
                     onChange={(e) => setFormState({ ...formState, message: e.target.value })}
                     rows={5}
-                    className="w-full px-5 py-4 rounded-2xl bg-muted/30 border-2 border-border focus:border-accent focus:outline-none transition-colors resize-none"
+                    className="w-full px-5 py-4 rounded-2xl bg-muted/30 border-2 border-border focus:border-primary focus:outline-none transition-colors resize-none"
                     required
                   />
                 </div>
@@ -206,7 +206,7 @@ export function ContactSection() {
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full rounded-2xl py-6 text-sm uppercase tracking-widest font-semibold bg-foreground text-background hover:bg-foreground/90"
+                  className="w-full rounded-2xl py-6 text-sm uppercase tracking-widest font-semibold bg-primary text-primary-foreground hover:bg-primary/90"
                 >
                   <Send className="w-4 h-4 mr-2" />
                   {t.contact.form.send}

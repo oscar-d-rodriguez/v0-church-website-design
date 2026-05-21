@@ -19,7 +19,7 @@ export function EventsSection() {
   const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
 
   const categoryColors = {
-    worship: "from-foreground/80 to-foreground/60",
+    worship: "from-primary/80 to-primary",
     youth: "from-accent/80 to-accent",
     community: "from-emerald-600/80 to-emerald-700",
     special: "from-amber-600/80 to-amber-700",
@@ -52,7 +52,7 @@ export function EventsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
-          <span className="text-accent font-semibold text-xs uppercase tracking-[0.2em]">
+          <span className="text-primary font-semibold text-xs uppercase tracking-[0.2em]">
             {t.events.subtitle}
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 mb-6 text-balance tracking-tight">
@@ -145,7 +145,7 @@ export function EventsSection() {
           <Button
             variant="outline"
             size="lg"
-            className="rounded-full px-10 border-2 border-foreground/20 hover:bg-foreground hover:text-background hover:border-foreground transition-all text-sm uppercase tracking-widest font-semibold"
+            className="rounded-full px-10 border-2 border-primary/30 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all text-sm uppercase tracking-widest font-semibold"
           >
             {t.common.viewAll}
             <ArrowRight className="w-4 h-4 ml-2" />

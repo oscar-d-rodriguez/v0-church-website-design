@@ -91,7 +91,7 @@ export function NewsletterPopup() {
               </button>
 
               {/* Header with gradient background */}
-              <div className="relative h-40 bg-gradient-to-br from-foreground via-foreground/90 to-accent overflow-hidden">
+              <div className="relative h-40 bg-gradient-to-br from-primary via-primary/90 to-accent overflow-hidden">
                 {/* Decorative elements */}
                 <div className="absolute inset-0 opacity-20">
                   <div className="absolute top-4 left-8 w-20 h-20 rounded-full bg-white/30 blur-xl" />
@@ -162,7 +162,7 @@ export function NewsletterPopup() {
                     >
                       <div className="text-center mb-6">
                         <h2 className="text-2xl font-bold font-serif mb-1 tracking-tight">{t.newsletter.title}</h2>
-                        <p className="text-accent font-semibold text-xs uppercase tracking-[0.15em] mb-3">{t.newsletter.subtitle}</p>
+                        <p className="text-primary font-semibold text-xs uppercase tracking-[0.15em] mb-3">{t.newsletter.subtitle}</p>
                         <p className="text-muted-foreground text-sm leading-relaxed">{t.newsletter.description}</p>
                       </div>
 
@@ -174,7 +174,7 @@ export function NewsletterPopup() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder={t.newsletter.placeholder}
-                            className="w-full pl-12 pr-4 py-4 rounded-2xl border-2 border-border bg-muted/30 focus:border-foreground focus:ring-0 outline-none transition-all duration-150 text-foreground placeholder:text-muted-foreground"
+                            className="w-full pl-12 pr-4 py-4 rounded-2xl border-2 border-border bg-muted/30 focus:border-primary focus:ring-0 outline-none transition-all duration-150 text-foreground placeholder:text-muted-foreground"
                             disabled={isSubmitting}
                           />
                         </div>
@@ -192,7 +192,7 @@ export function NewsletterPopup() {
                         <Button
                           type="submit"
                           disabled={isSubmitting}
-                          className="w-full py-6 rounded-2xl text-sm uppercase tracking-widest font-semibold bg-foreground text-background hover:bg-foreground/90"
+                          className="w-full py-6 rounded-2xl text-sm uppercase tracking-widest font-semibold bg-primary text-primary-foreground hover:bg-primary/90"
                         >
                           {isSubmitting ? (
                             <motion.div

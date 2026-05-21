@@ -68,7 +68,7 @@ export function MinistriesSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
-          <span className="text-accent font-semibold text-xs uppercase tracking-[0.2em]">
+          <span className="text-primary font-semibold text-xs uppercase tracking-[0.2em]">
             {t.ministries.subtitle}
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 text-balance tracking-tight">
@@ -87,14 +87,14 @@ export function MinistriesSection() {
               transition={{ duration: 0.4, delay: index * 0.08 }}
               whileHover={{ scale: 1.02, y: -5 }}
               whileTap={{ scale: 0.98 }}
-              className="bg-card rounded-3xl p-10 border border-border hover:border-accent/30 transition-colors duration-150 cursor-pointer group relative overflow-hidden"
+              className="bg-card rounded-3xl p-10 border border-border hover:border-primary/30 transition-colors duration-150 cursor-pointer group relative overflow-hidden"
             >
               {/* Hover Effect */}
-              <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
               
               <div className="relative z-10">
-                <div className="w-14 h-14 rounded-2xl bg-foreground/5 flex items-center justify-center mb-8 group-hover:bg-accent/10 transition-colors duration-150">
-                  <ministry.icon className="w-6 h-6 text-foreground/70 group-hover:text-accent transition-colors" />
+                <div className="w-14 h-14 rounded-2xl bg-primary/5 flex items-center justify-center mb-8 group-hover:bg-primary/10 transition-colors duration-150">
+                  <ministry.icon className="w-6 h-6 text-primary/70 group-hover:text-primary transition-colors" />
                 </div>
                 <h3 className="text-xl font-bold mb-4 font-serif tracking-tight group-hover:text-foreground transition-colors duration-150">
                   {ministry.title}
