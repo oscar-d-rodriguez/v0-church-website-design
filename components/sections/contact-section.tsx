@@ -45,10 +45,10 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-24 relative overflow-hidden">
+    <section id="contact" className="py-32 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-muted/30 to-transparent" />
+        <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-muted/20 to-transparent" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -58,12 +58,12 @@ export function ContactSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <span className="text-primary font-medium text-sm uppercase tracking-wider">
+          <span className="text-accent font-semibold text-xs uppercase tracking-[0.2em]">
             {t.contact.subtitle}
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-4 text-balance">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 text-balance tracking-tight">
             {t.contact.title}
           </h2>
         </motion.div>
@@ -85,10 +85,10 @@ export function ContactSection() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
-                  className="flex items-center gap-4 p-4 bg-card rounded-xl border border-border hover:border-primary/30 transition-all group"
+                  className="flex items-center gap-4 p-5 bg-card rounded-2xl border border-border hover:border-accent/30 transition-all group"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                    <info.icon className="w-6 h-6 text-primary" />
+                  <div className="w-12 h-12 rounded-xl bg-foreground/5 flex items-center justify-center group-hover:bg-accent/10 transition-colors">
+                    <info.icon className="w-5 h-5 text-foreground/60 group-hover:text-accent transition-colors" />
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">{info.label}</p>
@@ -104,11 +104,11 @@ export function ContactSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.3 }}
-              className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl p-6 border border-primary/20"
+              className="bg-muted/30 rounded-3xl p-8 border border-border"
             >
-              <div className="flex items-center gap-3 mb-4">
-                <Clock className="w-6 h-6 text-primary" />
-                <h3 className="font-bold text-lg">{t.contact.hours}</h3>
+              <div className="flex items-center gap-3 mb-6">
+                <Clock className="w-5 h-5 text-accent" />
+                <h3 className="font-bold text-sm uppercase tracking-[0.15em]">{t.contact.hours}</h3>
               </div>
               <div className="space-y-3">
                 {serviceHours.map((schedule) => (
@@ -129,11 +129,11 @@ export function ContactSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.4 }}
-              className="mt-6 h-48 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl flex items-center justify-center"
+              className="mt-6 h-48 bg-muted/30 rounded-3xl flex items-center justify-center border border-border"
             >
               <div className="text-center">
-                <MapPin className="w-10 h-10 mx-auto text-primary mb-2" />
-                <span className="text-muted-foreground">View on Google Maps</span>
+                <MapPin className="w-8 h-8 mx-auto text-foreground/30 mb-2" />
+                <span className="text-muted-foreground text-sm">View on Google Maps</span>
               </div>
             </motion.div>
           </motion.div>
@@ -145,15 +145,15 @@ export function ContactSection() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <form onSubmit={handleSubmit} className="bg-card rounded-2xl p-8 shadow-lg border border-border">
+            <form onSubmit={handleSubmit} className="bg-card rounded-3xl p-10 shadow-sm border border-border">
               {/* Prayer Request Toggle */}
-              <div className="mb-6">
+              <div className="mb-8">
                 <button
                   type="button"
                   onClick={() => setFormState({ ...formState, isPrayer: !formState.isPrayer })}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs uppercase tracking-[0.15em] font-semibold transition-all ${
                     formState.isPrayer
-                      ? "bg-primary text-primary-foreground"
+                      ? "bg-foreground text-background"
                       : "bg-muted text-muted-foreground hover:bg-muted/80"
                   }`}
                 >
@@ -163,42 +163,42 @@ export function ContactSection() {
               </div>
 
               {/* Form Fields */}
-              <div className="space-y-4">
+              <div className="space-y-5">
                 <div>
-                  <label className="block text-sm font-medium mb-2">
+                  <label className="block text-xs uppercase tracking-[0.15em] font-semibold mb-3">
                     {t.contact.form.name}
                   </label>
                   <input
                     type="text"
                     value={formState.name}
                     onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-muted/50 border-2 border-border focus:border-primary focus:outline-none transition-colors"
+                    className="w-full px-5 py-4 rounded-2xl bg-muted/30 border-2 border-border focus:border-accent focus:outline-none transition-colors"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">
+                  <label className="block text-xs uppercase tracking-[0.15em] font-semibold mb-3">
                     {t.contact.form.email}
                   </label>
                   <input
                     type="email"
                     value={formState.email}
                     onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-muted/50 border-2 border-border focus:border-primary focus:outline-none transition-colors"
+                    className="w-full px-5 py-4 rounded-2xl bg-muted/30 border-2 border-border focus:border-accent focus:outline-none transition-colors"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">
+                  <label className="block text-xs uppercase tracking-[0.15em] font-semibold mb-3">
                     {t.contact.form.message}
                   </label>
                   <textarea
                     value={formState.message}
                     onChange={(e) => setFormState({ ...formState, message: e.target.value })}
                     rows={5}
-                    className="w-full px-4 py-3 rounded-xl bg-muted/50 border-2 border-border focus:border-primary focus:outline-none transition-colors resize-none"
+                    className="w-full px-5 py-4 rounded-2xl bg-muted/30 border-2 border-border focus:border-accent focus:outline-none transition-colors resize-none"
                     required
                   />
                 </div>
@@ -206,9 +206,9 @@ export function ContactSection() {
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full rounded-xl py-6 text-lg"
+                  className="w-full rounded-2xl py-6 text-sm uppercase tracking-widest font-semibold bg-foreground text-background hover:bg-foreground/90"
                 >
-                  <Send className="w-5 h-5 mr-2" />
+                  <Send className="w-4 h-4 mr-2" />
                   {t.contact.form.send}
                 </Button>
               </div>

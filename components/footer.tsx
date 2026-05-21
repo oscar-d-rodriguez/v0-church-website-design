@@ -79,13 +79,13 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <h3 className="text-lg font-bold mb-6">{t.footer.quickLinks}</h3>
+            <h3 className="text-xs uppercase tracking-[0.2em] font-semibold mb-6">{t.footer.quickLinks}</h3>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-background/70 hover:text-primary transition-colors inline-block"
+                    className="text-background/60 hover:text-background transition-colors inline-block text-sm"
                   >
                     {link.label}
                   </Link>
@@ -101,8 +101,8 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <h3 className="text-lg font-bold mb-6">{t.footer.connect}</h3>
-            <address className="not-italic text-background/70 space-y-3">
+            <h3 className="text-xs uppercase tracking-[0.2em] font-semibold mb-6">{t.footer.connect}</h3>
+            <address className="not-italic text-background/60 space-y-3 text-sm">
               <p>123 Faith Street</p>
               <p>City, State 12345</p>
               <p>(555) 123-4567</p>

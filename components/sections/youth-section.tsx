@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 import { useLanguage } from "@/lib/language-context";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Music2, Mountain, Heart } from "lucide-react";
@@ -14,8 +15,8 @@ export function YouthSection() {
     offset: ["start end", "end start"],
   });
 
-  const x1 = useTransform(scrollYProgress, [0, 1], [-100, 100]);
-  const x2 = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const y1 = useTransform(scrollYProgress, [0, 1], [-50, 50]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [50, -50]);
 
   const activities = [
     { icon: BookOpen, text: t.youth.bibleStudy },
@@ -25,19 +26,19 @@ export function YouthSection() {
   ];
 
   return (
-    <section id="youth" ref={ref} className="py-24 relative overflow-hidden">
+    <section id="youth" ref={ref} className="py-32 relative overflow-hidden">
       {/* Parallax Background Elements */}
       <motion.div
-        style={{ x: x1 }}
-        className="absolute top-20 -left-20 w-40 h-40 bg-primary/10 rounded-full blur-3xl"
+        style={{ y: y1 }}
+        className="absolute top-20 -left-20 w-60 h-60 bg-accent/5 rounded-full blur-3xl"
       />
       <motion.div
-        style={{ x: x2 }}
-        className="absolute bottom-20 -right-20 w-60 h-60 bg-accent/10 rounded-full blur-3xl"
+        style={{ y: y2 }}
+        className="absolute bottom-20 -right-20 w-80 h-80 bg-muted/30 rounded-full blur-3xl"
       />
 
       <div className="container mx-auto px-4">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -45,19 +46,19 @@ export function YouthSection() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-primary font-medium text-sm uppercase tracking-wider">
+            <span className="text-accent font-semibold text-xs uppercase tracking-[0.2em]">
               {t.youth.subtitle}
             </span>
-            <h2 className="text-4xl md:text-5xl font-serif font-bold mt-4 mb-6 text-balance">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold mt-6 mb-6 text-balance tracking-tight">
               {t.youth.title}
             </h2>
-            <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
+            <p className="text-muted-foreground text-lg mb-10 leading-relaxed">
               {t.youth.description}
             </p>
 
             {/* Activities */}
-            <div className="mb-8">
-              <h3 className="font-semibold mb-4 text-lg">{t.youth.activities}</h3>
+            <div className="mb-10">
+              <h3 className="font-semibold mb-6 text-sm uppercase tracking-[0.15em] text-foreground/70">{t.youth.activities}</h3>
               <div className="grid grid-cols-2 gap-4">
                 {activities.map((activity, index) => (
                   <motion.div
@@ -66,10 +67,10 @@ export function YouthSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: index * 0.1 }}
-                    className="flex items-center gap-3 p-4 bg-muted/50 rounded-xl hover:bg-muted transition-colors group"
+                    className="flex items-center gap-4 p-4 bg-muted/30 rounded-2xl hover:bg-muted/50 transition-colors group"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                      <activity.icon className="w-5 h-5 text-primary" />
+                    <div className="w-10 h-10 rounded-xl bg-foreground/5 flex items-center justify-center group-hover:bg-accent/10 transition-colors">
+                      <activity.icon className="w-5 h-5 text-foreground/70 group-hover:text-accent transition-colors" />
                     </div>
                     <span className="text-sm font-medium">{activity.text}</span>
                   </motion.div>
@@ -79,13 +80,13 @@ export function YouthSection() {
 
             <Button
               size="lg"
-              className="rounded-full px-8"
+              className="rounded-full px-10 text-sm uppercase tracking-widest font-semibold bg-foreground text-background hover:bg-foreground/90"
             >
               {t.youth.join}
             </Button>
           </motion.div>
 
-          {/* Visual Collage */}
+          {/* Visual Collage with Parallax */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -96,20 +97,20 @@ export function YouthSection() {
             <div className="grid grid-cols-2 gap-4">
               {/* Main Image */}
               <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="col-span-2 h-64 bg-gradient-to-br from-primary/30 to-primary/10 rounded-2xl relative overflow-hidden"
+                style={{ y: y2 }}
+                whileHover={{ scale: 1.01 }}
+                className="col-span-2 h-72 rounded-3xl relative overflow-hidden"
               >
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <motion.span
-                    animate={{ scale: [1, 1.1, 1] }}
-                    transition={{ duration: 3, repeat: Infinity }}
-                    className="text-8xl"
-                  >
-                    🙌
-                  </motion.span>
-                </div>
-                <div className="absolute bottom-4 left-4 right-4 text-center">
-                  <span className="text-2xl font-serif font-bold gradient-text">
+                <Image
+                  src="/images/youth.jpg"
+                  alt="Youth Ministry"
+                  fill
+                  className="object-cover transition-transform duration-700 hover:scale-105"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6 text-center">
+                  <span className="text-2xl font-serif font-bold text-foreground">
                     Next Gen Faith
                   </span>
                 </div>
@@ -117,26 +118,42 @@ export function YouthSection() {
               
               {/* Small Images */}
               <motion.div
-                whileHover={{ scale: 1.05, rotate: -2 }}
-                className="h-40 bg-gradient-to-br from-accent/30 to-accent/10 rounded-2xl flex items-center justify-center"
+                style={{ y: y1 }}
+                whileHover={{ scale: 1.02 }}
+                className="h-44 rounded-3xl overflow-hidden relative"
               >
-                <span className="text-5xl">🎸</span>
+                <Image
+                  src="/images/worship.jpg"
+                  alt="Youth Worship"
+                  fill
+                  className="object-cover transition-transform duration-700 hover:scale-105"
+                  sizes="25vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent" />
               </motion.div>
               <motion.div
-                whileHover={{ scale: 1.05, rotate: 2 }}
-                className="h-40 bg-gradient-to-br from-primary/30 to-primary/10 rounded-2xl flex items-center justify-center"
+                style={{ y: y1 }}
+                whileHover={{ scale: 1.02 }}
+                className="h-44 rounded-3xl overflow-hidden relative"
               >
-                <span className="text-5xl">⛺</span>
+                <Image
+                  src="/images/hero-2.jpg"
+                  alt="Youth Community"
+                  fill
+                  className="object-cover transition-transform duration-700 hover:scale-105"
+                  sizes="25vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent" />
               </motion.div>
             </div>
 
-            {/* Floating Elements */}
+            {/* Floating Element */}
             <motion.div
-              animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
+              animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Infinity }}
-              className="absolute -top-4 -right-4 w-20 h-20 bg-accent/20 rounded-full flex items-center justify-center"
+              className="absolute -top-4 -right-4 w-20 h-20 bg-accent/10 rounded-full flex items-center justify-center backdrop-blur-sm"
             >
-              <span className="text-3xl">✨</span>
+              <span className="text-xs uppercase tracking-widest font-bold text-accent">NEW</span>
             </motion.div>
           </motion.div>
         </div>

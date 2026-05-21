@@ -45,8 +45,8 @@ export function Navigation() {
       animate={{ y: 0 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-background/90 backdrop-blur-lg shadow-lg border-b border-border"
-          : "bg-transparent"
+          ? "bg-background/95 backdrop-blur-lg shadow-lg border-b border-border"
+          : "bg-background/80 backdrop-blur-md"
       }`}
     >
       <nav className="container mx-auto px-4 py-3">
@@ -74,10 +74,10 @@ export function Navigation() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="px-4 py-2 text-sm font-medium text-foreground/80 hover:text-primary transition-colors relative group"
+                className="px-4 py-2 text-sm font-semibold uppercase tracking-wider text-foreground/70 hover:text-foreground transition-colors relative group"
               >
                 {item.label}
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-3/4" />
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-3/4" />
               </Link>
             ))}
           </div>

@@ -36,11 +36,11 @@ export function OfferingSection() {
   ];
 
   return (
-    <section id="offering" className="py-24 bg-muted/30 relative overflow-hidden">
+    <section id="offering" className="py-32 bg-muted/20 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent" />
-        <div className="absolute bottom-0 left-0 w-1/2 h-full bg-gradient-to-r from-accent/5 to-transparent" />
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-accent/5 to-transparent" />
+        <div className="absolute bottom-0 left-0 w-1/2 h-full bg-gradient-to-r from-muted/30 to-transparent" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -50,15 +50,15 @@ export function OfferingSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <span className="text-primary font-medium text-sm uppercase tracking-wider">
+          <span className="text-accent font-semibold text-xs uppercase tracking-[0.2em]">
             {t.offering.subtitle}
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-4 mb-6 text-balance">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 mb-6 text-balance tracking-tight">
             {t.offering.title}
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto text-pretty">
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto text-pretty leading-relaxed">
             {t.offering.description}
           </p>
         </motion.div>
@@ -88,10 +88,10 @@ export function OfferingSection() {
                     transition={{ duration: 0.2, delay: index * 0.05 }}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`flex items-center gap-2 px-6 py-3 rounded-full border-2 transition-colors duration-150 ${
+                    className={`flex items-center gap-2 px-6 py-3 rounded-full border-2 transition-colors duration-150 text-sm uppercase tracking-wider font-semibold ${
                       index === 0
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "bg-transparent border-border hover:border-primary hover:bg-primary/5"
+                        ? "bg-foreground text-background border-foreground"
+                        : "bg-transparent border-border hover:border-foreground hover:bg-foreground/5"
                     }`}
                   >
                     <type.icon className="w-5 h-5" />
@@ -111,10 +111,10 @@ export function OfferingSection() {
                     transition={{ duration: 0.2, delay: index * 0.03 }}
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`py-4 px-4 rounded-xl font-bold text-lg border-2 transition-colors duration-150 ${
+                    className={`py-4 px-4 rounded-2xl font-bold text-lg border-2 transition-colors duration-150 ${
                       amount === 100
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "bg-muted/50 border-border hover:border-primary"
+                        ? "bg-foreground text-background border-foreground"
+                        : "bg-muted/30 border-border hover:border-foreground"
                     }`}
                   >
                     ${amount}
@@ -125,18 +125,18 @@ export function OfferingSection() {
               {/* Custom Amount */}
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <div className="flex-1 relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground font-bold text-lg">
+                  <span className="absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground font-bold text-lg">
                     $
                   </span>
                   <input
                     type="number"
                     placeholder="Custom Amount"
-                    className="w-full pl-10 pr-4 py-4 rounded-xl bg-muted/50 border-2 border-border focus:border-primary focus:outline-none text-lg font-medium transition-colors"
+                    className="w-full pl-12 pr-4 py-4 rounded-2xl bg-muted/30 border-2 border-border focus:border-foreground focus:outline-none text-lg font-medium transition-colors"
                   />
                 </div>
                 <Button
                   size="lg"
-                  className="px-12 py-4 text-lg rounded-xl bg-primary hover:bg-primary/90 shadow-lg"
+                  className="px-12 py-4 text-sm uppercase tracking-widest font-semibold rounded-2xl bg-foreground text-background hover:bg-foreground/90 shadow-lg"
                 >
                   Give Now
                 </Button>
@@ -160,7 +160,7 @@ export function OfferingSection() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
-          <h3 className="text-2xl font-serif font-bold text-center mb-8">
+          <h3 className="text-xs uppercase tracking-[0.2em] font-semibold text-center mb-10">
             {t.offering.ways}
           </h3>
           <div className="grid md:grid-cols-3 gap-6">
@@ -173,21 +173,21 @@ export function OfferingSection() {
                 transition={{ duration: 0.3, delay: index * 0.08 }}
                 whileHover={{ y: -5 }}
                 whileTap={{ scale: 0.98 }}
-                className={`p-6 rounded-2xl border transition-colors duration-150 ${
+                className={`p-8 rounded-3xl border transition-colors duration-150 ${
                   way.highlight
-                    ? "bg-primary/5 border-primary/30"
-                    : "bg-card border-border hover:border-primary/30"
+                    ? "bg-accent/5 border-accent/30"
+                    : "bg-card border-border hover:border-accent/30"
                 }`}
               >
                 <div
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${
-                    way.highlight ? "bg-primary/20" : "bg-muted"
+                  className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-6 ${
+                    way.highlight ? "bg-accent/10" : "bg-muted/50"
                   }`}
                 >
-                  <way.icon className={`w-6 h-6 ${way.highlight ? "text-primary" : "text-muted-foreground"}`} />
+                  <way.icon className={`w-5 h-5 ${way.highlight ? "text-accent" : "text-foreground/50"}`} />
                 </div>
-                <h4 className="font-bold text-lg mb-2">{way.title}</h4>
-                <p className="text-muted-foreground text-sm">{way.description}</p>
+                <h4 className="font-bold text-lg mb-3 tracking-tight">{way.title}</h4>
+                <p className="text-muted-foreground text-sm leading-relaxed">{way.description}</p>
               </motion.div>
             ))}
           </div>
