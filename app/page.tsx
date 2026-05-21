@@ -10,6 +10,7 @@ import { OfferingSection } from "@/components/sections/offering-section";
 import { ContactSection } from "@/components/sections/contact-section";
 import { Footer } from "@/components/footer";
 import { Marquee } from "@/components/marquee";
+import { NewsletterPopup } from "@/components/newsletter-popup";
 import { useLanguage } from "@/lib/language-context";
 
 export default function HomePage() {
@@ -21,6 +22,7 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen">
+      <NewsletterPopup />
       <Navigation />
       <HeroSection />
       <Marquee items={marqueeItems} speed={25} />
