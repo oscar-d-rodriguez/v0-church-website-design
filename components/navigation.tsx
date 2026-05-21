@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sun, Moon, Globe, ChevronDown } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -33,6 +34,7 @@ export function Navigation() {
     { href: "#about", label: t.nav.about },
     { href: "#ministries", label: t.nav.ministries },
     { href: "#youth", label: t.nav.youth },
+    { href: "#events", label: t.nav.events },
     { href: "#offering", label: t.nav.offering },
     { href: "#contact", label: t.nav.contact },
   ];
@@ -47,20 +49,23 @@ export function Navigation() {
           : "bg-transparent"
       }`}
     >
-      <nav className="container mx-auto px-4 py-4">
+      <nav className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="#home" className="flex items-center gap-2 group">
+          <Link href="#home" className="flex items-center gap-3 group">
             <motion.div
-              whileHover={{ rotate: 360 }}
-              transition={{ duration: 0.6 }}
-              className="w-10 h-10 rounded-full bg-primary flex items-center justify-center"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
+              className="relative h-12 w-40"
             >
-              <span className="text-primary-foreground font-bold text-lg">✝</span>
+              <Image
+                src="/images/logo.png"
+                alt={t.churchName}
+                fill
+                className="object-contain dark:brightness-0 dark:invert"
+                priority
+              />
             </motion.div>
-            <span className="font-serif text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-              Grace Church
-            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -119,7 +124,7 @@ export function Navigation() {
                         language === "es" ? "bg-primary/10 text-primary" : ""
                       }`}
                     >
-                      Español
+                      Espanol
                     </button>
                   </motion.div>
                 )}

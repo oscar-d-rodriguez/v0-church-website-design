@@ -18,13 +18,13 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'Grace Church | A Community of Faith, Hope & Love',
-  description: 'Welcome to Grace Church - a vibrant community of believers dedicated to spreading God\'s love through worship, fellowship, and service. Join us for Sunday services and explore our ministries.',
-  keywords: ['church', 'faith', 'community', 'worship', 'ministries', 'youth', 'Christian'],
-  authors: [{ name: 'Grace Church' }],
+  title: 'Hosanna Church | Iglesia Hosanna - A Community of Faith, Hope & Love',
+  description: 'Welcome to Hosanna Church - a vibrant community of believers dedicated to spreading God\'s love through worship, fellowship, and service. Bienvenidos a Iglesia Hosanna.',
+  keywords: ['church', 'iglesia', 'Hosanna', 'faith', 'community', 'worship', 'ministries', 'youth', 'Christian', 'bilingual'],
+  authors: [{ name: 'Hosanna Church' }],
   openGraph: {
-    title: 'Grace Church | A Community of Faith, Hope & Love',
-    description: 'A vibrant community of believers dedicated to spreading God\'s love.',
+    title: 'Hosanna Church | Iglesia Hosanna',
+    description: 'A vibrant community of believers dedicated to spreading God\'s love. Una comunidad vibrante de creyentes.',
     type: 'website',
   },
 }
@@ -45,6 +45,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable} bg-background`} suppressHydrationWarning>
+      <head>
+        <link rel="icon" href="/images/symbol.png" type="image/png" />
+      </head>
       <body className="font-sans antialiased">
         <ThemeProvider
           attribute="class"

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { useLanguage } from "@/lib/language-context";
 import { Facebook, Instagram, Youtube, Twitter } from "lucide-react";
 
@@ -13,6 +14,7 @@ export function Footer() {
     { href: "#about", label: t.nav.about },
     { href: "#ministries", label: t.nav.ministries },
     { href: "#youth", label: t.nav.youth },
+    { href: "#events", label: t.nav.events },
     { href: "#offering", label: t.nav.offering },
     { href: "#contact", label: t.nav.contact },
   ];
@@ -41,10 +43,14 @@ export function Footer() {
             className="lg:col-span-2"
           >
             <Link href="#home" className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground text-2xl">✝</span>
+              <div className="relative h-14 w-44">
+                <Image
+                  src="/images/logo.png"
+                  alt={t.churchName}
+                  fill
+                  className="object-contain brightness-0 invert"
+                />
               </div>
-              <span className="text-3xl font-serif font-bold">Grace Church</span>
             </Link>
             <p className="text-background/70 text-lg mb-6 max-w-md">
               {t.footer.tagline}
@@ -100,7 +106,7 @@ export function Footer() {
               <p>123 Faith Street</p>
               <p>City, State 12345</p>
               <p>(555) 123-4567</p>
-              <p>info@gracechurch.com</p>
+              <p>info@hosannachurch.com</p>
             </address>
           </motion.div>
         </div>
@@ -111,7 +117,7 @@ export function Footer() {
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-background/50 text-sm">
-              © {new Date().getFullYear()} Grace Church. {t.footer.copyright}.
+              {new Date().getFullYear()} {t.churchName}. {t.footer.copyright}.
             </p>
             <div className="flex gap-6 text-sm text-background/50">
               <Link href="#" className="hover:text-primary transition-colors">

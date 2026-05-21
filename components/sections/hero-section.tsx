@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 import { useLanguage } from "@/lib/language-context";
 import { Button } from "@/components/ui/button";
 import { Play, ChevronDown } from "lucide-react";
@@ -77,17 +78,19 @@ export function HeroSection() {
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto"
         >
-          {/* Decorative Cross */}
+          {/* Logo Symbol */}
           <motion.div
-            initial={{ scale: 0, rotate: -180 }}
-            animate={{ scale: 1, rotate: 0 }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1, delay: 0.2, type: "spring" }}
-            className="w-16 h-16 mx-auto mb-8 relative"
+            className="w-24 h-24 mx-auto mb-8 relative"
           >
-            <div className="absolute inset-0 bg-primary/20 rounded-full animate-ping" />
-            <div className="relative w-full h-full bg-primary rounded-full flex items-center justify-center">
-              <span className="text-3xl text-primary-foreground">✝</span>
-            </div>
+            <Image
+              src="/images/symbol.png"
+              alt={t.churchName}
+              fill
+              className="object-contain dark:brightness-0 dark:invert"
+            />
           </motion.div>
 
           {/* Main Heading */}
