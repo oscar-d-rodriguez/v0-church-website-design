@@ -6,13 +6,44 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useLanguage } from "@/lib/language-context";
 import { events } from "@/lib/events-data";
-import { Calendar, Clock, MapPin, ArrowLeft, Share2 } from "lucide-react";
+import { Calendar, Clock, MapPin, ArrowLeft, Share2, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 export default function EventDetailPage() {
   const params = useParams();
   const { language, t } = useLanguage();
+  const [copied, setCopied] = useState(false);
   const event = events.find((e) => e.id === params.id);
+
+  const handleShare = async () => {
+    const eventTitle = language === "en" ? event?.titleEn : event?.titleEs;
+    const shareData = {
+      title: eventTitle,
+      text: language === "en" 
+        ? `Join us for ${eventTitle} at ${t.churchName}!` 
+        : `Unete a nosotros para ${eventTitle} en ${t.churchName}!`,
+      url: window.location.href,
+    };
+
+    if (navigator.share && navigator.canShare(shareData)) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        if ((err as Error).name !== "AbortError") {
+          console.error("Share failed:", err);
+        }
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch (err) {
+        console.error("Copy failed:", err);
+      }
+    }
+  };
 
   if (!event) {
     return (
@@ -152,10 +183,14 @@ export default function EventDetailPage() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.5 }}
           whileHover={{ scale: 1.1 }}
-          className="absolute bottom-24 right-8 z-20 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors"
-          aria-label="Share event"
+          whileTap={{ scale: 0.95 }}
+          onClick={handleShare}
+          className={`absolute bottom-24 right-8 z-20 w-12 h-12 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-colors ${
+            copied ? "bg-emerald-500/80" : "bg-white/20 hover:bg-white/30"
+          }`}
+          aria-label={copied ? (language === "en" ? "Link copied" : "Enlace copiado") : (language === "en" ? "Share event" : "Compartir evento")}
         >
-          <Share2 className="w-5 h-5" />
+          {copied ? <Check className="w-5 h-5" /> : <Share2 className="w-5 h-5" />}
         </motion.button>
       </div>
 
