@@ -45,11 +45,11 @@ export function Navigation() {
       animate={{ y: 0 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-background/95 backdrop-blur-lg shadow-lg border-b border-border"
-          : "bg-background/80 backdrop-blur-md"
+          ? "bg-primary shadow-lg"
+          : "bg-primary/95"
       }`}
     >
-      <nav className="container mx-auto px-4 py-3">
+      <nav className="w-full px-6 lg:px-12 py-3">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="#home" className="flex items-center gap-3 group">
@@ -62,22 +62,22 @@ export function Navigation() {
                 src="/images/logo.png"
                 alt={t.churchName}
                 fill
-                className="object-contain dark:brightness-0 dark:invert"
+                className="object-contain brightness-0 invert"
                 priority
               />
             </motion.div>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation - pushed to the right */}
           <div className="hidden lg:flex items-center gap-1">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="px-4 py-2 text-sm font-semibold uppercase tracking-wider text-foreground/70 hover:text-foreground transition-colors relative group"
+                className="px-4 py-2 text-sm font-semibold uppercase tracking-wider text-white/80 hover:text-white transition-colors relative group"
               >
                 {item.label}
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-3/4" />
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-3/4" />
               </Link>
             ))}
           </div>
@@ -90,7 +90,7 @@ export function Navigation() {
                 variant="ghost"
                 size="sm"
                 onClick={() => setLangOpen(!langOpen)}
-                className="flex items-center gap-1"
+                className="flex items-center gap-1 text-white hover:text-white hover:bg-white/10"
               >
                 <Globe className="w-4 h-4" />
                 <span className="uppercase text-xs">{language}</span>
@@ -137,7 +137,7 @@ export function Navigation() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="relative"
+                className="relative text-white hover:text-white hover:bg-white/10"
               >
                 <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                 <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
@@ -149,7 +149,7 @@ export function Navigation() {
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden"
+              className="lg:hidden text-white hover:text-white hover:bg-white/10"
               onClick={() => setIsOpen(!isOpen)}
             >
               {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -164,7 +164,7 @@ export function Navigation() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden mt-4 pb-4 border-t border-border pt-4"
+              className="lg:hidden mt-4 pb-4 border-t border-white/20 pt-4"
             >
               <div className="flex flex-col gap-2">
                 {navItems.map((item, index) => (
@@ -177,7 +177,7 @@ export function Navigation() {
                     <Link
                       href={item.href}
                       onClick={() => setIsOpen(false)}
-                      className="block px-4 py-3 text-foreground hover:text-primary hover:bg-muted rounded-lg transition-colors"
+                      className="block px-4 py-3 text-white hover:bg-white/10 rounded-lg transition-colors"
                     >
                       {item.label}
                     </Link>

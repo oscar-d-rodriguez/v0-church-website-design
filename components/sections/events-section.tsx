@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useLanguage } from "@/lib/language-context";
 import { events } from "@/lib/events-data";
 import { Calendar, Clock, MapPin, ArrowRight } from "lucide-react";
@@ -16,6 +17,7 @@ export function EventsSection() {
     offset: ["start end", "end start"],
   });
 
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
 
   const categoryColors = {
@@ -33,14 +35,30 @@ export function EventsSection() {
   };
 
   return (
-    <section id="events" ref={ref} className="py-32 bg-muted/20 relative overflow-hidden">
-      {/* Parallax Background */}
+    <section id="events" ref={ref} className="py-32 relative overflow-hidden">
+      {/* Parallax Background Image */}
+      <motion.div
+        style={{ y: bgY }}
+        className="absolute inset-0 z-0"
+      >
+        <Image
+          src="/images/community.jpg"
+          alt="Community background"
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
+        {/* Dark overlay for contrast */}
+        <div className="absolute inset-0 bg-foreground/95 dark:bg-background/95" />
+      </motion.div>
+
+      {/* Decorative Elements */}
       <motion.div
         style={{ y }}
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none z-0"
       >
-        <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-muted/50 rounded-full blur-3xl" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
       </motion.div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -55,7 +73,7 @@ export function EventsSection() {
           <span className="text-primary font-semibold text-xs uppercase tracking-[0.2em]">
             {t.events.subtitle}
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 mb-6 text-balance tracking-tight">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold mt-6 mb-6 text-balance tracking-tight text-background dark:text-foreground">
             {t.events.title}
           </h2>
         </motion.div>
@@ -74,7 +92,7 @@ export function EventsSection() {
                 <motion.div
                   whileHover={{ y: -8, scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                  className="group bg-card rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-200 border border-border h-full flex flex-col"
+                  className="group bg-background dark:bg-card rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-200 border border-border h-full flex flex-col"
                 >
                   {/* Image Placeholder with Gradient */}
                   <div className={`relative h-52 bg-gradient-to-br ${categoryColors[event.category]} overflow-hidden`}>
@@ -105,7 +123,7 @@ export function EventsSection() {
 
                   {/* Content */}
                   <div className="p-8 flex-1 flex flex-col">
-                    <h3 className="text-xl font-bold mb-3 font-serif tracking-tight group-hover:text-foreground transition-colors line-clamp-2">
+                    <h3 className="text-xl font-bold mb-3 font-serif tracking-tight group-hover:text-primary transition-colors line-clamp-2">
                       {language === "en" ? event.titleEn : event.titleEs}
                     </h3>
                     
@@ -115,15 +133,15 @@ export function EventsSection() {
 
                     <div className="mt-auto space-y-2.5 text-sm text-muted-foreground">
                       <div className="flex items-center gap-3">
-                        <Calendar className="w-4 h-4 text-foreground/40" />
+                        <Calendar className="w-4 h-4 text-primary/60" />
                         <span>{event.date}</span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <Clock className="w-4 h-4 text-foreground/40" />
+                        <Clock className="w-4 h-4 text-primary/60" />
                         <span>{event.time}</span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <MapPin className="w-4 h-4 text-foreground/40" />
+                        <MapPin className="w-4 h-4 text-primary/60" />
                         <span>{language === "en" ? event.locationEn : event.locationEs}</span>
                       </div>
                     </div>
@@ -145,7 +163,7 @@ export function EventsSection() {
           <Button
             variant="outline"
             size="lg"
-            className="rounded-full px-10 border-2 border-primary/30 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all text-sm uppercase tracking-widest font-semibold"
+            className="rounded-full px-10 border-2 border-primary bg-primary text-primary-foreground hover:bg-primary/90 transition-all text-sm uppercase tracking-widest font-semibold"
           >
             {t.common.viewAll}
             <ArrowRight className="w-4 h-4 ml-2" />

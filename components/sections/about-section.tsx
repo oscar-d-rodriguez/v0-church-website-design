@@ -22,7 +22,7 @@ export function AboutSection() {
       icon: Target,
       title: t.about.mission,
       description: t.about.missionText,
-      color: "bg-foreground/5 text-foreground",
+      color: "bg-primary/10 text-primary",
     },
     {
       icon: Sparkles,
@@ -34,7 +34,7 @@ export function AboutSection() {
       icon: Heart,
       title: t.about.values,
       description: t.about.valuesText,
-      color: "bg-foreground/5 text-foreground",
+      color: "bg-primary/10 text-primary",
     },
   ];
 
@@ -62,7 +62,7 @@ export function AboutSection() {
           <span className="text-primary font-semibold text-xs uppercase tracking-[0.2em]">
             {t.about.subtitle}
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 mb-6 text-balance tracking-tight">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold mt-6 mb-6 text-balance tracking-tight">
             {t.about.title}
           </h2>
           <p className="text-muted-foreground text-lg max-w-3xl mx-auto text-pretty leading-relaxed">

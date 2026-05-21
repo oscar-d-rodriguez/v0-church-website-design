@@ -55,7 +55,7 @@ export function OfferingSection() {
           <span className="text-primary font-semibold text-xs uppercase tracking-[0.2em]">
             {t.offering.subtitle}
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 mb-6 text-balance tracking-tight">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold mt-6 mb-6 text-balance tracking-tight">
             {t.offering.title}
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto text-pretty leading-relaxed">

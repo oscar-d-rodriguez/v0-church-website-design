@@ -46,10 +46,10 @@ export function YouthSection() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-accent font-semibold text-xs uppercase tracking-[0.2em]">
+            <span className="text-primary font-semibold text-xs uppercase tracking-[0.2em]">
               {t.youth.subtitle}
             </span>
-            <h2 className="text-4xl md:text-5xl font-serif font-bold mt-6 mb-6 text-balance tracking-tight">
+            <h2 className="text-5xl md:text-6xl font-serif font-bold mt-6 mb-6 text-balance tracking-tight">
               {t.youth.title}
             </h2>
             <p className="text-muted-foreground text-lg mb-10 leading-relaxed">
@@ -69,8 +69,8 @@ export function YouthSection() {
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                     className="flex items-center gap-4 p-4 bg-muted/30 rounded-2xl hover:bg-muted/50 transition-colors group"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-foreground/5 flex items-center justify-center group-hover:bg-accent/10 transition-colors">
-                      <activity.icon className="w-5 h-5 text-foreground/70 group-hover:text-accent transition-colors" />
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                      <activity.icon className="w-5 h-5 text-primary/70 group-hover:text-primary transition-colors" />
                     </div>
                     <span className="text-sm font-medium">{activity.text}</span>
                   </motion.div>
@@ -80,7 +80,7 @@ export function YouthSection() {
 
             <Button
               size="lg"
-              className="rounded-full px-10 text-sm uppercase tracking-widest font-semibold bg-foreground text-background hover:bg-foreground/90"
+              className="rounded-full px-10 text-sm uppercase tracking-widest font-semibold bg-primary text-primary-foreground hover:bg-primary/90"
             >
               {t.youth.join}
             </Button>

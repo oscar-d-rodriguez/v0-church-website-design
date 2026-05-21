@@ -7,6 +7,7 @@ import { MinistriesSection } from "@/components/sections/ministries-section";
 import { YouthSection } from "@/components/sections/youth-section";
 import { EventsSection } from "@/components/sections/events-section";
 import { OfferingSection } from "@/components/sections/offering-section";
+import { ServiceTimesSection } from "@/components/sections/service-times-section";
 import { ContactSection } from "@/components/sections/contact-section";
 import { Footer } from "@/components/footer";
 import { Marquee } from "@/components/marquee";
@@ -31,6 +32,7 @@ export default function HomePage() {
       <YouthSection />
       <Marquee items={marqueeItems} speed={30} direction="right" />
       <EventsSection />
+      <ServiceTimesSection />
       <OfferingSection />
       <ContactSection />
       <Footer />

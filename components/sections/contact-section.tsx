@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { MapPin, Phone, Mail, Clock, Send, Heart } from "lucide-react";
 
 export function ContactSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [formState, setFormState] = useState({
     name: "",
     email: "",
@@ -19,7 +19,7 @@ export function ContactSection() {
     {
       icon: MapPin,
       label: t.contact.address,
-      value: "123 Faith Street, City, State 12345",
+      value: "15220 Main St, Bellevue, WA 98007",
     },
     {
       icon: Phone,
@@ -29,13 +29,14 @@ export function ContactSection() {
     {
       icon: Mail,
       label: t.contact.email,
-      value: "info@gracechurch.com",
+      value: "info@hosannachurch.com",
     },
   ];
 
   const serviceHours = [
-    { day: t.contact.sunday, time: "9:00 AM & 11:00 AM" },
-    { day: t.contact.wednesday, time: "7:00 PM" },
+    { day: language === "en" ? "Friday" : "Viernes", time: "7:00 PM - Bible Study" },
+    { day: language === "en" ? "Sunday" : "Domingo", time: "2:00 PM - Service" },
+    { day: language === "en" ? "Thursday" : "Jueves", time: "7:00 PM - Prayer" },
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -63,7 +64,7 @@ export function ContactSection() {
           <span className="text-primary font-semibold text-xs uppercase tracking-[0.2em]">
             {t.contact.subtitle}
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 text-balance tracking-tight">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold mt-6 text-balance tracking-tight">
             {t.contact.title}
           </h2>
         </motion.div>

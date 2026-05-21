@@ -76,7 +76,7 @@
 
 @theme inline {
   --font-sans: var(--font-manrope), 'Geist', 'Geist Fallback', system-ui, sans-serif;
-  --font-serif: var(--font-playfair), Georgia, serif;
+  --font-serif: var(--font-figtree), 'Figtree', system-ui, sans-serif;
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -180,4 +180,15 @@
 .parallax-image {
   will-change: transform;
   backface-visibility: hidden;
+}
+
+/* Stroke text effect */
+.stroke-text {
+  -webkit-text-stroke: 2px var(--foreground);
+  text-stroke: 2px var(--foreground);
+}
+
+.dark .stroke-text {
+  -webkit-text-stroke: 2px var(--foreground);
+  text-stroke: 2px var(--foreground);
 }
