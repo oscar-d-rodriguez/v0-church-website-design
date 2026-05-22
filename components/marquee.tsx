@@ -12,7 +12,7 @@ export function Marquee({ items, speed = 30, direction = "left" }: MarqueeProps)
   const duplicatedItems = [...items, ...items, ...items, ...items];
 
   return (
-    <div className="relative overflow-hidden py-4 bg-primary/5 border-y border-border">
+    <div className="relative overflow-hidden py-8 bg-muted/30 border-y border-border">
       <motion.div
         animate={{
           x: direction === "left" ? ["0%", "-50%"] : ["-50%", "0%"],
@@ -25,15 +25,18 @@ export function Marquee({ items, speed = 30, direction = "left" }: MarqueeProps)
             ease: "linear",
           },
         }}
-        className="flex gap-8 whitespace-nowrap"
+        className="flex gap-16 whitespace-nowrap"
       >
         {duplicatedItems.map((item, index) => (
           <div
             key={index}
-            className="flex items-center gap-8 text-sm uppercase tracking-widest text-muted-foreground"
+            className="flex items-center gap-16 text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.1em] font-bold"
           >
-            <span>{item}</span>
-            <span className="text-primary">+++</span>
+            {/* Alternating solid and stroke text */}
+            <span className={index % 2 === 0 ? "text-foreground" : "stroke-text text-foreground"}>
+              {item}
+            </span>
+            <span className="text-primary/40">+</span>
           </div>
         ))}
       </motion.div>
