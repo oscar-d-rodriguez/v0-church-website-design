@@ -35,31 +35,23 @@ export function EventsSection() {
   };
 
   return (
-    <section id="events" ref={ref} className="py-32 relative overflow-hidden">
-      {/* Parallax Background Image */}
-      <motion.div
-        style={{ y: bgY }}
-        className="absolute inset-0 z-0"
-      >
+    <section id="events" ref={ref} className="py-32 relative overflow-hidden bg-foreground dark:bg-card">
+      {/* Background Image with fixed position effect */}
+      <div className="absolute inset-0 z-0">
         <Image
           src="/images/community.jpg"
           alt="Community background"
           fill
-          className="object-cover"
+          className="object-cover opacity-5"
           sizes="100vw"
         />
-        {/* Dark overlay for contrast */}
-        <div className="absolute inset-0 bg-foreground/95 dark:bg-background/95" />
-      </motion.div>
+      </div>
 
       {/* Decorative Elements */}
-      <motion.div
-        style={{ y }}
-        className="absolute inset-0 pointer-events-none z-0"
-      >
+      <div className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
-      </motion.div>
+      </div>
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}

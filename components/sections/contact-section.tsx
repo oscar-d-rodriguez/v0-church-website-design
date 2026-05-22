@@ -4,10 +4,14 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { useLanguage } from "@/lib/language-context";
 import { Button } from "@/components/ui/button";
-import { MapPin, Phone, Mail, Clock, Send, Heart } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Send, Heart, Check, Loader2 } from "lucide-react";
+import { submitContactForm } from "@/app/actions/contact";
 
 export function ContactSection() {
   const { t, language } = useLanguage();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState("");
   const [formState, setFormState] = useState({
     name: "",
     email: "",
@@ -29,7 +33,7 @@ export function ContactSection() {
     {
       icon: Mail,
       label: t.contact.email,
-      value: "info@hosannachurch.com",
+      value: "iglesia.hosanna@gmail.com",
     },
   ];
 
@@ -39,10 +43,22 @@ export function ContactSection() {
     { day: language === "en" ? "Thursday" : "Jueves", time: "7:00 PM - Prayer" },
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log("Form submitted:", formState);
+    setIsSubmitting(true);
+    setError("");
+    
+    const result = await submitContactForm(formState);
+    
+    setIsSubmitting(false);
+    
+    if (result.success) {
+      setIsSuccess(true);
+      setFormState({ name: "", email: "", message: "", isPrayer: false });
+      setTimeout(() => setIsSuccess(false), 5000);
+    } else {
+      setError(result.error || "Something went wrong");
+    }
   };
 
   return (
@@ -124,18 +140,24 @@ export function ContactSection() {
               </div>
             </motion.div>
 
-            {/* Map Placeholder */}
+            {/* Google Map */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.4 }}
-              className="mt-6 h-48 bg-muted/30 rounded-3xl flex items-center justify-center border border-border"
+              className="mt-6 h-48 rounded-3xl overflow-hidden border border-border"
             >
-              <div className="text-center">
-                <MapPin className="w-8 h-8 mx-auto text-foreground/30 mb-2" />
-                <span className="text-muted-foreground text-sm">View on Google Maps</span>
-              </div>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2689.4876!2d-122.1467!3d47.6186!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54906c8d2a3b5555%3A0x123456789!2s15220%20Main%20St%2C%20Bellevue%2C%20WA%2098007!5e0!3m2!1sen!2sus!4v1234567890"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Hosanna Church Location"
+              />
             </motion.div>
           </motion.div>
 
@@ -175,6 +197,7 @@ export function ContactSection() {
                     onChange={(e) => setFormState({ ...formState, name: e.target.value })}
                     className="w-full px-5 py-4 rounded-2xl bg-muted/30 border-2 border-border focus:border-primary focus:outline-none transition-colors"
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -188,6 +211,7 @@ export function ContactSection() {
                     onChange={(e) => setFormState({ ...formState, email: e.target.value })}
                     className="w-full px-5 py-4 rounded-2xl bg-muted/30 border-2 border-border focus:border-primary focus:outline-none transition-colors"
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -201,16 +225,41 @@ export function ContactSection() {
                     rows={5}
                     className="w-full px-5 py-4 rounded-2xl bg-muted/30 border-2 border-border focus:border-primary focus:outline-none transition-colors resize-none"
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
+
+                {error && (
+                  <p className="text-red-500 text-sm text-center">{error}</p>
+                )}
+
+                {isSuccess && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="bg-emerald-500/10 border border-emerald-500/30 rounded-2xl p-4 text-center"
+                  >
+                    <Check className="w-6 h-6 text-emerald-500 mx-auto mb-2" />
+                    <p className="text-emerald-600 font-medium">
+                      {language === "en" ? "Message sent successfully!" : "Mensaje enviado con exito!"}
+                    </p>
+                  </motion.div>
+                )}
 
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full rounded-2xl py-6 text-sm uppercase tracking-widest font-semibold bg-primary text-primary-foreground hover:bg-primary/90"
+                  disabled={isSubmitting || isSuccess}
+                  className="w-full rounded-2xl py-6 text-sm uppercase tracking-widest font-semibold bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
                 >
-                  <Send className="w-4 h-4 mr-2" />
-                  {t.contact.form.send}
+                  {isSubmitting ? (
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  ) : (
+                    <Send className="w-4 h-4 mr-2" />
+                  )}
+                  {isSubmitting 
+                    ? (language === "en" ? "Sending..." : "Enviando...") 
+                    : t.contact.form.send}
                 </Button>
               </div>
             </form>

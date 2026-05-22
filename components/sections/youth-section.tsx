@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useLanguage } from "@/lib/language-context";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Music2, Mountain, Heart } from "lucide-react";
@@ -81,8 +82,11 @@ export function YouthSection() {
             <Button
               size="lg"
               className="rounded-full px-10 text-sm uppercase tracking-widest font-semibold bg-primary text-primary-foreground hover:bg-primary/90"
+              asChild
             >
-              {t.youth.join}
+              <Link href="#contact">
+                {t.youth.join}
+              </Link>
             </Button>
           </motion.div>
 

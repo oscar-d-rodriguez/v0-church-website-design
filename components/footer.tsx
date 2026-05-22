@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "@/lib/language-context";
-import { Facebook, Instagram, Youtube, Twitter } from "lucide-react";
+import { Facebook, Instagram, Youtube } from "lucide-react";
 
 export function Footer() {
   const { t } = useLanguage();
@@ -20,10 +20,9 @@ export function Footer() {
   ];
 
   const socialLinks = [
-    { icon: Facebook, href: "#", label: "Facebook" },
-    { icon: Instagram, href: "#", label: "Instagram" },
-    { icon: Youtube, href: "#", label: "YouTube" },
-    { icon: Twitter, href: "#", label: "Twitter" },
+    { icon: Facebook, href: "https://www.facebook.com/iglesiahosannabellevue/", label: "Facebook" },
+    { icon: Instagram, href: "https://www.instagram.com/iglesiahosannabellevue/", label: "Instagram" },
+    { icon: Youtube, href: "https://www.youtube.com/@IglesiaHosanna", label: "YouTube" },
   ];
 
   return (
@@ -103,10 +102,10 @@ export function Footer() {
           >
             <h3 className="text-xs uppercase tracking-[0.2em] font-semibold mb-6">{t.footer.connect}</h3>
             <address className="not-italic text-background/60 space-y-3 text-sm">
-              <p>123 Faith Street</p>
-              <p>City, State 12345</p>
+              <p>15220 Main St</p>
+              <p>Bellevue, WA 98007</p>
               <p>(555) 123-4567</p>
-              <p>info@hosannachurch.com</p>
+              <p>iglesia.hosanna@gmail.com</p>
             </address>
           </motion.div>
         </div>
@@ -115,19 +114,9 @@ export function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-background/10">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-background/50 text-sm">
-              {new Date().getFullYear()} {t.churchName}. {t.footer.copyright}.
-            </p>
-            <div className="flex gap-6 text-sm text-background/50">
-              <Link href="#" className="hover:text-primary transition-colors">
-                Privacy Policy
-              </Link>
-              <Link href="#" className="hover:text-primary transition-colors">
-                Terms of Service
-              </Link>
-            </div>
-          </div>
+          <p className="text-background/50 text-sm text-center">
+            {new Date().getFullYear()} {t.churchName}. {t.footer.copyright}.
+          </p>
         </div>
       </div>
     </footer>
