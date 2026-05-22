@@ -33,7 +33,7 @@ export function Marquee({ items, speed = 30, direction = "left" }: MarqueeProps)
             className="flex items-center gap-16 text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.1em] font-bold"
           >
             {/* Alternating solid and stroke text */}
-            <span className={index % 2 === 0 ? "text-foreground" : "text-transparent stroke-text"}>
+            <span className={index % 2 === 0 ? "text-foreground" : "stroke-text text-foreground"}>
               {item}
             </span>
             <span className="text-primary/40">+</span>

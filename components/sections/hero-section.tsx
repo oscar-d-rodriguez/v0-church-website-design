@@ -147,7 +147,7 @@ export function HeroSection() {
             <Button
               variant="outline"
               size="lg"
-              className="text-sm uppercase tracking-widest font-semibold px-10 py-6 rounded-full border-2 border-white/30 text-white hover:bg-white/10 transition-all group"
+              className="text-sm uppercase tracking-widest font-semibold px-10 py-6 rounded-full border-2 border-white bg-black/50 text-white hover:bg-white hover:text-black transition-all group"
             >
               <Play className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
               {t.hero.watchLive}

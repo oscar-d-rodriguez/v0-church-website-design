@@ -182,13 +182,10 @@
   backface-visibility: hidden;
 }
 
-/* Stroke text effect */
+/* Stroke text effect - outline only, no fill */
 .stroke-text {
-  -webkit-text-stroke: 2px var(--foreground);
-  text-stroke: 2px var(--foreground);
-}
-
-.dark .stroke-text {
-  -webkit-text-stroke: 2px var(--foreground);
-  text-stroke: 2px var(--foreground);
+  -webkit-text-stroke: 3px rgba(255, 255, 255, 0.6);
+  text-stroke: 3px rgba(255, 255, 255, 0.6);
+  color: transparent !important;
+  -webkit-text-fill-color: transparent;
 }
