@@ -112,9 +112,9 @@ export function YouthSection() {
                   className="object-cover transition-transform duration-700 hover:scale-105"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6 text-center">
-                  <span className="text-2xl font-serif font-bold text-foreground">
+                  <span className="text-2xl font-serif font-bold text-white">
                     Next Gen Faith
                   </span>
                 </div>
@@ -133,7 +133,7 @@ export function YouthSection() {
                   className="object-cover transition-transform duration-700 hover:scale-105"
                   sizes="25vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
               </motion.div>
               <motion.div
                 style={{ y: y1 }}
@@ -147,7 +147,7 @@ export function YouthSection() {
                   className="object-cover transition-transform duration-700 hover:scale-105"
                   sizes="25vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
               </motion.div>
             </div>
 

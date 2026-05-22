@@ -93,12 +93,12 @@ export function AboutSection() {
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, 60vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
               <div className="absolute bottom-8 left-8 right-8">
-                <span className="text-xs uppercase tracking-[0.2em] text-foreground/70 mb-2 block font-semibold">
+                <span className="text-xs uppercase tracking-[0.2em] text-white/70 mb-2 block font-semibold">
                   Our Community
                 </span>
-                <h3 className="text-2xl md:text-3xl font-serif font-bold text-foreground">
+                <h3 className="text-2xl md:text-3xl font-serif font-bold text-white">
                   Growing Together in Faith
                 </h3>
               </div>
@@ -118,7 +118,7 @@ export function AboutSection() {
                 className="object-cover transition-transform duration-700 hover:scale-105"
                 sizes="(max-width: 768px) 50vw, 40vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
             </motion.div>
             <motion.div
               style={{ y: y1 }}
@@ -133,7 +133,7 @@ export function AboutSection() {
                 className="object-cover transition-transform duration-700 hover:scale-105"
                 sizes="(max-width: 768px) 50vw, 40vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
             </motion.div>
           </div>
         </motion.div>

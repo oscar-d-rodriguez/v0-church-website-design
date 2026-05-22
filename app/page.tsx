@@ -32,8 +32,8 @@ export default function HomePage() {
       <YouthSection />
       <Marquee items={marqueeItems} speed={30} direction="right" />
       <EventsSection />
-      <ServiceTimesSection />
       <OfferingSection />
+      <ServiceTimesSection />
       <ContactSection />
       <Footer />
     </main>
