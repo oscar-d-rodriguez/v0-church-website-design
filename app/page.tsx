@@ -18,8 +18,8 @@ export default function HomePage() {
   const { language } = useLanguage();
 
   const marqueeItems = language === "en" 
-    ? ["WORSHIP", "COMMUNITY", "FAITH", "LOVE", "SERVICE", "HOPE", "PRAYER", "HOSANNA"]
-    : ["ADORACION", "COMUNIDAD", "FE", "AMOR", "SERVICIO", "ESPERANZA", "ORACION", "HOSANNA"];
+    ? ["WORSHIP", "COMMUNITY", "FAITH", "LOVE", "SERVICE", "HOPE", "PRAYER", "HEALING"]
+    : ["ADORACION", "COMUNIDAD", "FE", "AMOR", "SERVICIO", "ESPERANZA", "ORACION", "SANIDAD"];
 
   return (
     <main className="min-h-screen">

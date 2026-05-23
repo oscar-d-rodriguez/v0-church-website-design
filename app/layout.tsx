@@ -49,7 +49,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/images/symbol.png" type="image/png" />
       </head>
-      <body className="font-sans antialiased">
+      <body suppressHydrationWarning className="font-sans antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

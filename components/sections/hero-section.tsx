@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Play } from "lucide-react";
 
 const heroImages = [
+  "/images/hero-0.jpg",
   "/images/hero-1.jpg",
   "/images/hero-2.jpg",
   "/images/hero-3.jpg",
@@ -31,7 +32,7 @@ export function HeroSection() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % heroImages.length);
-    }, 5000);
+    }, 7000);
     return () => clearInterval(interval);
   }, []);
 
@@ -39,7 +40,7 @@ export function HeroSection() {
     <section
       id="home"
       ref={ref}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-950"
     >
       {/* Rotating Background Images with Parallax - Darker overlay */}
       <motion.div
@@ -49,10 +50,10 @@ export function HeroSection() {
         <AnimatePresence mode="wait">
           <motion.div
             key={currentImage}
-            initial={{ opacity: 0, scale: 1.1 }}
+            initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.2, ease: "easeInOut" }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.7, ease: "easeInOut" }}
             className="absolute inset-0"
           >
             <Image
@@ -107,25 +108,38 @@ export function HeroSection() {
               src="/images/symbol.png"
               alt={t.churchName}
               fill
+              loading="eager"
               className="object-contain brightness-0 invert"
             />
           </motion.div>
 
           {/* Main Heading - White text */}
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-5xl md:text-7xl lg:text-9xl font-serif font-bold mb-6 text-balance tracking-tight"
+            initial={{ opacity: 0, y: 30, scale: 0.92, rotateX: 20 }}
+            animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+            whileHover={{ y: -4, scale: 1.01, rotateX: 0 }}
+            transition={{
+              duration: 0.9,
+              delay: 0.4,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="uppercase text-5xl md:text-7xl lg:text-8xl font-serif font-bold mb-6 text-balance tracking-wider"
           >
-            <span className="text-white">{t.hero.welcome}</span>
+            <motion.span
+              initial={{ opacity: 0, y: 10, skewY: 4 }}
+              animate={{ opacity: 1, y: 0, skewY: 0 }}
+              transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+              className="text-white"
+            >
+              {t.hero.welcome}
+            </motion.span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-lg md:text-xl text-white/80 mb-12 max-w-2xl mx-auto text-pretty leading-relaxed tracking-wide"
+            className="uppercase text-lg md:text-3xl text-white/80 mb-12 max-w-2xl mx-auto text-pretty leading-relaxed tracking-[.75rem]"
           >
             {t.hero.subtitle}
           </motion.p>
@@ -144,20 +158,17 @@ export function HeroSection() {
             >
               <a href="#contact">{t.hero.cta}</a>
             </Button>
-            <Button
+            {/* <Button
               variant="outline"
               size="lg"
               className="text-sm uppercase tracking-widest font-semibold px-10 py-6 rounded-full border-2 border-white bg-black/50 text-white hover:bg-white hover:text-black transition-all group"
             >
               <Play className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
               {t.hero.watchLive}
-            </Button>
+            </Button> */}
           </motion.div>
         </motion.div>
       </motion.div>
-
-      {/* Bottom Fade - reduced */}
-      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background/50 to-transparent z-10" />
     </section>
   );
 }

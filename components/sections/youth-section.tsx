@@ -47,10 +47,10 @@ export function YouthSection() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-primary font-semibold text-xs uppercase tracking-[0.2em]">
+            <span className="text-primary font-semibold text-sm uppercase tracking-[0.4em]">
               {t.youth.subtitle}
             </span>
-            <h2 className="text-5xl md:text-6xl font-serif font-bold mt-6 mb-6 text-balance tracking-tight">
+            <h2 className="uppercase text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 mb-6 text-balance tracking-wider">
               {t.youth.title}
             </h2>
             <p className="text-muted-foreground text-lg mb-10 leading-relaxed">

@@ -184,8 +184,5 @@
 
 /* Stroke text effect - outline only, no fill */
 .stroke-text {
-  -webkit-text-stroke: 3px rgba(255, 255, 255, 0.6);
-  text-stroke: 3px rgba(255, 255, 255, 0.6);
-  color: transparent !important;
-  -webkit-text-fill-color: transparent;
+  color: #1084CD;
 }

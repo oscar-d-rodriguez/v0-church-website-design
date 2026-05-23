@@ -1,18 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { useLanguage } from "@/lib/language-context";
 import { Button } from "@/components/ui/button";
-import { CreditCard, Building, Mail, Heart, RefreshCw, DollarSign } from "lucide-react";
+import { CreditCard, Building, Mail } from "lucide-react";
 
 export function OfferingSection() {
   const { t } = useLanguage();
-
-  const givingTypes = [
-    { icon: Heart, label: t.offering.tithes },
-    { icon: RefreshCw, label: t.offering.recurring },
-    { icon: DollarSign, label: t.offering.oneTime },
-  ];
+  const [selectedDonationType, setSelectedDonationType] = useState("ofrendas");
+  const [isRecurring, setIsRecurring] = useState(false);
 
   const givingWays = [
     {
@@ -52,10 +49,10 @@ export function OfferingSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
-          <span className="text-primary font-semibold text-xs uppercase tracking-[0.2em]">
+          <span className="text-primary font-semibold text-sm uppercase tracking-[0.4em]">
             {t.offering.subtitle}
           </span>
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold mt-6 mb-6 text-balance tracking-tight">
+          <h2 className="uppercase text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 mb-6 text-balance tracking-wider">
             {t.offering.title}
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto text-pretty leading-relaxed">
@@ -77,27 +74,38 @@ export function OfferingSection() {
             <div className="absolute bottom-0 left-0 w-40 h-40 bg-accent/10 rounded-full blur-3xl" />
 
             <div className="relative z-10">
-              {/* Giving Types */}
-              <div className="flex flex-wrap justify-center gap-4 mb-10">
-                {givingTypes.map((type, index) => (
-                  <motion.button
-                    key={type.label}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.2, delay: index * 0.05 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`flex items-center gap-2 px-6 py-3 rounded-full border-2 transition-colors duration-150 text-sm uppercase tracking-wider font-semibold ${
-                      index === 0
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "bg-transparent border-border hover:border-primary hover:bg-primary/5"
-                    }`}
-                  >
-                    <type.icon className="w-5 h-5" />
-                    <span className="font-medium">{type.label}</span>
-                  </motion.button>
-                ))}
+              {/* Donation Type */}
+              <div className="mb-6">
+                <label className="block text-sm uppercase tracking-[0.25em] text-muted-foreground mb-3">
+                  {t.offering.donationTypeLabel}
+                </label>
+                <select
+                  value={selectedDonationType}
+                  onChange={(e) => setSelectedDonationType(e.target.value)}
+                  className="w-full rounded-2xl border-2 border-border bg-background px-4 py-4 text-sm font-semibold uppercase tracking-wider text-foreground transition-colors focus:border-primary focus:outline-none"
+                >
+                  <option value="ofrendas">Ofrendas</option>
+                  <option value="diezmos">Diezmos</option>
+                  <option value="misiones">Misiones</option>
+                  <option value="templo">Templo</option>
+                </select>
+              </div>
+
+              <div className="mb-6">
+                <label className="flex items-center gap-3 cursor-pointer text-sm font-semibold uppercase tracking-[0.25em] text-foreground">
+                  <input
+                    type="checkbox"
+                    checked={isRecurring}
+                    onChange={(e) => setIsRecurring(e.target.checked)}
+                    className="h-5 w-5 rounded border-border text-primary focus:ring-primary"
+                  />
+                  {t.offering.recurringCheckboxLabel}
+                </label>
+                {isRecurring ? (
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    {t.offering.recurringDescription}
+                  </p>
+                ) : null}
               </div>
 
               {/* Amount Selection */}
@@ -130,7 +138,7 @@ export function OfferingSection() {
                   </span>
                   <input
                     type="number"
-                    placeholder="Custom Amount"
+                    placeholder={t.offering.customAmountPlaceholder}
                     className="w-full pl-12 pr-4 py-4 rounded-2xl bg-muted/30 border-2 border-border focus:border-primary focus:outline-none text-lg font-medium transition-colors"
                   />
                 </div>
@@ -138,7 +146,7 @@ export function OfferingSection() {
                   size="lg"
                   className="px-12 py-4 text-sm uppercase tracking-widest font-semibold rounded-2xl bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg"
                 >
-                  Give Now
+                  {t.offering.giveNow}
                 </Button>
               </div>
 

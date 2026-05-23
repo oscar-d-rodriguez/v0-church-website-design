@@ -30,10 +30,10 @@ export function Marquee({ items, speed = 30, direction = "left" }: MarqueeProps)
         {duplicatedItems.map((item, index) => (
           <div
             key={index}
-            className="flex items-center gap-16 text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.1em] font-bold"
+            className="flex items-center gap-16 text-lg md:text-xl lg:text-xl uppercase tracking-[0.1em] font-bold"
           >
             {/* Alternating solid and stroke text */}
-            <span className={index % 2 === 0 ? "text-foreground" : "stroke-text text-foreground"}>
+            <span className={ `${index % 2 === 0 ? "text-foreground" : "stroke-text text-foreground"} tracking-[.25rem]`}>
               {item}
             </span>
             <span className="text-primary/40">+</span>

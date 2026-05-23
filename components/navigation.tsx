@@ -23,7 +23,7 @@ export function Navigation() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 24);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -43,10 +43,10 @@ export function Navigation() {
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-xl ${
         scrolled
-          ? "bg-primary shadow-lg"
-          : "bg-primary/95"
+          ? "bg-[#1084CD]/100 shadow-lg"
+          : "bg-[#1084CD]/60"
       }`}
     >
       <nav className="w-full px-6 lg:px-12 py-3">

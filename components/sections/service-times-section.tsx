@@ -66,10 +66,10 @@ export function ServiceTimesSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-primary font-semibold text-xs uppercase tracking-[0.2em]">
+            <span className="text-primary font-semibold text-sm uppercase tracking-[0.4em]">
               {language === "en" ? "Join Us" : "Unete a Nosotros"}
             </span>
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold mt-6 mb-12 text-white tracking-tight">
+            <h2 className="uppercase text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 mb-12 text-white tracking-wider">
               {language === "en" ? "Service Times" : "Horarios de Servicio"}
             </h2>
           </motion.div>
