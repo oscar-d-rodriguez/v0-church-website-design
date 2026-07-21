@@ -12,7 +12,17 @@ export interface ChurchEvent {
   category: "worship" | "youth" | "community" | "special";
 }
 
-export const events: ChurchEvent[] = [
+interface BackendEvent {
+  id: string;
+  title?: string;
+  description?: string;
+  date: string;
+  location?: string;
+  type?: string;
+  image?: string;
+}
+
+const fallbackEvents: ChurchEvent[] = [
   {
     id: "sunday-worship-experience",
     titleEn: "Sunday Worship Experience",
@@ -92,3 +102,85 @@ export const events: ChurchEvent[] = [
     category: "special",
   },
 ];
+
+export const events: ChurchEvent[] = fallbackEvents;
+
+function formatDisplayDate(value: string) {
+  const parsedDate = new Date(value);
+
+  if (Number.isNaN(parsedDate.getTime())) {
+    return value;
+  }
+
+  return new Intl.DateTimeFormat("en", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(parsedDate);
+}
+
+function formatDisplayTime(value: string) {
+  const parsedDate = new Date(value);
+
+  if (Number.isNaN(parsedDate.getTime())) {
+    return "TBD";
+  }
+
+  return new Intl.DateTimeFormat("en", {
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(parsedDate);
+}
+
+function mapCategory(type?: string): ChurchEvent["category"] {
+  switch (type) {
+    case "service":
+      return "worship";
+    case "meeting":
+      return "community";
+    case "outreach":
+      return "community";
+    default:
+      return "special";
+  }
+}
+
+export function mapBackendEvent(event: BackendEvent): ChurchEvent {
+  return {
+    id: event.id,
+    titleEn: event.title ?? "Untitled Event",
+    titleEs: event.title ?? "Evento sin titulo",
+    descriptionEn: event.description ?? "More details coming soon.",
+    descriptionEs: event.description ?? "Pronto más detalles.",
+    date: formatDisplayDate(event.date),
+    time: formatDisplayTime(event.date),
+    locationEn: event.location ?? "Church Campus",
+    locationEs: event.location ?? "Campus de la Iglesia",
+    imageUrl: event.image ?? "/images/community.jpg",
+    category: mapCategory(event.type),
+  };
+}
+
+function getEventsApiUrl() {
+  const configuredUrl = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_BACKEND_URL;
+  const baseUrl = configuredUrl ? configuredUrl.replace(/\/$/, "") : "http://localhost:8080";
+  return `${baseUrl}/api/events`;
+}
+
+export async function fetchEvents(): Promise<ChurchEvent[]> {
+  try {
+    const response = await fetch(getEventsApiUrl(), { cache: "no-store" });
+
+    if (!response.ok) {
+      throw new Error(`Failed to load events: ${response.status}`);
+    }
+
+    const data = (await response.json()) as BackendEvent[] | { events?: BackendEvent[] };
+    const items = Array.isArray(data) ? data : data.events ?? [];
+
+    return items.map(mapBackendEvent);
+  } catch (error) {
+    console.error("Unable to load events from backend, falling back to sample data.", error);
+    return fallbackEvents;
+  }
+}

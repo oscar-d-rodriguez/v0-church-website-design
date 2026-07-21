@@ -5,16 +5,32 @@ import Link from "next/link";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useLanguage } from "@/lib/language-context";
-import { events } from "@/lib/events-data";
+import { events as fallbackEvents, fetchEvents, type ChurchEvent } from "@/lib/events-data";
 import { Calendar, Clock, MapPin, ArrowLeft, Share2, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function EventDetailPage() {
   const params = useParams();
   const { language, t } = useLanguage();
   const [copied, setCopied] = useState(false);
-  const event = events.find((e) => e.id === params.id);
+  const [events, setEvents] = useState<ChurchEvent[]>(fallbackEvents);
+  const eventId = Array.isArray(params.id) ? params.id[0] : params.id;
+  const event = events.find((e) => e.id === eventId);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    fetchEvents().then((loadedEvents) => {
+      if (isMounted) {
+        setEvents(loadedEvents);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleShare = async () => {
     const eventTitle = language === "en" ? event?.titleEn : event?.titleEs;

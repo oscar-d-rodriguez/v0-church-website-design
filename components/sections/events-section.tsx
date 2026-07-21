@@ -1,17 +1,18 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "@/lib/language-context";
-import { events } from "@/lib/events-data";
+import { events as fallbackEvents, fetchEvents, type ChurchEvent } from "@/lib/events-data";
 import { Calendar, Clock, MapPin, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function EventsSection() {
   const { language, t } = useLanguage();
   const ref = useRef<HTMLElement>(null);
+  const [events, setEvents] = useState<ChurchEvent[]>(fallbackEvents);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
@@ -19,6 +20,20 @@ export function EventsSection() {
 
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    fetchEvents().then((loadedEvents) => {
+      if (isMounted) {
+        setEvents(loadedEvents);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const categoryColors = {
     worship: "from-primary/80 to-primary",
@@ -44,6 +59,7 @@ export function EventsSection() {
           fill
           className="object-cover opacity-5"
           sizes="100vw"
+          loading="eager"
         />
       </div>
 
