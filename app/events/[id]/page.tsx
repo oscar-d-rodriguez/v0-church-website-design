@@ -259,7 +259,7 @@ export default function EventDetailPage() {
           </motion.p>
 
           {/* CTA Button */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
@@ -271,7 +271,7 @@ export default function EventDetailPage() {
             >
               {language === "en" ? "I'm Interested" : "Me Interesa"}
             </Button>
-          </motion.div>
+          </motion.div> */}
         </motion.div>
       </div>
     </main>

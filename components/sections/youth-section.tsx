@@ -22,8 +22,7 @@ export function YouthSection() {
   const activities = [
     { icon: BookOpen, text: t.youth.bibleStudy },
     { icon: Music2, text: t.youth.worship },
-    { icon: Mountain, text: t.youth.retreats },
-    { icon: Heart, text: t.youth.community },
+    { icon: Mountain, text: t.youth.retreats }  
   ];
 
   return (
@@ -84,7 +83,7 @@ export function YouthSection() {
               className="rounded-full px-10 text-sm uppercase tracking-widest font-semibold bg-primary text-primary-foreground hover:bg-primary/90"
               asChild
             >
-              <Link href="#contact">
+              <Link href="https://www.instagram.com/legacyleadersofficial/" target="_blank" rel="noopener noreferrer">
                 {t.youth.join}
               </Link>
             </Button>
@@ -106,7 +105,7 @@ export function YouthSection() {
                 className="col-span-2 h-72 rounded-3xl relative overflow-hidden"
               >
                 <Image
-                  src="/images/youth.jpg"
+                  src="/images/youth1.jpg"
                   alt="Youth Ministry"
                   fill
                   className="object-cover transition-transform duration-700 hover:scale-105"
@@ -115,7 +114,7 @@ export function YouthSection() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6 text-center">
                   <span className="text-2xl font-serif font-bold text-white">
-                    Next Gen Faith
+                    Legacy Leaders
                   </span>
                 </div>
               </motion.div>
@@ -127,7 +126,7 @@ export function YouthSection() {
                 className="h-44 rounded-3xl overflow-hidden relative"
               >
                 <Image
-                  src="/images/worship.jpg"
+                  src="/images/youth2.jpg"
                   alt="Youth Worship"
                   fill
                   className="object-cover transition-transform duration-700 hover:scale-105"
@@ -141,7 +140,7 @@ export function YouthSection() {
                 className="h-44 rounded-3xl overflow-hidden relative"
               >
                 <Image
-                  src="/images/hero-2.jpg"
+                  src="/images/youth3.jpg"
                   alt="Youth Community"
                   fill
                   className="object-cover transition-transform duration-700 hover:scale-105"
