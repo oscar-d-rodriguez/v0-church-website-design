@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/lib/language-context";
@@ -17,24 +17,18 @@ const heroImages = [
 export function HeroSection() {
   const { t } = useLanguage();
   const ref = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
   const [currentImage, setCurrentImage] = useState(0);
-  
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 1.15]);
 
   // Auto-rotate images every 5 seconds
   useEffect(() => {
+    if (reduceMotion) return;
+
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % heroImages.length);
     }, 7000);
     return () => clearInterval(interval);
-  }, []);
+  }, [reduceMotion]);
 
   return (
     <section
@@ -44,7 +38,6 @@ export function HeroSection() {
     >
       {/* Rotating Background Images with Parallax - Darker overlay */}
       <motion.div
-        style={{ y, scale }}
         className="absolute inset-0 z-0"
       >
         <AnimatePresence mode="wait">
@@ -88,7 +81,6 @@ export function HeroSection() {
 
       {/* Content */}
       <motion.div
-        style={{ opacity }}
         className="relative z-10 container mx-auto px-4 text-center pb-32"
       >
         <motion.div
@@ -117,7 +109,6 @@ export function HeroSection() {
           <motion.h1
             initial={{ opacity: 0, y: 30, scale: 0.92, rotateX: 20 }}
             animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
-            whileHover={{ y: -4, scale: 1.01, rotateX: 0 }}
             transition={{
               duration: 0.9,
               delay: 0.4,

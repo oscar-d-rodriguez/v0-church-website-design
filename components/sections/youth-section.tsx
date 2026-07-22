@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,13 +11,6 @@ import { BookOpen, Music2, Mountain, Heart } from "lucide-react";
 export function YouthSection() {
   const { t } = useLanguage();
   const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  const y1 = useTransform(scrollYProgress, [0, 1], [-50, 50]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [50, -50]);
 
   const activities = [
     { icon: BookOpen, text: t.youth.bibleStudy },
@@ -29,11 +22,9 @@ export function YouthSection() {
     <section id="youth" ref={ref} className="py-32 relative overflow-hidden">
       {/* Parallax Background Elements */}
       <motion.div
-        style={{ y: y1 }}
         className="absolute top-20 -left-20 w-60 h-60 bg-accent/5 rounded-full blur-3xl"
       />
       <motion.div
-        style={{ y: y2 }}
         className="absolute bottom-20 -right-20 w-80 h-80 bg-muted/30 rounded-full blur-3xl"
       />
 
@@ -100,7 +91,6 @@ export function YouthSection() {
             <div className="grid grid-cols-2 gap-4">
               {/* Main Image */}
               <motion.div
-                style={{ y: y2 }}
                 whileHover={{ scale: 1.01 }}
                 className="col-span-2 h-72 rounded-3xl relative overflow-hidden"
               >
@@ -121,7 +111,6 @@ export function YouthSection() {
               
               {/* Small Images */}
               <motion.div
-                style={{ y: y1 }}
                 whileHover={{ scale: 1.02 }}
                 className="h-44 rounded-3xl overflow-hidden relative"
               >
@@ -135,7 +124,6 @@ export function YouthSection() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
               </motion.div>
               <motion.div
-                style={{ y: y1 }}
                 whileHover={{ scale: 1.02 }}
                 className="h-44 rounded-3xl overflow-hidden relative"
               >
@@ -152,8 +140,6 @@ export function YouthSection() {
 
             {/* Floating Element */}
             <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 4, repeat: Infinity }}
               className="absolute -top-4 -right-4 w-20 h-20 bg-accent/10 rounded-full flex items-center justify-center backdrop-blur-sm"
             >
               <span className="text-xs uppercase tracking-widest font-bold text-accent">NEW</span>

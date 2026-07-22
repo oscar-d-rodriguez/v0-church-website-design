@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/lib/language-context";
@@ -9,13 +9,6 @@ import { Heart, Target, Sparkles } from "lucide-react";
 export function AboutSection() {
   const { t } = useLanguage();
   const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  const y1 = useTransform(scrollYProgress, [0, 1], [100, -100]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [50, -50]);
 
   const cards = [
     {
@@ -42,11 +35,9 @@ export function AboutSection() {
     <section id="about" ref={ref} className="py-32 relative overflow-hidden">
       {/* Parallax Background Elements */}
       <motion.div
-        style={{ y: y1 }}
         className="absolute -right-40 top-20 w-80 h-80 bg-accent/5 rounded-full blur-3xl"
       />
       <motion.div
-        style={{ y: y2 }}
         className="absolute -left-40 bottom-20 w-96 h-96 bg-muted/50 rounded-full blur-3xl"
       />
 
@@ -81,7 +72,6 @@ export function AboutSection() {
           <div className="grid grid-cols-12 grid-rows-2 gap-4 h-[550px]">
             {/* Main Large Image */}
             <motion.div
-              style={{ y: y2 }}
               whileHover={{ scale: 1.01 }}
               transition={{ type: "spring", stiffness: 400, damping: 25 }}
               className="col-span-12 md:col-span-7 row-span-2 rounded-3xl overflow-hidden relative group"
@@ -106,7 +96,6 @@ export function AboutSection() {
             
             {/* Small Images */}
             <motion.div
-              style={{ y: y1 }}
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 400, damping: 25 }}
               className="col-span-6 md:col-span-5 rounded-3xl overflow-hidden relative"
@@ -121,7 +110,6 @@ export function AboutSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
             </motion.div>
             <motion.div
-              style={{ y: y1 }}
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 400, damping: 25 }}
               className="col-span-6 md:col-span-5 rounded-3xl overflow-hidden relative"

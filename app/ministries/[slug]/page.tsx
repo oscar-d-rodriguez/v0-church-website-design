@@ -108,12 +108,12 @@ const ministryData = {
     directorEs: "Juan Carlos Velazquez",
     directorIsFemale: false,
     activities: [
-      { en: "Morning Devotionals 'Amaneciendo' (Tues & Thurs 5:00-5:30 AM)", es: "Devocionales Matutinos 'Amaneciendo' (Martes y Jueves 5:00-5:30 AM)" },
+      { en: "Morning Devotionals 'Amaneciendo' (Tues & Thurs 5:00-6:00 AM)", es: "Devocionales Matutinos 'Amaneciendo' (Martes y Jueves 5:00-6:00 AM)" },
       { en: "Wednesday Intercessory Prayer Group", es: "Grupo de Oración Intercesora Miércoles" },
       { en: "Wednesday Night Prayer Service", es: "Servicio de Oración Miércoles" },
       { en: "24/7 Prayer Support via Zoom", es: "Apoyo de Oración 24/7 vía Zoom" },
     ],
-    schedule: { en: "Tues/Thurs 5:00-5:30 AM & Wednesdays (Times via Zoom)", es: "Martes/Jueves 5:00-5:30 AM & Miércoles (Horarios vía Zoom)" },
+    schedule: { en: "Tues/Thurs 5:00-6:00 AM & Wednesdays (Times via Zoom)", es: "Martes/Jueves 5:00-6:00 AM & Miércoles (Horarios vía Zoom)" },
     contact: "juanc76543@gmail.com",
   },
 };

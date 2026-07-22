@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -10,13 +10,6 @@ import { Music, Baby, Users, UserCircle, Globe, HandHeart } from "lucide-react";
 export function MinistriesSection() {
   const { t } = useLanguage();
   const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
 
   const ministries = [
     {

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/lib/language-context";
@@ -9,13 +9,6 @@ import { Clock, MapPin } from "lucide-react";
 export function ServiceTimesSection() {
   const { language } = useLanguage();
   const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const textY = useTransform(scrollYProgress, [0, 1], [50, -50]);
 
   const services = [
     {
@@ -39,7 +32,6 @@ export function ServiceTimesSection() {
     <section ref={ref} className="relative h-[80vh] min-h-[600px] overflow-hidden flex items-center">
       {/* Parallax Background Image */}
       <motion.div
-        style={{ y: bgY }}
         className="absolute inset-0 z-0 scale-110"
       >
         <Image
@@ -55,7 +47,6 @@ export function ServiceTimesSection() {
 
       {/* Content */}
       <motion.div
-        style={{ y: textY }}
         className="container mx-auto px-4 relative z-10"
       >
         <div className="max-w-4xl mx-auto text-center">

@@ -38,9 +38,18 @@ export function ContactSection() {
   ];
 
   const serviceHours = [
-    { day: language === "en" ? "Friday" : "Viernes", time: "7:00 PM - Bible Study" },
-    { day: language === "en" ? "Sunday" : "Domingo", time: "2:00 PM - Service" },
-    { day: language === "en" ? "Thursday" : "Jueves", time: "7:00 PM - Prayer" },
+    {
+      day: language === "en" ? "Friday" : "Viernes",
+      time: language === "en" ? "7:00 PM - Bible Study" : "7:00 PM - Estudio Biblico",
+    },
+    {
+      day: language === "en" ? "Sunday" : "Domingo",
+      time: language === "en" ? "2:00 PM - Service" : "2:00 PM - Servicio",
+    },
+    {
+      day: language === "en" ? "Tuesday" : "Martes",
+      time: language === "en" ? "7:00 PM - Prayer" : "7:00 PM - Oracion",
+    },
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {

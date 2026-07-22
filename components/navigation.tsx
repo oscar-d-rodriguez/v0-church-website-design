@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const { language, setLanguage, t } = useLanguage();
@@ -19,14 +18,6 @@ export function Navigation() {
 
   useEffect(() => {
     setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 24);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navItems = [
@@ -45,10 +36,7 @@ export function Navigation() {
       <div className="lg:hidden fixed top-0 left-0 right-0 z-[60] pt-2 px-4 pb-2 bg-[#1084CD]">
         <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=iglesiahosannabellevue@gmail.com&item_name=Donation&currency_code=USD" target="_blank" rel="noopener noreferrer" className="block">
           <motion.div
-            animate={{ 
-              opacity: [0.95, 1, 0.95]
-            }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+            whileTap={{ scale: 0.98 }}
             className="w-full px-6 py-2.5 text-sm font-bold uppercase tracking-widest text-white bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full shadow-lg text-center"
           >
             {t.nav.offering}
@@ -98,13 +86,6 @@ export function Navigation() {
                     >
                       <motion.div
                         whileTap={{ scale: 0.95 }}
-                        animate={{ 
-                          opacity: [0.95, 1, 0.95]
-                        }}
-                        transition={{ 
-                          opacity: { duration: 1.5, repeat: Infinity, ease: "easeInOut" },
-                          scale: { type: "spring" }
-                        }}
                         className="px-6 py-2.5 text-sm font-bold uppercase tracking-widest text-white bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full shadow-lg hover:shadow-xl transition-all"
                       >
                         {item.label}
@@ -229,10 +210,7 @@ export function Navigation() {
                             onClick={() => setIsOpen(false)}
                           >
                             <motion.div
-                              animate={{ 
-                                opacity: [0.95, 1, 0.95]
-                              }}
-                              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                              whileTap={{ scale: 0.98 }}
                               className="block px-6 py-3 text-white font-bold uppercase tracking-widest bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full transition-colors text-center"
                             >
                               {item.label}

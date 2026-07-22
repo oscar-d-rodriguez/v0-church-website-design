@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { X, Mail, Check, Sparkles } from "lucide-react";
 import { useLanguage } from "@/lib/language-context";
 import { Button } from "@/components/ui/button";
@@ -12,11 +12,13 @@ const STORAGE_KEY = "hosanna-newsletter-dismissed";
 
 export function NewsletterPopup() {
   const { t } = useLanguage();
+  const reduceMotion = useReducedMotion();
   const [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState("");
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     // Check if user has already dismissed or subscribed
@@ -28,6 +30,14 @@ export function NewsletterPopup() {
       }, 2500);
       return () => clearTimeout(timer);
     }
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current) {
+        clearTimeout(closeTimerRef.current);
+      }
+    };
   }, []);
 
   const handleClose = () => {
@@ -58,7 +68,7 @@ export function NewsletterPopup() {
     localStorage.setItem(STORAGE_KEY, "subscribed");
 
     // Close popup after showing success
-    setTimeout(() => {
+    closeTimerRef.current = setTimeout(() => {
       setIsOpen(false);
     }, 3000);
   };
@@ -106,8 +116,8 @@ export function NewsletterPopup() {
                 {/* Logo */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                   <motion.div
-                    animate={{ rotate: [0, 5, -5, 0] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    animate={reduceMotion ? undefined : { rotate: [0, 5, -5, 0] }}
+                    transition={reduceMotion ? undefined : { duration: 4, repeat: Infinity, ease: "easeInOut" }}
                   >
                     <Image
                       src="/images/symbol.png"
@@ -121,15 +131,15 @@ export function NewsletterPopup() {
 
                 {/* Floating sparkles */}
                 <motion.div
-                  animate={{ y: [-5, 5, -5], opacity: [0.5, 1, 0.5] }}
-                  transition={{ duration: 3, repeat: Infinity }}
+                  animate={reduceMotion ? undefined : { y: [-5, 5, -5], opacity: [0.5, 1, 0.5] }}
+                  transition={reduceMotion ? undefined : { duration: 3, repeat: Infinity }}
                   className="absolute top-6 right-16"
                 >
                   <Sparkles className="w-5 h-5 text-white/60" />
                 </motion.div>
                 <motion.div
-                  animate={{ y: [5, -5, 5], opacity: [0.3, 0.8, 0.3] }}
-                  transition={{ duration: 2.5, repeat: Infinity }}
+                  animate={reduceMotion ? undefined : { y: [5, -5, 5], opacity: [0.3, 0.8, 0.3] }}
+                  transition={reduceMotion ? undefined : { duration: 2.5, repeat: Infinity }}
                   className="absolute bottom-8 left-12"
                 >
                   <Sparkles className="w-4 h-4 text-white/50" />

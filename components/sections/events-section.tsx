@@ -1,25 +1,16 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "@/lib/language-context";
 import { events as fallbackEvents, fetchEvents, type ChurchEvent } from "@/lib/events-data";
 import { Calendar, Clock, MapPin, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 export function EventsSection() {
   const { language, t } = useLanguage();
-  const ref = useRef<HTMLElement>(null);
   const [events, setEvents] = useState<ChurchEvent[]>(fallbackEvents);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
 
   useEffect(() => {
     let isMounted = true;
@@ -35,13 +26,6 @@ export function EventsSection() {
     };
   }, []);
 
-  const categoryColors = {
-    worship: "from-primary/80 to-primary",
-    youth: "from-accent/80 to-accent",
-    community: "from-emerald-600/80 to-emerald-700",
-    special: "from-amber-600/80 to-amber-700",
-  };
-
   const categoryLabels = {
     worship: language === "en" ? "Worship" : "Adoracion",
     youth: language === "en" ? "Youth" : "Jovenes",
@@ -50,7 +34,7 @@ export function EventsSection() {
   };
 
   return (
-    <section id="events" ref={ref} className="py-32 relative overflow-hidden bg-foreground dark:bg-card">
+    <section id="events" className="py-32 relative overflow-hidden bg-foreground dark:bg-card">
       {/* Background Image with fixed position effect */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -102,7 +86,7 @@ export function EventsSection() {
                   transition={{ type: "spring", stiffness: 400, damping: 25 }}
                   className="group bg-background dark:bg-card rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-200 border border-border h-full flex flex-col"
                 >
-                  <div className={`relative h-52 bg-gradient-to-br ${categoryColors[event.category]} overflow-hidden`}>
+                  <div className="relative h-52 overflow-hidden bg-muted">
                     <Image
                       src={event.imageUrl}
                       alt={language === "en" ? event.titleEn : event.titleEs}
@@ -110,19 +94,10 @@ export function EventsSection() {
                       className="object-cover"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
-                    <div className={`absolute inset-0 bg-gradient-to-t ${categoryColors[event.category]} opacity-45`} />
-
-                    {/* Collage Pattern */}
-                    <div className="absolute inset-0 opacity-20">
-                      <div className="absolute top-2 left-2 w-16 h-16 bg-white/20 rounded-2xl" />
-                      <div className="absolute top-4 right-4 w-24 h-12 bg-white/10 rounded-2xl" />
-                      <div className="absolute bottom-4 left-1/4 w-20 h-20 bg-white/15 rounded-full" />
-                      <div className="absolute bottom-2 right-2 w-12 h-16 bg-white/20 rounded-2xl" />
-                    </div>
                     
                     {/* Category Badge */}
                     <div className="absolute top-4 left-4">
-                      <span className="px-4 py-1.5 bg-white/20 backdrop-blur-sm text-white text-[10px] uppercase tracking-[0.15em] font-semibold rounded-full">
+                      <span className="px-4 py-1.5 bg-black/55 backdrop-blur-sm text-white text-[10px] uppercase tracking-[0.15em] font-semibold rounded-full">
                         {categoryLabels[event.category]}
                       </span>
                     </div>
@@ -131,7 +106,7 @@ export function EventsSection() {
                     <motion.div
                       initial={{ opacity: 0, x: -10 }}
                       whileHover={{ opacity: 1, x: 0 }}
-                      className="absolute bottom-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="absolute bottom-4 right-4 w-10 h-10 bg-black/55 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                     >
                       <ArrowRight className="w-5 h-5 text-white" />
                     </motion.div>
