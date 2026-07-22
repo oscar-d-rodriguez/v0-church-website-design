@@ -11,6 +11,7 @@ import {
   findEventBySlugOrId,
   type ChurchEvent,
 } from "@/lib/events-data";
+import { EventDetailLoading } from "@/components/events/event-detail-loading";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { Calendar, Clock, MapPin, ArrowLeft, Share2, Check, UserRound, Phone } from "lucide-react";
@@ -26,6 +27,7 @@ export default function EventDetailPage() {
   const params = useParams();
   const { language, t } = useLanguage();
   const [copied, setCopied] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [events, setEvents] = useState<ChurchEvent[]>(fallbackEvents);
   const eventSlug = Array.isArray(params.id) ? params.id[0] : params.id;
   const event = eventSlug ? findEventBySlugOrId(events, eventSlug) : undefined;
@@ -33,16 +35,24 @@ export default function EventDetailPage() {
   useEffect(() => {
     let isMounted = true;
 
-    fetchEvents().then((loadedEvents) => {
+    const loadEvents = async () => {
+      const loadedEvents = await fetchEvents();
       if (isMounted) {
         setEvents(loadedEvents);
+        setLoading(false);
       }
-    });
+    };
+
+    loadEvents();
 
     return () => {
       isMounted = false;
     };
   }, []);
+
+  if (loading) {
+    return <EventDetailLoading language={language} />;
+  }
 
   const handleShare = async () => {
     const eventTitle = language === "en" ? event?.titleEn : event?.titleEs;
