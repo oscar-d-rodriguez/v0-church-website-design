@@ -11,6 +11,7 @@ const ministryData = {
     directorImage: "/images/ministries/image2.jpeg",
     directorEn: "María José Avilés",
     directorEs: "María José Avilés",
+      directorIsFemale: true,
     activities: [
       { en: "Rehearsals and Music Training", es: "Ensayos y Capacitación Musical" },
       { en: "Sunday Worship Services at 2:00 PM", es: "Servicios de Adoración Dominical a las 2:00 PM" },
@@ -29,6 +30,7 @@ const ministryData = {
     directorImage: "/images/ministries/image4.jpeg",
     directorEn: "Stephanie Tapia",
     directorEs: "Stephanie Tapia",
+    directorIsFemale: true,
     activities: [
       { en: "Bible Classes Every Sunday", es: "Clases Bíblicas Todos los Domingos" },
       { en: "Bible Stories & Teachings", es: "Historias y Enseñanzas Bíblicas" },
@@ -47,6 +49,7 @@ const ministryData = {
     directorImage: "/images/ministries/image6.jpeg",
     directorEn: "Pedro Lazo",
     directorEs: "Pedro Lazo",
+    directorIsFemale: false,
     activities: [
       { en: "Men's Camping Trips", es: "Viajes de Campamento para Hombres" },
       { en: "Support for Sons & Young Men", es: "Apoyo para Hijos y Jóvenes Hombres" },
@@ -63,8 +66,9 @@ const ministryData = {
     descriptionEs: "Nuestro Ministerio de Mujeres brinda oportunidades para que las mujeres se conecten, crezcan y sirvan juntas. A través de eventos de comunión, servicio en la cocina y actividades comunitarias, alentamos a las mujeres a profundizar su fe y apoyarse mutuamente.",
     image: "/images/ministries/image9.jpeg",
     directorImage: "/images/ministries/image8.jpeg",
-    directorEn: "Director: María José Avilés",
-    directorEs: "Directora: María José Avilés",
+    directorEn: "María José Avilés",
+    directorEs: "María José Avilés",
+    directorIsFemale: true,
     activities: [
       { en: "Fellowship Events & Gatherings", es: "Eventos de Comunión y Encuentros" },
       { en: "Kitchen Service & Food Ministry", es: "Servicio en la Cocina y Ministerio de Alimentos" },
@@ -83,6 +87,7 @@ const ministryData = {
     directorImage: "/images/ministries/image10.jpeg",
     directorEn: "Sheila Garcia",
     directorEs: "Sheila Garcia",
+    directorIsFemale: true,
     activities: [
       { en: "Temple Visits & Follow-up", es: "Visitas al Templo y Seguimiento" },
       { en: "Evangelism & Outreach", es: "Evangelismo y Alcance" },
@@ -101,6 +106,7 @@ const ministryData = {
     directorImage: "/images/ministries/image12.jpeg",
     directorEn: "Juan Carlos Velazquez",
     directorEs: "Juan Carlos Velazquez",
+    directorIsFemale: false,
     activities: [
       { en: "Morning Devotionals 'Amaneciendo' (Tues & Thurs 5:00-5:30 AM)", es: "Devocionales Matutinos 'Amaneciendo' (Martes y Jueves 5:00-5:30 AM)" },
       { en: "Wednesday Intercessory Prayer Group", es: "Grupo de Oración Intercesora Miércoles" },

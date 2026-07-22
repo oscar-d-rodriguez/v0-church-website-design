@@ -96,14 +96,22 @@ export function EventsSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Link href={`/events/${event.id}`}>
+              <Link href={`/events/${event.slug}`}>
                 <motion.div
                   whileHover={{ y: -8, scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 400, damping: 25 }}
                   className="group bg-background dark:bg-card rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-200 border border-border h-full flex flex-col"
                 >
-                  {/* Image Placeholder with Gradient */}
                   <div className={`relative h-52 bg-gradient-to-br ${categoryColors[event.category]} overflow-hidden`}>
+                    <Image
+                      src={event.imageUrl}
+                      alt={language === "en" ? event.titleEn : event.titleEs}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                    <div className={`absolute inset-0 bg-gradient-to-t ${categoryColors[event.category]} opacity-45`} />
+
                     {/* Collage Pattern */}
                     <div className="absolute inset-0 opacity-20">
                       <div className="absolute top-2 left-2 w-16 h-16 bg-white/20 rounded-2xl" />

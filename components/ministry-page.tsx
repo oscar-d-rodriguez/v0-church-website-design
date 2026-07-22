@@ -21,6 +21,7 @@ interface MinistryData {
   contact: string;
   directorEn?: string;
   directorEs?: string;
+  directorIsFemale?: boolean;
 }
 
 interface MinistryPageProps {
@@ -28,66 +29,112 @@ interface MinistryPageProps {
 }
 
 export function MinistryPage({ ministry }: MinistryPageProps) {
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
 
   const title = language === "en" ? ministry.titleEn : ministry.titleEs;
   const description = language === "en" ? ministry.descriptionEn : ministry.descriptionEs;
-  const schedule = language === "en" ? ministry.schedule.en : ministry.schedule.es;
+  const directorLabel = language === "en"
+    ? "Director"
+    : ministry.directorIsFemale
+      ? "Directora"
+      : "Director";
 
   return (
     <>
       <Navigation />
       <main className="min-h-screen">
-        {/* Hero Section - Extends to top */}
-        <section className="relative h-[60vh] min-h-[500px] overflow-hidden -mt-20">
-          <Image
-            src={ministry.image}
-            alt={title}
-            fill
-            className="object-cover"
-            priority
-          />
-          {/* Darker overlay gradient */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-background" />
-          
-          {/* Animated background elements */}
-          <div className="absolute inset-0 opacity-30">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply filter blur-3xl"></div>
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/10 rounded-full mix-blend-multiply filter blur-3xl"></div>
-          </div>
-          
-          <div className="absolute inset-0 flex items-end pt-20">
-            <div className="container mx-auto px-4 pb-12">
+        <section className="relative -mt-20">
+          <div className="relative h-[50vh] md:h-[60vh] lg:h-[70vh] min-h-[440px] overflow-hidden bg-gradient-to-br from-sky-500/80 to-blue-700">
+            <Image
+              src={ministry.image}
+              alt={title}
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-sky-500/70 to-blue-700/75" />
+
+            <div className="absolute inset-0">
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                <Link 
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 0.2, scale: 1 }}
+                transition={{ duration: 1 }}
+                className="absolute top-10 left-10 w-64 h-64 bg-white/20 rounded-3xl rotate-12"
+              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 0.15, scale: 1 }}
+                transition={{ duration: 1, delay: 0.2 }}
+                className="absolute top-20 right-20 w-48 h-80 bg-white/15 rounded-3xl -rotate-6"
+              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 0.25, scale: 1 }}
+                transition={{ duration: 1, delay: 0.4 }}
+                className="absolute bottom-20 left-1/4 w-96 h-48 bg-white/10 rounded-full"
+              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 0.2, scale: 1 }}
+                transition={{ duration: 1, delay: 0.3 }}
+                className="absolute bottom-10 right-10 w-72 h-72 bg-white/15 rounded-3xl rotate-45"
+              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 0.3, scale: 1 }}
+                transition={{ duration: 1, delay: 0.5 }}
+                className="absolute top-1/3 left-1/2 -translate-x-1/2 w-40 h-40 bg-white/20 rounded-full"
+              />
+            </div>
+
+            <div className="absolute top-0 left-0 right-0 z-20">
+              <div className="container mx-auto px-4 lg:px-40 pt-56 md:pt-52 lg:pt-48">
+                <Link
                   href="/#ministries"
-                  className="inline-flex items-center gap-2 text-white hover:text-amber-300 transition-colors mb-6 group"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/50 px-3 py-2 text-white backdrop-blur-md shadow-lg transition-colors hover:bg-black/65 md:px-4 md:py-2.5 md:hover:text-amber-200 group"
                 >
                   <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                   <span className="text-sm uppercase tracking-widest font-semibold">
-                    {language === "en" ? "Back to Ministries" : "Volver a Ministerios"}
+                    {language === "en" ? "Back to Ministries" : "Volver a los ministerios"}
                   </span>
                 </Link>
-                <motion.h1 
-                  className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-white drop-shadow-lg"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1 }}
-                >
-                  {title}
-                </motion.h1>
-              </motion.div>
+              </div>
             </div>
+          </div>
+
+          <div className="container mx-auto px-4 lg:px-40 relative z-20 -mt-32 md:-mt-40">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="max-w-5xl mx-auto rounded-[2rem] border border-white/60 bg-background/95 backdrop-blur-xl shadow-2xl p-6 md:p-10"
+            >
+              <span className="inline-flex px-4 py-1.5 bg-primary/10 text-primary text-xs md:text-sm font-semibold uppercase tracking-[0.18em] rounded-full">
+                {language === "en" ? "Ministry" : "Ministerio"}
+              </span>
+              <motion.h1
+                className="mt-4 text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-foreground text-balance tracking-tight"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+              >
+                {title}
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="mt-4 text-base md:text-lg leading-relaxed text-foreground/80 text-pretty max-w-3xl"
+              >
+                {description}
+              </motion.p>
+            </motion.div>
           </div>
         </section>
 
         {/* Content Section */}
-        <section className="py-24 bg-gradient-to-b from-background via-background to-muted/30">
-          <div className="container mx-auto px-4">
+        <section className="py-10 md:py-16 bg-gradient-to-b from-background via-background to-muted/30">
+          <div className="container mx-auto px-4 lg:px-40">
             <div className="grid lg:grid-cols-3 gap-12 lg:gap-16">
               {/* Main Content */}
               <motion.div
@@ -101,7 +148,7 @@ export function MinistryPage({ ministry }: MinistryPageProps) {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.6, delay: 0.3 }}
-                  className="mb-12 p-6 bg-gradient-to-r from-primary/5 to-amber-500/5 rounded-2xl border border-primary/20 backdrop-blur"
+                  className="mb-12"
                 >
                   <p className="text-lg leading-relaxed text-foreground/90 font-medium">
                     {description}
@@ -115,7 +162,6 @@ export function MinistryPage({ ministry }: MinistryPageProps) {
                   transition={{ duration: 0.6, delay: 0.3 }}
                 >
                   <div className="flex items-center gap-3 mb-8">
-                    <div className="w-1 h-8 bg-gradient-to-b from-primary to-amber-500 rounded-full"></div>
                     <h2 className="text-3xl font-serif font-bold">
                       {language === "en" ? "What We Do" : "Lo Que Hacemos"}
                     </h2>
@@ -184,7 +230,7 @@ export function MinistryPage({ ministry }: MinistryPageProps) {
                             
                             <Image
                               src={ministry.directorImage}
-                              alt={language === "en" ? ministry.directorEn || "Director" : ministry.directorEs || "Director/a"}
+                              alt={language === "en" ? ministry.directorEn || "Director" : ministry.directorEs || directorLabel}
                               fill
                               className="object-cover rounded-full ring-4 ring-background shadow-xl"
                             />
@@ -193,7 +239,7 @@ export function MinistryPage({ ministry }: MinistryPageProps) {
                       )}
                       <div className="text-center">
                         <h3 className="font-bold text-xl text-foreground">
-                          {language === "en" ? "Director" : "Director/a"}
+                          {directorLabel}
                         </h3>
                         <p className="text-primary font-semibold text-2xl leading-relaxed">
                           {language === "en" ? ministry.directorEn : ministry.directorEs}

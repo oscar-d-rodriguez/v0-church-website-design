@@ -10,13 +10,13 @@ export function Footer() {
   const { t } = useLanguage();
 
   const quickLinks = [
-    { href: "#home", label: t.nav.home },
-    { href: "#about", label: t.nav.about },
-    { href: "#ministries", label: t.nav.ministries },
-    { href: "#youth", label: t.nav.youth },
-    { href: "#events", label: t.nav.events },
-    { href: "#offering", label: t.nav.offering },
-    { href: "#contact", label: t.nav.contact },
+    { href: "/#home", label: t.nav.home },
+    { href: "/#about", label: t.nav.about },
+    { href: "/#ministries", label: t.nav.ministries },
+    { href: "/#youth", label: t.nav.youth },
+    { href: "/#events", label: t.nav.events },
+    { href: "/#offering", label: t.nav.offering },
+    { href: "/#contact", label: t.nav.contact },
   ];
 
   const socialLinks = [
@@ -47,7 +47,21 @@ export function Footer() {
                   src="/images/logo.png"
                   alt={t.churchName}
                   fill
-                  className="object-contain brightness-0 invert"
+                  className="object-contain brightness-0 invert dark:hidden"
+                />
+                <div
+                  className="hidden dark:block absolute inset-0 bg-primary"
+                  style={{
+                    WebkitMaskImage: "url('/images/logo.png')",
+                    maskImage: "url('/images/logo.png')",
+                    WebkitMaskRepeat: "no-repeat",
+                    maskRepeat: "no-repeat",
+                    WebkitMaskPosition: "center",
+                    maskPosition: "center",
+                    WebkitMaskSize: "contain",
+                    maskSize: "contain",
+                  }}
+                  aria-hidden="true"
                 />
               </div>
             </Link>

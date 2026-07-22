@@ -45,7 +45,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${manrope.variable} ${figtree.variable} bg-background`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${manrope.variable} ${figtree.variable} bg-background`}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
       <head>
         <link rel="icon" href="/images/symbol.png" type="image/png" />
       </head>

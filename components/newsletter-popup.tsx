@@ -6,6 +6,7 @@ import { X, Mail, Check, Sparkles } from "lucide-react";
 import { useLanguage } from "@/lib/language-context";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { submitNewsletterSignup } from "@/app/actions/contact";
 
 const STORAGE_KEY = "hosanna-newsletter-dismissed";
 
@@ -45,10 +46,14 @@ export function NewsletterPopup() {
 
     setIsSubmitting(true);
 
-    // Simulate API call - replace with actual newsletter API
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
+    const result = await submitNewsletterSignup({ email });
     setIsSubmitting(false);
+
+    if (!result.success) {
+      setError(result.error || "Something went wrong");
+      return;
+    }
+
     setIsSuccess(true);
     localStorage.setItem(STORAGE_KEY, "subscribed");
 

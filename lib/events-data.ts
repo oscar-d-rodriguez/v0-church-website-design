@@ -1,5 +1,6 @@
 export interface ChurchEvent {
   id: string;
+  slug: string;
   titleEn: string;
   titleEs: string;
   descriptionEn: string;
@@ -9,6 +10,7 @@ export interface ChurchEvent {
   locationEn: string;
   locationEs: string;
   imageUrl: string;
+  includeHosannaMap: boolean;
   category: "worship" | "youth" | "community" | "special";
 }
 
@@ -20,11 +22,13 @@ interface BackendEvent {
   location?: string;
   type?: string;
   image?: string;
+  includeHosannaMap?: boolean;
 }
 
 const fallbackEvents: ChurchEvent[] = [
   {
     id: "sunday-worship-experience",
+    slug: "sunday-worship-experience",
     titleEn: "Sunday Worship Experience",
     titleEs: "Experiencia de Adoracion Dominical",
     descriptionEn: "Join us for a powerful time of worship, fellowship, and the Word.",
@@ -34,10 +38,12 @@ const fallbackEvents: ChurchEvent[] = [
     locationEn: "Main Sanctuary",
     locationEs: "Santuario Principal",
     imageUrl: "/events/sunday-worship.jpg",
+    includeHosannaMap: false,
     category: "worship",
   },
   {
     id: "youth-night-revival",
+    slug: "youth-night-revival",
     titleEn: "Youth Night Revival",
     titleEs: "Noche de Avivamiento Juvenil",
     descriptionEn: "An electrifying night of worship, games, and community for young people.",
@@ -47,10 +53,12 @@ const fallbackEvents: ChurchEvent[] = [
     locationEn: "Youth Center",
     locationEs: "Centro Juvenil",
     imageUrl: "/events/youth-night.jpg",
+    includeHosannaMap: false,
     category: "youth",
   },
   {
     id: "summer-family-picnic",
+    slug: "summer-family-picnic",
     titleEn: "Summer Family Picnic",
     titleEs: "Picnic Familiar de Verano",
     descriptionEn: "Bring your family for food, fun, and fellowship in the sun!",
@@ -60,10 +68,12 @@ const fallbackEvents: ChurchEvent[] = [
     locationEn: "Church Grounds",
     locationEs: "Terrenos de la Iglesia",
     imageUrl: "/events/family-picnic.jpg",
+    includeHosannaMap: false,
     category: "community",
   },
   {
     id: "womens-conference-2026",
+    slug: "womens-conference-2026",
     titleEn: "Women's Conference 2026",
     titleEs: "Conferencia de Mujeres 2026",
     descriptionEn: "A weekend of empowerment, worship, and sisterhood.",
@@ -73,10 +83,12 @@ const fallbackEvents: ChurchEvent[] = [
     locationEn: "Main Sanctuary",
     locationEs: "Santuario Principal",
     imageUrl: "/events/womens-conference.jpg",
+    includeHosannaMap: false,
     category: "special",
   },
   {
     id: "mens-breakfast",
+    slug: "mens-breakfast",
     titleEn: "Men's Brotherhood Breakfast",
     titleEs: "Desayuno de Hermandad de Hombres",
     descriptionEn: "Start your Saturday with fellowship, food, and faith.",
@@ -86,10 +98,12 @@ const fallbackEvents: ChurchEvent[] = [
     locationEn: "Fellowship Hall",
     locationEs: "Salon de Comunion",
     imageUrl: "/events/mens-breakfast.jpg",
+    includeHosannaMap: false,
     category: "community",
   },
   {
     id: "christmas-cantata",
+    slug: "christmas-cantata",
     titleEn: "Christmas Cantata",
     titleEs: "Cantata de Navidad",
     descriptionEn: "Celebrate the birth of Christ with our annual musical celebration.",
@@ -99,11 +113,21 @@ const fallbackEvents: ChurchEvent[] = [
     locationEn: "Main Sanctuary",
     locationEs: "Santuario Principal",
     imageUrl: "/events/christmas-cantata.jpg",
+    includeHosannaMap: false,
     category: "special",
   },
 ];
 
 export const events: ChurchEvent[] = fallbackEvents;
+
+export function slugifyEventTitle(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "") || "event";
+}
 
 function formatDisplayDate(value: string) {
   const parsedDate = new Date(value);
@@ -146,9 +170,12 @@ function mapCategory(type?: string): ChurchEvent["category"] {
 }
 
 export function mapBackendEvent(event: BackendEvent): ChurchEvent {
+  const title = event.title ?? "Untitled Event";
+
   return {
     id: event.id,
-    titleEn: event.title ?? "Untitled Event",
+    slug: slugifyEventTitle(title),
+    titleEn: title,
     titleEs: event.title ?? "Evento sin titulo",
     descriptionEn: event.description ?? "More details coming soon.",
     descriptionEs: event.description ?? "Pronto más detalles.",
@@ -157,8 +184,13 @@ export function mapBackendEvent(event: BackendEvent): ChurchEvent {
     locationEn: event.location ?? "Church Campus",
     locationEs: event.location ?? "Campus de la Iglesia",
     imageUrl: event.image ?? "/images/community.jpg",
+    includeHosannaMap: Boolean(event.includeHosannaMap),
     category: mapCategory(event.type),
   };
+}
+
+export function findEventBySlugOrId(events: ChurchEvent[], value: string) {
+  return events.find((event) => event.slug === value || event.id === value);
 }
 
 function getEventsApiUrl() {
