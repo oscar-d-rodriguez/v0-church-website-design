@@ -98,7 +98,7 @@ export function AboutSection() {
             <motion.div
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              className="col-span-6 md:col-span-5 rounded-3xl overflow-hidden relative"
+              className="col-span-6 md:col-span-5 aspect-[4/5] md:aspect-auto md:h-full rounded-3xl overflow-hidden relative"
             >
               <Image
                 src="/images/prayer.jpg"
@@ -112,7 +112,7 @@ export function AboutSection() {
             <motion.div
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              className="col-span-6 md:col-span-5 rounded-3xl overflow-hidden relative"
+              className="col-span-6 md:col-span-5 aspect-[4/5] md:aspect-auto md:h-full rounded-3xl overflow-hidden relative"
             >
               <Image
                 src="/images/service.jpg"

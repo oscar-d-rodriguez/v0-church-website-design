@@ -93,20 +93,11 @@ export function NewsletterPopup() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", stiffness: 400, damping: 30 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[90%] max-w-lg"
+            className="fixed left-1/2 top-1/2 z-50 w-[92%] max-w-sm -translate-x-1/2 -translate-y-1/2 sm:max-w-lg"
           >
-            <div className="bg-card rounded-3xl overflow-hidden shadow-2xl border border-border relative">
-              {/* Close button */}
-              <button
-                onClick={handleClose}
-                className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-background transition-colors duration-150"
-                aria-label="Close"
-              >
-                <X className="w-4 h-4" />
-              </button>
-
+            <div className="relative max-h-[88vh] overflow-y-auto rounded-3xl border border-border bg-card shadow-2xl">
               {/* Header with gradient background */}
-              <div className="relative h-40 bg-gradient-to-br from-primary via-primary/90 to-accent overflow-hidden">
+              <div className="relative hidden h-40 overflow-hidden bg-gradient-to-br from-primary via-primary/90 to-accent sm:block">
                 {/* Decorative elements */}
                 <div className="absolute inset-0 opacity-20">
                   <div className="absolute top-4 left-8 w-20 h-20 rounded-full bg-white/30 blur-xl" />
@@ -147,7 +138,15 @@ export function NewsletterPopup() {
               </div>
 
               {/* Content */}
-              <div className="p-8 pt-6">
+              <div className="relative p-5 pt-12 sm:p-8 sm:pt-6">
+                <button
+                  onClick={handleClose}
+                  className="absolute right-3 top-3 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-background/90 text-muted-foreground backdrop-blur-sm transition-colors duration-150 hover:bg-background hover:text-foreground sm:right-4 sm:top-4 sm:h-8 sm:w-8"
+                  aria-label="Close"
+                >
+                  <X className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                </button>
+
                 <AnimatePresence mode="wait">
                   {isSuccess ? (
                     <motion.div
@@ -175,21 +174,21 @@ export function NewsletterPopup() {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0, y: -10 }}
                     >
-                      <div className="text-center mb-6">
-                        <h2 className="text-2xl font-bold font-serif mb-1 tracking-tight">{t.newsletter.title}</h2>
-                        <p className="text-primary font-semibold text-xs uppercase tracking-[0.15em] mb-3">{t.newsletter.subtitle}</p>
-                        <p className="text-muted-foreground text-sm leading-relaxed">{t.newsletter.description}</p>
+                      <div className="mb-5 text-center sm:mb-6">
+                        <h2 className="mb-1 text-xl font-bold tracking-tight font-serif sm:text-2xl">{t.newsletter.title}</h2>
+                        <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-primary sm:mb-3 sm:text-xs">{t.newsletter.subtitle}</p>
+                        <p className="text-sm leading-relaxed text-muted-foreground">{t.newsletter.description}</p>
                       </div>
 
                       <form onSubmit={handleSubmit} className="space-y-4">
                         <div className="relative">
-                          <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                          <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground sm:h-5 sm:w-5" />
                           <input
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder={t.newsletter.placeholder}
-                            className="w-full pl-12 pr-4 py-4 rounded-2xl border-2 border-border bg-muted/30 focus:border-primary focus:ring-0 outline-none transition-all duration-150 text-foreground placeholder:text-muted-foreground"
+                            className="w-full rounded-2xl border-2 border-border bg-muted/30 py-3.5 pl-12 pr-4 text-foreground placeholder:text-muted-foreground outline-none transition-all duration-150 focus:border-primary focus:ring-0 sm:py-4"
                             disabled={isSubmitting}
                           />
                         </div>
@@ -207,13 +206,13 @@ export function NewsletterPopup() {
                         <Button
                           type="submit"
                           disabled={isSubmitting}
-                          className="w-full py-6 rounded-2xl text-sm uppercase tracking-widest font-semibold bg-primary text-primary-foreground hover:bg-primary/90"
+                          className="w-full rounded-2xl py-5 text-sm font-semibold uppercase tracking-widest bg-primary text-primary-foreground hover:bg-primary/90 sm:py-6"
                         >
                           {isSubmitting ? (
                             <motion.div
                               animate={{ rotate: 360 }}
                               transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                              className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
+                              className="h-5 w-5 rounded-full border-2 border-white/30 border-t-white"
                             />
                           ) : (
                             t.newsletter.subscribe
@@ -223,7 +222,7 @@ export function NewsletterPopup() {
                         <button
                           type="button"
                           onClick={handleClose}
-                          className="w-full text-sm text-muted-foreground hover:text-foreground transition-colors duration-150"
+                          className="w-full text-xs text-muted-foreground transition-colors duration-150 hover:text-foreground sm:text-sm"
                         >
                           {t.newsletter.noThanks}
                         </button>

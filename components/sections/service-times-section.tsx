@@ -31,9 +31,7 @@ export function ServiceTimesSection() {
   return (
     <section ref={ref} className="relative h-[80vh] min-h-[600px] overflow-hidden flex items-center">
       {/* Parallax Background Image */}
-      <motion.div
-        className="absolute inset-0 z-0 scale-110"
-      >
+      <motion.div className="absolute inset-0 z-0 h-full w-full scale-110">
         <Image
           src="/images/prayer.jpg"
           alt="Service times background"
