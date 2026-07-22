@@ -13,7 +13,7 @@ import {
 } from "@/lib/events-data";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { Calendar, Clock, MapPin, ArrowLeft, Share2, Check } from "lucide-react";
+import { Calendar, Clock, MapPin, ArrowLeft, Share2, Check, UserRound, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 
@@ -95,6 +95,9 @@ export default function EventDetailPage() {
     community: language === "en" ? "Community" : "Comunidad",
     special: language === "en" ? "Special" : "Especial",
   };
+  const hasSingleContact = event.contacts.length === 1;
+  const hasMultipleContacts = event.contacts.length > 1;
+  const singleContact = hasSingleContact ? event.contacts[0] : null;
 
   return (
     <>
@@ -180,7 +183,7 @@ export default function EventDetailPage() {
           className="max-w-5xl mx-auto"
         >
           {/* Event Info Cards */}
-          <div className="grid sm:grid-cols-3 gap-4 mb-8">
+          <div className={hasSingleContact ? "grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8" : "grid sm:grid-cols-3 gap-4 mb-8"}>
             <motion.div
               whileHover={{ y: -4 }}
               className="bg-card border border-border rounded-2xl p-6 text-center"
@@ -207,7 +210,65 @@ export default function EventDetailPage() {
               <p className="text-sm text-muted-foreground mb-1">{t.events.location}</p>
               <p className="font-semibold">{language === "en" ? event.locationEn : event.locationEs}</p>
             </motion.div>
+
+            {singleContact && (
+              <motion.div
+                whileHover={{ y: -4 }}
+                className="bg-card border border-border rounded-2xl p-6 text-center"
+              >
+                <UserRound className="w-8 h-8 text-primary mx-auto mb-3" />
+                <p className="text-sm text-muted-foreground mb-1">
+                  {language === "en" ? "Contact" : "Contacto"}
+                </p>
+                <p className="font-semibold">{singleContact.name}</p>
+                {singleContact.phone && (
+                  <a
+                    href={`tel:${singleContact.phone.replace(/\s+/g, "")}`}
+                    className="mt-1 block text-sm text-muted-foreground hover:text-foreground hover:underline"
+                  >
+                    {singleContact.phone}
+                  </a>
+                )}
+              </motion.div>
+            )}
           </div>
+
+          {hasMultipleContacts && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.45 }}
+              className="mb-8 rounded-2xl border border-border bg-card p-5 md:p-6"
+            >
+              <h2 className="mb-4 text-lg font-semibold">
+                {language === "en" ? "Event Contacts" : "Contactos del evento"}
+              </h2>
+              <div className="grid gap-3 sm:grid-cols-2">
+                {event.contacts.map((contact, index) => (
+                  <div
+                    key={`${contact.name}-${index}`}
+                    className="rounded-xl border border-border/70 bg-background/70 p-4"
+                  >
+                    <div className="flex items-center gap-2 text-foreground">
+                      <UserRound className="h-4 w-4 text-primary" />
+                      <p className="font-medium">{contact.name}</p>
+                    </div>
+                    {contact.phone && (
+                      <div className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
+                        <Phone className="h-4 w-4 text-primary" />
+                        <a
+                          href={`tel:${contact.phone.replace(/\s+/g, "")}`}
+                          className="hover:text-foreground hover:underline"
+                        >
+                          {contact.phone}
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
 
           {event.includeHosannaMap && (
             <motion.div

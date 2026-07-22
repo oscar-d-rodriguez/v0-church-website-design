@@ -11,7 +11,13 @@ export interface ChurchEvent {
   locationEs: string;
   imageUrl: string;
   includeHosannaMap: boolean;
+  contacts: EventContact[];
   category: "worship" | "youth" | "community" | "special";
+}
+
+export interface EventContact {
+  name: string;
+  phone?: string;
 }
 
 interface BackendEvent {
@@ -23,6 +29,7 @@ interface BackendEvent {
   type?: string;
   image?: string;
   includeHosannaMap?: boolean;
+  contacts?: EventContact[];
 }
 
 const fallbackEvents: ChurchEvent[] = [];
@@ -80,6 +87,14 @@ function mapCategory(type?: string): ChurchEvent["category"] {
 
 export function mapBackendEvent(event: BackendEvent): ChurchEvent {
   const title = event.title ?? "Untitled Event";
+  const contacts = Array.isArray(event.contacts)
+    ? event.contacts
+        .filter((contact) => contact?.name?.trim())
+        .map((contact) => ({
+          name: contact.name.trim(),
+          phone: contact.phone?.trim() || undefined,
+        }))
+    : [];
 
   return {
     id: event.id,
@@ -94,6 +109,7 @@ export function mapBackendEvent(event: BackendEvent): ChurchEvent {
     locationEs: event.location ?? "Campus de la Iglesia",
     imageUrl: event.image ?? "/images/community.jpg",
     includeHosannaMap: Boolean(event.includeHosannaMap),
+    contacts,
     category: mapCategory(event.type),
   };
 }

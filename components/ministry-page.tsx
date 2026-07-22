@@ -16,7 +16,7 @@ interface MinistryData {
   descriptionEs: string;
   image: string;
   directorImage?: string;
-  activities: { en: string; es: string }[];
+  activities: { en: string; es: string; zoomUrl?: string }[];
   schedule: { en: string; es: string };
   contact: string;
   directorEn?: string;
@@ -192,6 +192,18 @@ export function MinistryPage({ ministry }: MinistryPageProps) {
                             {language === "en" ? activity.en : activity.es}
                           </span>
                         </div>
+                        {activity.zoomUrl && (
+                          <div className="relative mt-3 pl-9">
+                            <a
+                              href={activity.zoomUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex items-center rounded-lg border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary transition-colors hover:bg-primary/20"
+                            >
+                              Link a Zoom
+                            </a>
+                          </div>
+                        )}
                       </motion.div>
                     ))}
                   </div>

@@ -34,17 +34,18 @@ export function EventsSection() {
   };
 
   return (
-    <section id="events" className="py-32 relative overflow-hidden bg-foreground dark:bg-card">
+    <section id="events" className="py-32 relative overflow-hidden bg-slate-950">
       {/* Background Image with fixed position effect */}
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/community.jpg"
           alt="Community background"
           fill
-          className="object-cover opacity-5"
+          className="object-cover opacity-35"
           sizes="100vw"
           loading="eager"
         />
+        <div className="absolute inset-0 bg-gradient-to-b from-sky-950/65 via-blue-900/55 to-slate-950/70" />
       </div>
 
       {/* Decorative Elements */}
@@ -65,7 +66,7 @@ export function EventsSection() {
           <span className="text-primary font-semibold text-sm uppercase tracking-[0.4em]">
             {t.events.subtitle}
           </span>
-          <h2 className="uppercase text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 mb-6 text-balance tracking-wider text-background dark:text-foreground">
+          <h2 className="uppercase text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 mb-6 text-balance tracking-wider text-white">
             {t.events.title}
           </h2>
         </motion.div>
@@ -84,7 +85,7 @@ export function EventsSection() {
                 <motion.div
                   whileHover={{ y: -8, scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                  className="group bg-background dark:bg-card rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-200 border border-border h-full flex flex-col"
+                  className="group bg-white dark:bg-slate-900/85 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-200 border border-border dark:border-white/10 h-full flex flex-col"
                 >
                   <div className="relative h-52 overflow-hidden bg-muted">
                     <Image
@@ -114,15 +115,15 @@ export function EventsSection() {
 
                   {/* Content */}
                   <div className="p-8 flex-1 flex flex-col">
-                    <h3 className="text-xl font-bold mb-3 font-serif tracking-tight group-hover:text-primary transition-colors line-clamp-2">
+                    <h3 className="text-xl font-bold mb-3 font-serif tracking-tight text-slate-900 dark:text-white group-hover:text-primary dark:group-hover:text-sky-200 transition-colors line-clamp-2">
                       {language === "en" ? event.titleEn : event.titleEs}
                     </h3>
                     
-                    <p className="text-muted-foreground text-sm mb-6 line-clamp-2 leading-relaxed">
+                    <p className="text-slate-600 dark:text-slate-300 text-sm mb-6 line-clamp-2 leading-relaxed">
                       {language === "en" ? event.descriptionEn : event.descriptionEs}
                     </p>
 
-                    <div className="mt-auto space-y-2.5 text-sm text-muted-foreground">
+                    <div className="mt-auto space-y-2.5 text-sm text-slate-600 dark:text-slate-300">
                       <div className="flex items-center gap-3">
                         <Calendar className="w-4 h-4 text-primary/60" />
                         <span>{event.date}</span>

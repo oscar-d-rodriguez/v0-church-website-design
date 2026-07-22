@@ -19,10 +19,10 @@ export function ServiceTimesSection() {
     {
       day: language === "en" ? "Sunday" : "Domingo",
       time: "2:00 PM",
-      type: language === "en" ? "Service" : "Servicio",
+      type: language === "en" ? "Service" : "Servicio de Gloria",
     },
     {
-      day: language === "en" ? "Thursday" : "Jueves",
+      day: language === "en" ? "Tuesday" : "Martes",
       time: "7:00 PM",
       type: language === "en" ? "Prayer" : "Oración",
     },

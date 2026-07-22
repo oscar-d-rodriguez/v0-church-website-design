@@ -54,7 +54,7 @@ export const translations = {
       worship: "Youth Worship Nights",
       retreats: "Annual Retreats",
       community: "Community Service Projects",
-      join: "Join Our Youth Group",
+      join: "Follow Us",
     },
     events: {
       title: "Upcoming Events",
@@ -182,7 +182,7 @@ export const translations = {
       worship: "Noches de Alabanza",
       retreats: "Campamentos y Eventos",
       community: "Servicio Comunitario",
-      join: "Únete",
+      join: "Síguenos",
     },
     events: {
       title: "Próximos Eventos",

@@ -44,7 +44,7 @@ export function ContactSection() {
     },
     {
       day: language === "en" ? "Sunday" : "Domingo",
-      time: language === "en" ? "2:00 PM - Service" : "2:00 PM - Servicio",
+      time: language === "en" ? "2:00 PM - Service" : "2:00 PM - Servicio de Gloria",
     },
     {
       day: language === "en" ? "Tuesday" : "Martes",
