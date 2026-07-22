@@ -99,7 +99,7 @@ const ministryData = {
   },
   prayer: {
     titleEn: "Prayer Ministry",
-    titleEs: "Ministerio de Interseción",
+    titleEs: "Ministerio de Intercesión",
     descriptionEn: "Our Prayer Ministry is the heartbeat of our church. We believe in the power of prayer and are committed to interceding for our church, community, and world. Join us for morning devotionals, intercessory prayer groups, and Wednesday night prayer services.",
     descriptionEs: "Nuestro Ministerio de Oración es el corazón de nuestra iglesia. Creemos en el poder de la oración y estamos comprometidos a interceder por nuestra iglesia, comunidad y mundo. Únete a nosotros para devocionales matutinos, grupos de oración intercesora y servicios de oración.",
     image: "/images/ministries/image13.jpeg",

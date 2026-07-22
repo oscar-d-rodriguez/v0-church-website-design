@@ -27,8 +27,8 @@ export function EventsSection() {
   }, []);
 
   const categoryLabels = {
-    worship: language === "en" ? "Worship" : "Adoracion",
-    youth: language === "en" ? "Youth" : "Jovenes",
+    worship: language === "en" ? "Worship" : "Adoración",
+    youth: language === "en" ? "Youth" : "Jóvenes",
     community: language === "en" ? "Community" : "Comunidad",
     special: language === "en" ? "Special" : "Especial",
   };

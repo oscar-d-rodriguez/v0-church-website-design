@@ -14,7 +14,7 @@ export function ServiceTimesSection() {
     {
       day: language === "en" ? "Friday" : "Viernes",
       time: "7:00 PM",
-      type: language === "en" ? "Bible Study" : "Estudio Biblico",
+      type: language === "en" ? "Bible Study" : "Estudio Bíblico",
     },
     {
       day: language === "en" ? "Sunday" : "Domingo",
@@ -24,7 +24,7 @@ export function ServiceTimesSection() {
     {
       day: language === "en" ? "Thursday" : "Jueves",
       time: "7:00 PM",
-      type: language === "en" ? "Prayer" : "Oracion",
+      type: language === "en" ? "Prayer" : "Oración",
     },
   ];
 
@@ -58,7 +58,7 @@ export function ServiceTimesSection() {
             transition={{ duration: 0.6 }}
           >
             <span className="text-primary font-semibold text-sm uppercase tracking-[0.4em]">
-              {language === "en" ? "Join Us" : "Unete a Nosotros"}
+              {language === "en" ? "Join Us" : "Únete a Nosotros"}
             </span>
             <h2 className="uppercase text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 mb-12 text-white tracking-wider">
               {language === "en" ? "Service Times" : "Horarios de Servicio"}

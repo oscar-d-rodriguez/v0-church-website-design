@@ -40,7 +40,7 @@ export function ContactSection() {
   const serviceHours = [
     {
       day: language === "en" ? "Friday" : "Viernes",
-      time: language === "en" ? "7:00 PM - Bible Study" : "7:00 PM - Estudio Biblico",
+      time: language === "en" ? "7:00 PM - Bible Study" : "7:00 PM - Estudio Bíblico",
     },
     {
       day: language === "en" ? "Sunday" : "Domingo",
@@ -48,7 +48,7 @@ export function ContactSection() {
     },
     {
       day: language === "en" ? "Tuesday" : "Martes",
-      time: language === "en" ? "7:00 PM - Prayer" : "7:00 PM - Oracion",
+      time: language === "en" ? "7:00 PM - Prayer" : "7:00 PM - Oración",
     },
   ];
 
