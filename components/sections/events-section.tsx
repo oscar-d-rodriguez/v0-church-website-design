@@ -27,11 +27,19 @@ export function EventsSection() {
   }, []);
 
   const categoryLabels = {
-    worship: language === "en" ? "Worship" : "Adoración",
-    youth: language === "en" ? "Youth" : "Jóvenes",
-    community: language === "en" ? "Community" : "Comunidad",
-    special: language === "en" ? "Special" : "Especial",
+    service: language === "en" ? "Special Service" : "Servicio Especial",
+    womens: language === "en" ? "Women" : "Damas",
+    mens: language === "en" ? "Men" : "Varones",
+    fundraiser: language === "en" ? "Fundraiser" : "Venta a Beneficio",
+    event: language === "en" ? "Special Event" : "Evento Especial",
+    outreach: language === "en" ? "Outreach" : "Evangelismo",
+    meeting: language === "en" ? "Leaders' Meeting" : "Reunión de Líderes",
   };
+
+  const getEventDate = (event: ChurchEvent) =>
+    language === "en" ? event.dateEn : event.dateEs;
+  const getEventTime = (event: ChurchEvent) =>
+    language === "en" ? event.timeEn : event.timeEs;
 
   return (
     <section id="events" className="py-32 relative overflow-hidden bg-slate-950">
@@ -101,6 +109,11 @@ export function EventsSection() {
                       <span className="px-4 py-1.5 bg-black/55 backdrop-blur-sm text-white text-[10px] uppercase tracking-[0.15em] font-semibold rounded-full">
                         {categoryLabels[event.category]}
                       </span>
+                      {event.isMultiDay && (
+                        <span className="ml-2 inline-block rounded-full bg-primary/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-white">
+                          {language === "en" ? "Multi-day" : "Varios días"}
+                        </span>
+                      )}
                     </div>
 
                     {/* Hover Arrow */}
@@ -126,11 +139,11 @@ export function EventsSection() {
                     <div className="mt-auto space-y-2.5 text-sm text-slate-600 dark:text-slate-300">
                       <div className="flex items-center gap-3">
                         <Calendar className="w-4 h-4 text-primary/60" />
-                        <span>{event.date}</span>
+                        <span>{getEventDate(event)}</span>
                       </div>
                       <div className="flex items-center gap-3">
                         <Clock className="w-4 h-4 text-primary/60" />
-                        <span>{event.time}</span>
+                        <span>{getEventTime(event)}</span>
                       </div>
                       <div className="flex items-center gap-3">
                         <MapPin className="w-4 h-4 text-primary/60" />

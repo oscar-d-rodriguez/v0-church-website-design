@@ -14,7 +14,7 @@ import {
 import { EventDetailLoading } from "@/components/events/event-detail-loading";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { Calendar, Clock, MapPin, ArrowLeft, Share2, Check, UserRound, Phone } from "lucide-react";
+import { Calendar, CalendarDays, Clock, MapPin, ArrowLeft, Share2, Check, UserRound, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 
@@ -100,14 +100,25 @@ export default function EventDetailPage() {
   }
 
   const categoryLabels = {
-    worship: language === "en" ? "Worship" : "Adoración",
-    youth: language === "en" ? "Youth" : "Jóvenes",
-    community: language === "en" ? "Community" : "Comunidad",
-    special: language === "en" ? "Special" : "Especial",
+    service: language === "en" ? "Special Service" : "Servicio Especial",
+    womens: language === "en" ? "Women" : "Damas",
+    mens: language === "en" ? "Men" : "Varones",
+    fundraiser: language === "en" ? "Fundraiser" : "Venta a Beneficio",
+    event: language === "en" ? "Special Event" : "Evento Especial",
+    outreach: language === "en" ? "Outreach" : "Evangelismo",
+    meeting: language === "en" ? "Leaders' Meeting" : "Reunión de Líderes",
   };
   const hasSingleContact = event.contacts.length === 1;
   const hasMultipleContacts = event.contacts.length > 1;
   const singleContact = hasSingleContact ? event.contacts[0] : null;
+  const eventDate = language === "en" ? event.dateEn : event.dateEs;
+  const eventTime = language === "en" ? event.timeEn : event.timeEs;
+  const dateLabel = event.isMultiDay
+    ? (language === "en" ? "Dates" : "Fechas")
+    : t.events.date;
+  const timeLabel = event.isMultiDay
+    ? (language === "en" ? "Schedule" : "Horario")
+    : t.events.time;
 
   return (
     <>
@@ -174,6 +185,12 @@ export default function EventDetailPage() {
                 <span className="inline-flex px-4 py-1.5 bg-primary/10 text-primary text-xs md:text-sm font-semibold uppercase tracking-[0.18em] rounded-full">
                   {categoryLabels[event.category]}
                 </span>
+                {event.isMultiDay && (
+                  <span className="ml-3 inline-flex items-center gap-1 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
+                    <CalendarDays className="h-3.5 w-3.5" />
+                    {language === "en" ? "Multi-day" : "Varios días"}
+                  </span>
+                )}
                 <h1 className="mt-4 text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-foreground text-balance tracking-tight">
                   {language === "en" ? event.titleEn : event.titleEs}
                 </h1>
@@ -199,8 +216,8 @@ export default function EventDetailPage() {
               className="bg-card border border-border rounded-2xl p-6 text-center"
             >
               <Calendar className="w-8 h-8 text-primary mx-auto mb-3" />
-              <p className="text-sm text-muted-foreground mb-1">{t.events.date}</p>
-              <p className="font-semibold">{event.date}</p>
+              <p className="text-sm text-muted-foreground mb-1">{dateLabel}</p>
+              <p className="font-semibold">{eventDate}</p>
             </motion.div>
 
             <motion.div
@@ -208,8 +225,8 @@ export default function EventDetailPage() {
               className="bg-card border border-border rounded-2xl p-6 text-center"
             >
               <Clock className="w-8 h-8 text-primary mx-auto mb-3" />
-              <p className="text-sm text-muted-foreground mb-1">{t.events.time}</p>
-              <p className="font-semibold">{event.time}</p>
+              <p className="text-sm text-muted-foreground mb-1">{timeLabel}</p>
+              <p className="font-semibold">{eventTime}</p>
             </motion.div>
 
             <motion.div
