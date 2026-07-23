@@ -29,7 +29,7 @@ export function ServiceTimesSection() {
   ];
 
   return (
-    <section ref={ref} className="relative h-[80vh] min-h-[600px] overflow-hidden flex items-center">
+    <section ref={ref} className="relative flex items-start overflow-hidden py-20 sm:py-24 md:h-[80vh] md:min-h-[600px] md:items-center md:py-0">
       {/* Parallax Background Image */}
       <motion.div className="absolute inset-0 z-0 h-full w-full scale-110">
         <Image
@@ -44,9 +44,7 @@ export function ServiceTimesSection() {
       </motion.div>
 
       {/* Content */}
-      <motion.div
-        className="container mx-auto px-4 relative z-10"
-      >
+      <motion.div className="relative z-10 container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
           {/* Section Header */}
           <motion.div
@@ -55,16 +53,16 @@ export function ServiceTimesSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-primary font-semibold text-sm uppercase tracking-[0.4em]">
+            <span className="text-primary font-semibold text-xs uppercase tracking-[0.25em] sm:text-sm sm:tracking-[0.4em]">
               {language === "en" ? "Join Us" : "Únete a Nosotros"}
             </span>
-            <h2 className="uppercase text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 mb-12 text-white tracking-wider">
+            <h2 className="mt-5 mb-10 font-serif text-3xl font-bold uppercase leading-tight tracking-wide text-white sm:mt-6 sm:mb-12 sm:text-4xl sm:tracking-wider md:text-5xl lg:text-6xl">
               {language === "en" ? "Service Times" : "Horarios de Servicio"}
             </h2>
           </motion.div>
 
           {/* Service Times Grid */}
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
+          <div className="mb-10 grid gap-5 sm:mb-12 md:grid-cols-3 md:gap-6">
             {services.map((service, index) => (
               <motion.div
                 key={service.day}
@@ -72,11 +70,11 @@ export function ServiceTimesSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20"
+                className="rounded-3xl border border-white/20 bg-white/10 p-6 backdrop-blur-sm sm:p-8"
               >
                 <div className="flex items-center justify-center gap-2 mb-4">
                   <Clock className="w-5 h-5 text-primary" />
-                  <span className="text-3xl font-bold text-white">{service.time}</span>
+                  <span className="text-2xl font-bold text-white sm:text-3xl">{service.time}</span>
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2 font-serif">{service.day}</h3>
                 <p className="text-white/70 text-sm uppercase tracking-wider">{service.type}</p>
@@ -93,7 +91,7 @@ export function ServiceTimesSection() {
             className="flex items-center justify-center gap-3 text-white/80"
           >
             <MapPin className="w-5 h-5 text-primary" />
-            <span className="text-lg">15220 Main St, Bellevue, WA 98007</span>
+            <span className="text-sm sm:text-lg">15220 Main St, Bellevue, WA 98007</span>
           </motion.div>
         </div>
       </motion.div>
