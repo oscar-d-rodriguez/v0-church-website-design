@@ -10,13 +10,13 @@ export function Footer() {
   const { t } = useLanguage();
 
   const quickLinks = [
-    { href: "/#home", label: t.nav.home },
-    { href: "/#about", label: t.nav.about },
-    { href: "/#ministries", label: t.nav.ministries },
-    { href: "/#youth", label: t.nav.youth },
-    { href: "/#events", label: t.nav.events },
-    { href: "/#offering", label: t.nav.offering },
-    { href: "/#contact", label: t.nav.contact },
+    { href: "#home", label: t.nav.home },
+    { href: "#about", label: t.nav.about },
+    { href: "#ministries", label: t.nav.ministries },
+    { href: "#youth", label: t.nav.youth },
+    { href: "#events", label: t.nav.events },
+    { href: "#offering", label: t.nav.offering },
+    { href: "#contact", label: t.nav.contact },
   ];
 
   const socialLinks = [

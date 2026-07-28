@@ -21,13 +21,13 @@ export function Navigation() {
   }, []);
 
   const navItems = [
-    { href: "/#home", label: t.nav.home },
-    { href: "/#about", label: t.nav.about },
-    { href: "/#ministries", label: t.nav.ministries },
-    { href: "/#youth", label: t.nav.youth },
-    { href: "/#events", label: t.nav.events },
-    { href: "/#contact", label: t.nav.contact },
-    { href: "/#offering", label: t.nav.offering },
+    { href: "#home", label: t.nav.home },
+    { href: "#about", label: t.nav.about },
+    { href: "#ministries", label: t.nav.ministries },
+    { href: "#youth", label: t.nav.youth },
+    { href: "#events", label: t.nav.events },
+    { href: "#contact", label: t.nav.contact },
+    { href: "#offering", label: t.nav.offering },
   ];
 
   return (
@@ -57,7 +57,7 @@ export function Navigation() {
         <nav className="w-full px-6 lg:px-12 py-3">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link href="/#home" className="flex items-center gap-3 group">
+            <Link href="#home" className="flex items-center gap-3 group">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
