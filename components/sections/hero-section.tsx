@@ -1,11 +1,9 @@
 "use client";
 
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/lib/language-context";
 import { Button } from "@/components/ui/button";
-import { Play } from "lucide-react";
 
 const heroImages = [
   "/images/hero-0.jpg",
@@ -17,149 +15,97 @@ const heroImages = [
 export function HeroSection() {
   const { t } = useLanguage();
   const ref = useRef<HTMLElement>(null);
-  const reduceMotion = useReducedMotion();
   const [currentImage, setCurrentImage] = useState(0);
 
-  // Auto-rotate images every 5 seconds
   useEffect(() => {
-    if (reduceMotion) return;
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mediaQuery.matches) return;
 
-    const interval = setInterval(() => {
+    const interval = window.setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % heroImages.length);
     }, 7000);
-    return () => clearInterval(interval);
-  }, [reduceMotion]);
+
+    return () => window.clearInterval(interval);
+  }, []);
 
   return (
     <section
       id="home"
       ref={ref}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-950"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-950"
     >
-      {/* Rotating Background Images with Parallax - Darker overlay */}
-      <motion.div
-        className="absolute inset-0 z-0"
-      >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentImage}
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.7, ease: "easeInOut" }}
-            className="absolute inset-0"
-          >
-            <Image
-              src={heroImages[currentImage]}
-              alt="Hosanna Church Community"
-              fill
-              className="object-cover parallax-image"
-              priority
-              sizes="100vw"
-            />
-            {/* Darker overlay for better text contrast */}
-            <div className="absolute inset-0 bg-black/60" />
-          </motion.div>
-        </AnimatePresence>
+      <div className="absolute inset-0 z-0">
+        <div key={currentImage} className="absolute inset-0 transition-opacity duration-700 ease-in-out">
+          <Image
+            src={heroImages[currentImage]}
+            alt="Hosanna Church Community"
+            fill
+            className="object-cover parallax-image"
+            priority
+            quality={60}
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-black/60" />
+        </div>
 
-        {/* Image Indicators - moved below scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+        <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 gap-1">
           {heroImages.map((_, index) => (
             <button
               key={index}
+              type="button"
               onClick={() => setCurrentImage(index)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                index === currentImage 
-                  ? "bg-white w-8" 
-                  : "bg-white/30 hover:bg-white/50"
+              aria-current={index === currentImage ? "true" : undefined}
+              className={`flex h-8 w-8 items-center justify-center rounded-full transition-all duration-300 ${
+                index === currentImage ? "bg-white/20" : "hover:bg-white/15"
               }`}
               aria-label={`Go to slide ${index + 1}`}
-            />
+            >
+              <span
+                className={`h-3.5 w-3.5 rounded-full border border-white/40 transition-all duration-300 ${
+                  index === currentImage ? "scale-110 bg-white" : "bg-white/30"
+                }`}
+              />
+            </button>
           ))}
         </div>
-      </motion.div>
+      </div>
 
-      {/* Content */}
-      <motion.div
-        className="relative z-10 container mx-auto px-4 text-center pb-32"
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto"
-        >
-          {/* Logo Symbol */}
-          <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1, delay: 0.2, type: "spring" }}
-            className="w-20 h-20 mx-auto mb-8 relative"
-          >
+      <div className="relative z-10 container mx-auto px-4 pb-32 text-center">
+        <div className="mx-auto max-w-4xl">
+          <div className="relative mx-auto mb-8 h-16 w-16 md:h-20 md:w-20">
             <Image
               src="/images/symbol.png"
               alt={t.churchName}
               fill
               loading="eager"
+              quality={80}
+              sizes="80px"
               className="object-contain brightness-0 invert"
             />
-          </motion.div>
+          </div>
 
-          {/* Main Heading - White text */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30, scale: 0.92, rotateX: 20 }}
-            animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
-            transition={{
-              duration: 0.9,
-              delay: 0.4,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="uppercase text-5xl md:text-7xl lg:text-8xl font-serif font-bold mb-6 text-balance tracking-wider"
+          <h1
+            className="mb-6 font-serif text-5xl font-bold uppercase tracking-wider text-balance md:text-7xl lg:text-8xl"
+            style={{ textShadow: "0 2px 12px rgba(0,0,0,0.45)" }}
           >
-            <motion.span
-              initial={{ opacity: 0, y: 10, skewY: 4 }}
-              animate={{ opacity: 1, y: 0, skewY: 0 }}
-              transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-              className="text-white"
-            >
-              {t.hero.welcome}
-            </motion.span>
-          </motion.h1>
+            <span className="text-white">{t.hero.welcome}</span>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="uppercase text-lg md:text-3xl text-white/80 mb-12 max-w-2xl mx-auto text-pretty leading-relaxed tracking-[.75rem]"
-          >
+          <p className="mx-auto mb-12 max-w-2xl text-lg uppercase leading-relaxed tracking-[.75rem] text-white text-pretty md:text-3xl">
             {t.hero.subtitle}
-          </motion.p>
+          </p>
 
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-          >
+          <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <Button
               size="lg"
-              className="text-sm uppercase tracking-widest font-semibold px-10 py-6 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all"
+              className="rounded-full bg-primary px-10 py-6 text-sm font-semibold uppercase tracking-widest text-primary-foreground shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl"
               asChild
             >
               <a href="#contact">{t.hero.cta}</a>
             </Button>
-            {/* <Button
-              variant="outline"
-              size="lg"
-              className="text-sm uppercase tracking-widest font-semibold px-10 py-6 rounded-full border-2 border-white bg-black/50 text-white hover:bg-white hover:text-black transition-all group"
-            >
-              <Play className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
-              {t.hero.watchLive}
-            </Button> */}
-          </motion.div>
-        </motion.div>
-      </motion.div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

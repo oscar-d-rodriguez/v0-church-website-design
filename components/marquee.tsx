@@ -1,31 +1,32 @@
 "use client";
 
-import { motion } from "framer-motion";
+import type { CSSProperties } from "react";
+import { useLanguage } from "@/lib/language-context";
 
 interface MarqueeProps {
-  items: string[];
+  items?: string[];
   speed?: number;
   direction?: "left" | "right";
 }
 
 export function Marquee({ items, speed = 30, direction = "left" }: MarqueeProps) {
-  const duplicatedItems = [...items, ...items, ...items, ...items];
+  const { language } = useLanguage();
+  const fallbackItems =
+    language === "en"
+      ? ["WORSHIP", "COMMUNITY", "FAITH", "LOVE", "SERVICE", "HOPE", "PRAYER", "HEALING"]
+      : ["ADORACIÓN", "COMUNIDAD", "FE", "AMOR", "SERVICIO", "ESPERANZA", "ORACIÓN", "SANIDAD"];
+
+  const finalItems = items && items.length > 0 ? items : fallbackItems;
+  const duplicatedItems = [...finalItems, ...finalItems, ...finalItems, ...finalItems];
+  const marqueeStyle = {
+    "--marquee-duration": `${speed}s`,
+  } as CSSProperties;
 
   return (
     <div className="relative overflow-hidden py-8 bg-muted/30 border-y border-border">
-      <motion.div
-        animate={{
-          x: direction === "left" ? ["0%", "-50%"] : ["-50%", "0%"],
-        }}
-        transition={{
-          x: {
-            repeat: Infinity,
-            repeatType: "loop",
-            duration: speed,
-            ease: "linear",
-          },
-        }}
-        className="flex gap-16 whitespace-nowrap"
+      <div
+        style={marqueeStyle}
+        className={`marquee-track ${direction === "left" ? "marquee-track--left" : "marquee-track--right"} flex gap-16 whitespace-nowrap`}
       >
         {duplicatedItems.map((item, index) => (
           <div
@@ -36,10 +37,10 @@ export function Marquee({ items, speed = 30, direction = "left" }: MarqueeProps)
             <span className={ `${index % 2 === 0 ? "text-foreground" : "stroke-text text-foreground"} tracking-[.25rem]`}>
               {item}
             </span>
-            <span className="text-primary/40">+</span>
+            <span className="text-primary/80">•</span>
           </div>
         ))}
-      </motion.div>
+      </div>
     </div>
   );
 }

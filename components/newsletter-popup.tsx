@@ -182,9 +182,15 @@ export function NewsletterPopup() {
 
                       <form onSubmit={handleSubmit} className="space-y-4">
                         <div className="relative">
+                          <label htmlFor="newsletter-email" className="sr-only">
+                            {t.newsletter.placeholder}
+                          </label>
                           <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground sm:h-5 sm:w-5" />
                           <input
+                            id="newsletter-email"
+                            name="email"
                             type="email"
+                            autoComplete="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder={t.newsletter.placeholder}

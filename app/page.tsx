@@ -1,5 +1,3 @@
-"use client";
-
 import { Navigation } from "@/components/navigation";
 import { HeroSection } from "@/components/sections/hero-section";
 import { AboutSection } from "@/components/sections/about-section";
@@ -11,26 +9,19 @@ import { ServiceTimesSection } from "@/components/sections/service-times-section
 import { ContactSection } from "@/components/sections/contact-section";
 import { Footer } from "@/components/footer";
 import { Marquee } from "@/components/marquee";
-import { NewsletterPopup } from "@/components/newsletter-popup";
-import { useLanguage } from "@/lib/language-context";
+import { NewsletterPopupLoader } from "@/components/newsletter-popup-loader";
 
 export default function HomePage() {
-  const { language } = useLanguage();
-
-  const marqueeItems = language === "en" 
-    ? ["WORSHIP", "COMMUNITY", "FAITH", "LOVE", "SERVICE", "HOPE", "PRAYER", "HEALING"]
-    : ["ADORACIÓN", "COMUNIDAD", "FE", "AMOR", "SERVICIO", "ESPERANZA", "ORACIÓN", "SANIDAD"];
-
   return (
     <main className="min-h-screen">
-      <NewsletterPopup />
+      <NewsletterPopupLoader />
       <Navigation />
       <HeroSection />
-      <Marquee items={marqueeItems} speed={25} />
+      <Marquee speed={25} />
       <AboutSection />
       <MinistriesSection />
       <YouthSection />
-      <Marquee items={marqueeItems} speed={30} direction="right" />
+      <Marquee speed={30} direction="right" />
       <EventsSection />
       <OfferingSection />
       <ServiceTimesSection />

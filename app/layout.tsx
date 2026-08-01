@@ -1,22 +1,11 @@
 import type { Metadata, Viewport } from 'next'
-import { Manrope, Figtree } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { ThemeProvider } from '@/components/theme-provider'
 import { LanguageProvider } from '@/lib/language-context'
 import './globals.css'
 
-const manrope = Manrope({ 
-  subsets: ['latin'],
-  variable: '--font-manrope',
-  display: 'swap',
-})
-
-const figtree = Figtree({ 
-  subsets: ['latin'],
-  variable: '--font-figtree',
-  display: 'swap',
-  weight: ['400', '500', '600', '700', '800', '900'],
-})
+const isVercelProduction =
+  process.env.NODE_ENV === 'production' && process.env.VERCEL === '1'
 
 export const metadata: Metadata = {
   title: 'Hosanna Church | Iglesia Hosanna - A Community of Faith, Hope & Love',
@@ -47,7 +36,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${manrope.variable} ${figtree.variable} bg-background`}
+      className="bg-background"
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
@@ -65,7 +54,7 @@ export default function RootLayout({
             {children}
           </LanguageProvider>
         </ThemeProvider>
-        {process.env.NODE_ENV === 'production' && <Analytics />}
+        {isVercelProduction && <Analytics />}
       </body>
     </html>
   )

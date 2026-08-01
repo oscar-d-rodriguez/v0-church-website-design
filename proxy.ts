@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 const TRACKING_PARAMS = ['fbclid']
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const url = request.nextUrl.clone()
   let hasTrackingParam = false
 

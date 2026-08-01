@@ -33,7 +33,7 @@ export function Navigation() {
   return (
     <>
       {/* Mobile Offering Banner - Always visible on top */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-[60] pt-2 px-4 pb-2 bg-[#1084CD]">
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-[60] pt-2 px-4 pb-2 bg-[#0d74b5]">
         <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=iglesiahosannabellevue@gmail.com&item_name=Donation&currency_code=USD" target="_blank" rel="noopener noreferrer" className="block">
           <motion.div
             whileTap={{ scale: 0.98 }}
@@ -48,7 +48,7 @@ export function Navigation() {
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-xl lg:top-0 pt-0 lg:pt-0 bg-[#1084CD] shadow-lg"
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-xl lg:top-0 pt-0 lg:pt-0 bg-[#0d74b5] shadow-lg"
         style={{ top: "0" }}
       >
         {/* Add padding top for mobile to account for offering banner */}
@@ -98,7 +98,7 @@ export function Navigation() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="px-4 py-2 text-sm font-semibold uppercase tracking-wider text-white/80 hover:text-white transition-colors relative group"
+                    className="px-4 py-2 text-sm font-bold uppercase tracking-wider text-white hover:text-white transition-colors relative group"
                   >
                     {item.label}
                     <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-3/4" />
@@ -115,7 +115,9 @@ export function Navigation() {
                   variant="ghost"
                   size="sm"
                   onClick={() => setLangOpen(!langOpen)}
-                  className="flex items-center gap-1 text-white hover:text-white hover:bg-white/10"
+                  aria-expanded={langOpen}
+                  aria-haspopup="menu"
+                  className="flex min-h-11 min-w-11 items-center gap-1 text-white hover:text-white hover:bg-white/10"
                 >
                   <Globe className="w-4 h-4" />
                   <span className="uppercase text-xs">{language}</span>
@@ -162,7 +164,7 @@ export function Navigation() {
                   variant="ghost"
                   size="icon"
                   onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                  className="relative text-white hover:text-white hover:bg-white/10"
+                  className="relative min-h-11 min-w-11 text-white hover:text-white hover:bg-white/10"
                 >
                   <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                   <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
@@ -174,8 +176,10 @@ export function Navigation() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="lg:hidden text-white hover:text-white hover:bg-white/10"
+                className="lg:hidden min-h-11 min-w-11 text-white hover:text-white hover:bg-white/10"
                 onClick={() => setIsOpen(!isOpen)}
+                aria-expanded={isOpen}
+                aria-controls="mobile-navigation"
               >
                 {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </Button>
@@ -186,6 +190,7 @@ export function Navigation() {
           <AnimatePresence>
             {isOpen && (
               <motion.div
+                id="mobile-navigation"
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
@@ -220,7 +225,7 @@ export function Navigation() {
                           <Link
                             href={item.href}
                             onClick={() => setIsOpen(false)}
-                            className="block px-4 py-3 text-white hover:bg-white/10 rounded-lg transition-colors"
+                            className="block px-4 py-3 text-[15px] font-bold text-white hover:bg-white/10 rounded-lg transition-colors"
                           >
                             {item.label}
                           </Link>

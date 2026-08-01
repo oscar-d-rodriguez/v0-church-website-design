@@ -197,11 +197,14 @@ export function ContactSection() {
               {/* Form Fields */}
               <div className="space-y-5">
                 <div>
-                  <label className="block text-xs uppercase tracking-[0.15em] font-semibold mb-3">
+                  <label htmlFor="contact-name" className="block text-xs uppercase tracking-[0.15em] font-semibold mb-3">
                     {t.contact.form.name}
                   </label>
                   <input
+                    id="contact-name"
+                    name="name"
                     type="text"
+                    autoComplete="name"
                     value={formState.name}
                     onChange={(e) => setFormState({ ...formState, name: e.target.value })}
                     className="w-full px-5 py-4 rounded-2xl bg-muted/30 border-2 border-border focus:border-primary focus:outline-none transition-colors"
@@ -211,11 +214,14 @@ export function ContactSection() {
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase tracking-[0.15em] font-semibold mb-3">
+                  <label htmlFor="contact-email" className="block text-xs uppercase tracking-[0.15em] font-semibold mb-3">
                     {t.contact.form.email}
                   </label>
                   <input
+                    id="contact-email"
+                    name="email"
                     type="email"
+                    autoComplete="email"
                     value={formState.email}
                     onChange={(e) => setFormState({ ...formState, email: e.target.value })}
                     className="w-full px-5 py-4 rounded-2xl bg-muted/30 border-2 border-border focus:border-primary focus:outline-none transition-colors"
@@ -225,10 +231,12 @@ export function ContactSection() {
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase tracking-[0.15em] font-semibold mb-3">
+                  <label htmlFor="contact-message" className="block text-xs uppercase tracking-[0.15em] font-semibold mb-3">
                     {t.contact.form.message}
                   </label>
                   <textarea
+                    id="contact-message"
+                    name="message"
                     value={formState.message}
                     onChange={(e) => setFormState({ ...formState, message: e.target.value })}
                     rows={5}
