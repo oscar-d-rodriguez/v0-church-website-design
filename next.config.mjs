@@ -5,6 +5,16 @@ const nextConfig = {
   },
   images: {
     qualities: [60, 70, 75, 80],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.ctfassets.net',
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
+    ],
   },
 }
 
