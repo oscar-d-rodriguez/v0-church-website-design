@@ -3,13 +3,14 @@
 import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/language-context";
 import { ArrowRight, HeartHandshake, Landmark, Send, Sparkles } from "lucide-react";
+import type { CmsOfferingSection } from "@/lib/cms-home";
 
-export function OfferingSection() {
+export function OfferingSection({ offeringSection }: { offeringSection?: CmsOfferingSection | null }) {
   const { language, t } = useLanguage();
   const paypalDonationUrl =
     "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=iglesiahosannabellevue@gmail.com&item_name=Donation&currency_code=USD";
 
-  const givingPoints = [
+  const fallbackGivingPoints = [
     {
       icon: Sparkles,
       title: language === "en" ? "Tithes & Offerings" : "Diezmos y Ofrendas",
@@ -35,6 +36,11 @@ export function OfferingSection() {
           : "Contribuye al crecimiento futuro y a las instalaciones de la iglesia.",
     },
   ];
+  const iconByKey = { sparkles: Sparkles, heartHandshake: HeartHandshake, landmark: Landmark };
+  const givingPoints = offeringSection?.givingPoints.length
+    ? offeringSection.givingPoints.map((point) => ({ ...point, icon: iconByKey[point.icon] }))
+    : fallbackGivingPoints;
+  const donateUrl = offeringSection?.donateCta?.url || paypalDonationUrl;
 
   return (
     <section id="offering" className="py-32 bg-muted/20 relative overflow-hidden">
@@ -52,13 +58,13 @@ export function OfferingSection() {
           className="text-center mb-20"
         >
           <span className="text-primary font-semibold text-sm uppercase tracking-[0.4em]">
-            {t.offering.subtitle}
+            {offeringSection?.eyebrow || t.offering.subtitle}
           </span>
           <h2 className="uppercase text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 mb-6 text-balance tracking-wider">
-            {t.offering.title}
+            {offeringSection?.headline || t.offering.title}
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto text-pretty leading-relaxed">
-            {t.offering.description}
+            {offeringSection?.description || t.offering.description}
           </p>
         </motion.div>
 
@@ -76,36 +82,36 @@ export function OfferingSection() {
 
               <div className="relative z-10">
                 <p className="text-sm uppercase tracking-[0.3em] text-primary font-semibold mb-3">
-                  {language === "en" ? "Give with purpose" : "Da con propósito"}
+                  {offeringSection?.cardEyebrow || (language === "en" ? "Give with purpose" : "Da con propósito")}
                 </p>
                 <h3 className="text-3xl md:text-4xl font-serif font-bold mb-4">
-                  {language === "en" ? "Support the ministry today" : "Apoya al ministerio hoy"}
+                  {offeringSection?.cardHeadline || (language === "en" ? "Support the ministry today" : "Apoya al ministerio hoy")}
                 </h3>
                 <p className="text-muted-foreground text-base leading-relaxed mb-8">
-                  {language === "en"
+                  {offeringSection?.cardDescription || (language === "en"
                     ? "Your generosity helps us continue worship, discipleship, outreach, and care for our church family."
-                    : "Tu generosidad nos ayuda a continuar la adoración, el discipulado, el alcance y el cuidado de nuestra familia iglesia."}
+                    : "Tu generosidad nos ayuda a continuar la adoración, el discipulado, el alcance y el cuidado de nuestra familia iglesia.")}
                 </p>
 
                 <a
-                  href={paypalDonationUrl}
+                  href={donateUrl}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-primary-foreground shadow-lg transition-transform hover:scale-[1.02]"
                 >
-                  {language === "en" ? "Donate with PayPal" : "Donar con PayPal"}
+                  {offeringSection?.donateCta?.label || (language === "en" ? "Donate with PayPal" : "Donar con PayPal")}
                   <ArrowRight className="h-4 w-4" />
                 </a>
 
                 <div className="mt-8 rounded-2xl border border-border bg-muted/30 p-5">
                   <p className="text-sm uppercase tracking-[0.3em] text-muted-foreground mb-2">
-                    {language === "en" ? "PayPal account" : "Cuenta de PayPal"}
+                    {offeringSection?.accountLabel || (language === "en" ? "PayPal account" : "Cuenta de PayPal")}
                   </p>
-                  <p className="font-semibold text-foreground">iglesiahosannabellevue@gmail.com</p>
+                  <p className="font-semibold text-foreground">{offeringSection?.accountValue || "iglesiahosannabellevue@gmail.com"}</p>
                   <p className="mt-2 text-sm text-muted-foreground">
-                    {language === "en"
+                    {offeringSection?.accountDescription || (language === "en"
                       ? "If you prefer, you can also send your gift directly from your PayPal app or website."
-                      : "Si lo prefieres, también puedes enviar tu ofrenda directamente desde tu app o sitio web de PayPal."}
+                      : "Si lo prefieres, también puedes enviar tu ofrenda directamente desde tu app o sitio web de PayPal.")}
                   </p>
                 </div>
               </div>
@@ -140,13 +146,13 @@ export function OfferingSection() {
                 <div className="flex items-center gap-3 text-primary mb-3">
                   <Send className="h-5 w-5" />
                   <p className="font-semibold uppercase tracking-[0.25em] text-sm">
-                    {language === "en" ? "Every gift matters" : "Cada donación importa"}
+                    {offeringSection?.thankYouHeading || (language === "en" ? "Every gift matters" : "Cada donación importa")}
                   </p>
                 </div>
                 <p className="text-sm leading-relaxed text-muted-foreground">
-                  {language === "en"
+                  {offeringSection?.thankYouDescription || (language === "en"
                     ? "Thank you for partnering with us in faith and generosity."
-                    : "Gracias por asociarte con nosotros en fe y generosidad."}
+                    : "Gracias por asociarte con nosotros en fe y generosidad.")}
                 </p>
               </div>
             </div>

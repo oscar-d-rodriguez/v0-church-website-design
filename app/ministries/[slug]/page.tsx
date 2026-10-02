@@ -1,5 +1,8 @@
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 import { MinistryPage } from "@/components/ministry-page";
+import { getCmsMinistryContent } from "@/lib/cms-ministry";
+import { normalizeSiteLocale } from "@/lib/site-configuration";
 
 const ministryData = {
   worship: {
@@ -138,7 +141,17 @@ interface PageProps {
 
 export default async function Page({ params }: PageProps) {
   const { slug } = await params;
-  const ministry = ministryData[slug as keyof typeof ministryData];
+  const cookieStore = await cookies();
+  const locale = normalizeSiteLocale(
+    cookieStore.get("church-language")?.value || process.env.NEXT_PUBLIC_CMS_LOCALE,
+  );
+  const cmsResponse = await getCmsMinistryContent({ slug, locale });
+
+  if (cmsResponse?.source === "contentful" && !cmsResponse.ministry) {
+    notFound();
+  }
+
+  const ministry = cmsResponse?.ministry || ministryData[slug as keyof typeof ministryData];
 
   if (!ministry) {
     notFound();

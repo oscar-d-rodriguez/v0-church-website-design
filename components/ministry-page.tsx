@@ -8,8 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { ArrowLeft, Calendar, Mail, CheckCircle, Sparkles } from "lucide-react";
+import type { CmsMinistryDetail } from "@/lib/cms-ministry";
 
-interface MinistryData {
+export interface LegacyMinistryData {
   titleEn: string;
   titleEs: string;
   descriptionEn: string;
@@ -25,19 +26,63 @@ interface MinistryData {
 }
 
 interface MinistryPageProps {
-  ministry: MinistryData;
+  ministry: LegacyMinistryData | CmsMinistryDetail;
+}
+
+function isCmsMinistry(ministry: LegacyMinistryData | CmsMinistryDetail): ministry is CmsMinistryDetail {
+  return "detailDescription" in ministry && "whatWeDoItems" in ministry;
 }
 
 export function MinistryPage({ ministry }: MinistryPageProps) {
   const { language } = useLanguage();
+  const cmsMinistry = isCmsMinistry(ministry) ? ministry : null;
+  const legacyMinistry = (cmsMinistry ? null : ministry) as LegacyMinistryData;
 
-  const title = language === "en" ? ministry.titleEn : ministry.titleEs;
-  const description = language === "en" ? ministry.descriptionEn : ministry.descriptionEs;
-  const directorLabel = language === "en"
-    ? "Director"
-    : ministry.directorIsFemale
-      ? "Directora"
-      : "Director";
+  const title = cmsMinistry ? cmsMinistry.title : language === "en" ? legacyMinistry.titleEn : legacyMinistry.titleEs;
+  const description = cmsMinistry
+    ? cmsMinistry.detailDescription
+    : language === "en"
+      ? legacyMinistry.descriptionEn
+      : legacyMinistry.descriptionEs;
+  const shortDescription = cmsMinistry
+    ? cmsMinistry.shortDescription
+    : description;
+  const heroImage = cmsMinistry?.heroImage?.url || (!cmsMinistry ? legacyMinistry.image : "");
+  const heroImageAlt = cmsMinistry?.heroImageAltText || title;
+  const activities = cmsMinistry
+    ? cmsMinistry.whatWeDoItems.map((item) => ({ text: item, zoomUrl: undefined }))
+    : legacyMinistry.activities.map((activity) => ({
+        text: language === "en" ? activity.en : activity.es,
+        zoomUrl: activity.zoomUrl,
+      }));
+  const leader = cmsMinistry
+    ? cmsMinistry.leader
+    : legacyMinistry.directorEn || legacyMinistry.directorEs || legacyMinistry.directorImage
+      ? {
+          name: language === "en" ? legacyMinistry.directorEn || null : legacyMinistry.directorEs || null,
+          image: legacyMinistry.directorImage || null,
+          imageAltText: language === "en" ? legacyMinistry.directorEn || "Director" : legacyMinistry.directorEs || "Director",
+          roleLabel: language === "en" ? "Director" : legacyMinistry.directorIsFemale ? "Directora" : "Director",
+        }
+      : null;
+  const leaderImage = cmsMinistry ? cmsMinistry.leader?.image?.url || null : legacyMinistry.directorImage || null;
+  const contactEmail = cmsMinistry ? cmsMinistry.contactEmail : legacyMinistry.contact;
+  const schedule = cmsMinistry
+    ? cmsMinistry.schedule
+    : language === "en"
+      ? legacyMinistry.schedule.en
+      : legacyMinistry.schedule.es;
+  const joinCta = cmsMinistry
+    ? cmsMinistry.joinCta?.heading && cmsMinistry.joinCta.description && cmsMinistry.joinCta.label
+      ? cmsMinistry.joinCta
+      : null
+    : {
+        heading: language === "en" ? "Ready to Join?" : "¿Listo para Unirte?",
+        description: language === "en"
+          ? "We would love to have you serve with us! Contact us today to get started."
+          : "¡Nos encantaría que sirvieras con nosotros! Contáctanos hoy para comenzar.",
+        label: language === "en" ? "Contact Us Now" : "Contactanos Ahora",
+      };
 
   return (
     <>
@@ -46,8 +91,8 @@ export function MinistryPage({ ministry }: MinistryPageProps) {
         <section className="relative -mt-20">
           <div className="relative h-[50vh] md:h-[60vh] lg:h-[70vh] min-h-[440px] overflow-hidden bg-gradient-to-br from-sky-500/80 to-blue-700">
             <Image
-              src={ministry.image}
-              alt={title}
+              src={heroImage}
+              alt={heroImageAlt}
               fill
               className="object-cover"
               priority
@@ -126,7 +171,7 @@ export function MinistryPage({ ministry }: MinistryPageProps) {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="mt-4 text-base md:text-lg leading-relaxed text-foreground/80 text-pretty max-w-3xl"
               >
-                {description}
+                  {shortDescription}
               </motion.p>
             </motion.div>
           </div>
@@ -168,7 +213,7 @@ export function MinistryPage({ ministry }: MinistryPageProps) {
                   </div>
                   
                   <div className="grid sm:grid-cols-2 gap-4">
-                    {ministry.activities.map((activity, index) => (
+                    {activities.map((activity, index) => (
                       <motion.div
                         key={index}
                         initial={{ opacity: 0, x: -20 }}
@@ -189,7 +234,7 @@ export function MinistryPage({ ministry }: MinistryPageProps) {
                             <CheckCircle className="w-6 h-6 text-primary shrink-0" />
                           </motion.div>
                           <span className="font-medium text-foreground/90 leading-relaxed">
-                            {language === "en" ? activity.en : activity.es}
+                            {activity.text}
                           </span>
                         </div>
                         {activity.zoomUrl && (
@@ -218,7 +263,7 @@ export function MinistryPage({ ministry }: MinistryPageProps) {
                 className="space-y-6"
               >
                 {/* Director Card - Enhanced */}
-                {(ministry.directorEn || ministry.directorEs || ministry.directorImage) && (
+                {leader && (
                   <motion.div
                     whileHover={{ y: -8 }}
                     transition={{ duration: 0.3 }}
@@ -228,7 +273,7 @@ export function MinistryPage({ ministry }: MinistryPageProps) {
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-amber-500/5" />
                     
                     <div className="relative">
-                      {ministry.directorImage && (
+                      {leaderImage && (
                         <motion.div
                           className="mb-6 flex justify-center"
                           initial={{ scale: 0.8, opacity: 0 }}
@@ -241,8 +286,8 @@ export function MinistryPage({ ministry }: MinistryPageProps) {
                             <div className="absolute inset-2 rounded-full ring-2 ring-primary/30" />
                             
                             <Image
-                              src={ministry.directorImage}
-                              alt={language === "en" ? ministry.directorEn || "Director" : ministry.directorEs || directorLabel}
+                              src={leaderImage}
+                              alt={leader.imageAltText || leader.name || "Director"}
                               fill
                               className="object-cover rounded-full ring-4 ring-background shadow-xl"
                             />
@@ -251,13 +296,52 @@ export function MinistryPage({ ministry }: MinistryPageProps) {
                       )}
                       <div className="text-center">
                         <h3 className="font-bold text-xl text-foreground">
-                          {directorLabel}
+                          {leader.roleLabel}
                         </h3>
                         <p className="text-primary font-semibold text-2xl leading-relaxed">
-                          {language === "en" ? ministry.directorEn : ministry.directorEs}
+                          {leader.name}
                         </p>
                       </div>
                     </div>
+                  </motion.div>
+                )}
+
+                {schedule && (
+                  <motion.div
+                    whileHover={{ y: -4 }}
+                    className="relative overflow-hidden rounded-3xl border border-primary/30 bg-gradient-to-br from-blue-50 to-blue-50/50 p-6 shadow-md dark:from-blue-950/30 dark:to-blue-900/20"
+                  >
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
+                        <Calendar className="w-5 h-5 text-primary" />
+                      </div>
+                      <h3 className="font-bold text-lg">
+                        {language === "en" ? "Schedule" : "Horario"}
+                      </h3>
+                    </div>
+                    <p className="text-foreground/80 leading-relaxed">{schedule}</p>
+                  </motion.div>
+                )}
+
+                {contactEmail && (
+                  <motion.div
+                    whileHover={{ y: -4 }}
+                    className="relative overflow-hidden rounded-3xl border border-primary/30 bg-gradient-to-br from-green-50 to-green-50/50 p-6 shadow-md dark:from-green-950/30 dark:to-green-900/20"
+                  >
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
+                        <Mail className="w-5 h-5 text-primary" />
+                      </div>
+                      <h3 className="font-bold text-lg">
+                        {language === "en" ? "Contact" : "Contacto"}
+                      </h3>
+                    </div>
+                    <a
+                      href={`mailto:${contactEmail}`}
+                      className="block break-all text-foreground/80 font-medium underline-offset-4 hover:underline"
+                    >
+                      {contactEmail}
+                    </a>
                   </motion.div>
                 )}
 
@@ -311,7 +395,7 @@ export function MinistryPage({ ministry }: MinistryPageProps) {
                 </motion.div> */}
 
                 {/* Join CTA - Enhanced */}
-                <motion.div
+                {joinCta && contactEmail && <motion.div
                   whileHover={{ y: -8 }}
                   transition={{ duration: 0.3 }}
                   className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary to-amber-500 p-8 text-primary-foreground shadow-lg hover:shadow-xl transition-shadow group"
@@ -332,21 +416,19 @@ export function MinistryPage({ ministry }: MinistryPageProps) {
                     <div className="flex items-center gap-2 mb-3">
                       <Sparkles className="w-5 h-5" />
                       <h3 className="font-bold text-xl">
-                        {language === "en" ? "Ready to Join?" : "¿Listo para Unirte?"}
+                        {joinCta.heading}
                       </h3>
                     </div>
                     <p className="text-primary-foreground/90 mb-6 leading-relaxed">
-                      {language === "en" 
-                        ? "We would love to have you serve with us! Contact us today to get started." 
-                        : "¡Nos encantaría que sirvieras con nosotros! Contáctanos hoy para comenzar."}
+                      {joinCta.description}
                     </p>
                     <Button asChild variant="secondary" className="w-full rounded-xl font-semibold group-hover:scale-105 transition-transform">
-                      <a href={`mailto:${ministry.contact}`}>
-                        {language === "en" ? "Contact Us Now" : "Contactanos Ahora"}
+                      <a href={`mailto:${contactEmail}`}>
+                        {joinCta.label}
                       </a>
                     </Button>
                   </div>
-                </motion.div>
+                </motion.div>}
               </motion.div>
             </div>
           </div>

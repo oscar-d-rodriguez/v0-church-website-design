@@ -5,30 +5,43 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sun, Moon, Globe, ChevronDown } from "lucide-react";
-import { useTheme } from "next-themes";
+import { useTheme } from "@/components/theme-provider";
+import { useRouter } from "next/navigation";
 import { useLanguage } from "@/lib/language-context";
 import { Button } from "@/components/ui/button";
+import { useSiteConfiguration } from "@/components/site-configuration-provider";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  const router = useRouter();
   const { theme, setTheme } = useTheme();
   const { language, setLanguage, t } = useLanguage();
+  const siteConfiguration = useSiteConfiguration();
   const [mounted, setMounted] = useState(false);
+
+  const logoUrl = siteConfiguration?.organizationLogo?.url || "/images/logo.png";
+  const logoAlt = siteConfiguration?.organizationLogo?.description || siteConfiguration?.organizationName || t.churchName;
+
+  const sectionHref = (id: string) => `/#${id}`;
+  const offeringUrl = siteConfiguration?.offeringUrl || "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=iglesiahosannabellevue@gmail.com&item_name=Donation&currency_code=USD";
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const navItems = [
-    { href: "#home", label: t.nav.home },
-    { href: "#about", label: t.nav.about },
-    { href: "#ministries", label: t.nav.ministries },
-    { href: "#youth", label: t.nav.youth },
-    { href: "#events", label: t.nav.events },
-    { href: "#contact", label: t.nav.contact },
-    { href: "#offering", label: t.nav.offering },
+  const fallbackNavItems = [
+    { href: sectionHref("home"), label: t.nav.home, isOffering: false },
+    { href: sectionHref("about"), label: t.nav.about, isOffering: false },
+    { href: sectionHref("ministries"), label: t.nav.ministries, isOffering: false },
+    { href: sectionHref("youth"), label: t.nav.youth, isOffering: false },
+    { href: sectionHref("events"), label: t.nav.events, isOffering: false },
+    { href: sectionHref("contact"), label: t.nav.contact, isOffering: false },
+    { href: sectionHref("offering"), label: t.nav.offering, isOffering: true },
   ];
+  const navItems = siteConfiguration?.navigationItems?.length
+    ? siteConfiguration.navigationItems
+    : fallbackNavItems;
 
   return (
     <>
@@ -57,16 +70,17 @@ export function Navigation() {
         <nav className="w-full px-6 lg:px-12 py-3">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link href="#home" className="flex items-center gap-3 group">
+            <Link href={sectionHref("home")} className="flex items-center gap-3 group">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
                 className="relative h-12 w-40"
               >
                 <Image
-                  src="/images/logo.png"
-                  alt={t.churchName}
+                  src={logoUrl}
+                  alt={logoAlt}
                   fill
+                  sizes="176px"
                   className="object-contain brightness-0 invert"
                   priority
                 />
@@ -76,21 +90,18 @@ export function Navigation() {
             {/* Desktop Navigation - pushed to the right */}
             <div className="hidden lg:flex items-center gap-2">
               {navItems.map((item) => {
-                const isOffering = item.href.endsWith("#offering");
+                const isOffering = item.isOffering || item.href.endsWith("#offering");
                 
                 if (isOffering) {
                   return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                    >
+                    <a key={item.href} href={offeringUrl} target="_blank" rel="noopener noreferrer">
                       <motion.div
                         whileTap={{ scale: 0.95 }}
                         className="px-6 py-2.5 text-sm font-bold uppercase tracking-widest text-white bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full shadow-lg hover:shadow-xl transition-all"
                       >
                         {item.label}
                       </motion.div>
-                    </Link>
+                    </a>
                   );
                 }
                 
@@ -135,6 +146,7 @@ export function Navigation() {
                         onClick={() => {
                           setLanguage("en");
                           setLangOpen(false);
+                          router.refresh();
                         }}
                         className={`w-full px-4 py-2 text-left text-sm hover:bg-muted transition-colors ${
                           language === "en" ? "bg-primary/10 text-primary" : ""
@@ -146,6 +158,7 @@ export function Navigation() {
                         onClick={() => {
                           setLanguage("es");
                           setLangOpen(false);
+                          router.refresh();
                         }}
                         className={`w-full px-4 py-2 text-left text-sm hover:bg-muted transition-colors ${
                           language === "es" ? "bg-primary/10 text-primary" : ""
@@ -198,7 +211,7 @@ export function Navigation() {
               >
                 <div className="flex flex-col gap-2">
                   {navItems.map((item, index) => {
-                    const isOffering = item.href.endsWith("#offering");
+                    const isOffering = item.isOffering || item.href.endsWith("#offering");
                     
                     return (
                       <motion.div
@@ -209,7 +222,7 @@ export function Navigation() {
                       >
                         {isOffering ? (
                           <a
-                            href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=iglesiahosannabellevue@gmail.com&item_name=Donation&currency_code=USD"
+                            href={offeringUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() => setIsOpen(false)}

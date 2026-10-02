@@ -158,7 +158,7 @@ export const translations = {
       overlayTitle: "Creciendo en la Fe",
     },
     ministries: {
-      title: "Nuestros Ministerios",
+      title: "Nuestros Ministerios**",
       subtitle: "Creciendo y Sirviendo Juntos",
       worship: "Ministerio de Alabanza",
       worshipDesc: "Vive una adoración que acerca los corazones a Dios mediante la música y la alabanza.",
