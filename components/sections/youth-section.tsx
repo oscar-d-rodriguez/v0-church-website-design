@@ -6,17 +6,41 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/lib/language-context";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Music2, Mountain, Heart } from "lucide-react";
+import { BookOpen, Music2, Mountain } from "lucide-react";
+import type { CmsYouthSection } from "@/lib/cms-home";
+import { getYouthActivityIcon } from "@/lib/youth-icons";
 
-export function YouthSection() {
+interface YouthSectionProps {
+  youthSection?: CmsYouthSection | null;
+}
+
+export function YouthSection({ youthSection }: YouthSectionProps) {
   const { t } = useLanguage();
   const ref = useRef<HTMLElement>(null);
 
-  const activities = [
+  const fallbackActivities = [
     { icon: BookOpen, text: t.youth.bibleStudy },
     { icon: Music2, text: t.youth.worship },
-    { icon: Mountain, text: t.youth.retreats }  
+    { icon: Mountain, text: t.youth.retreats },
   ];
+  const hasCmsContent = Boolean(youthSection?.activities.length);
+  const activities = hasCmsContent
+    ? youthSection.activities.map((activity) => ({
+        icon: getYouthActivityIcon(activity.icon),
+        text: activity.text,
+      }))
+    : fallbackActivities;
+  const primaryCta = hasCmsContent ? youthSection?.primaryCta || null : {
+    label: t.youth.join,
+    url: "https://www.instagram.com/legacyleadersofficial/",
+  };
+  const mainImage = hasCmsContent ? youthSection?.images.main.image?.url || "/images/youth1.jpg" : "/images/youth1.jpg";
+  const mainImageAlt = hasCmsContent ? youthSection?.images.main.altText || "Youth Ministry" : "Youth Ministry";
+  const secondaryImage = hasCmsContent ? youthSection?.images.secondary.image?.url || "/images/youth2.jpg" : "/images/youth2.jpg";
+  const secondaryImageAlt = hasCmsContent ? youthSection?.images.secondary.altText || "Youth Worship" : "Youth Worship";
+  const tertiaryImage = hasCmsContent ? youthSection?.images.tertiary.image?.url || "/images/youth3.jpg" : "/images/youth3.jpg";
+  const tertiaryImageAlt = hasCmsContent ? youthSection?.images.tertiary.altText || "Youth Community" : "Youth Community";
+  const isExternalCta = Boolean(primaryCta?.url && /^https?:\/\//i.test(primaryCta.url));
 
   return (
     <section id="youth" ref={ref} className="py-32 relative overflow-hidden">
@@ -38,18 +62,20 @@ export function YouthSection() {
             transition={{ duration: 0.6 }}
           >
             <span className="text-primary font-semibold text-sm uppercase tracking-[0.4em]">
-              {t.youth.subtitle}
+              {hasCmsContent ? youthSection?.eyebrow : t.youth.subtitle}
             </span>
             <h2 className="uppercase text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 mb-6 text-balance tracking-wider">
-              {t.youth.title}
+              {hasCmsContent ? youthSection?.headline : t.youth.title}
             </h2>
             <p className="text-muted-foreground text-lg mb-10 leading-relaxed">
-              {t.youth.description}
+              {hasCmsContent ? youthSection?.description : t.youth.description}
             </p>
 
             {/* Activities */}
             <div className="mb-10">
-              <h3 className="font-semibold mb-6 text-sm uppercase tracking-[0.15em] text-foreground/70">{t.youth.activities}</h3>
+              <h3 className="font-semibold mb-6 text-sm uppercase tracking-[0.15em] text-foreground/70">
+                {hasCmsContent ? youthSection?.activitiesHeading : t.youth.activities}
+              </h3>
               <div className="grid grid-cols-2 gap-4">
                 {activities.map((activity, index) => (
                   <motion.div
@@ -69,15 +95,21 @@ export function YouthSection() {
               </div>
             </div>
 
-            <Button
-              size="lg"
-              className="rounded-full px-10 text-sm uppercase tracking-widest font-semibold bg-primary text-primary-foreground hover:bg-primary/90"
-              asChild
-            >
-              <Link href="https://www.instagram.com/legacyleadersofficial/" target="_blank" rel="noopener noreferrer">
-                {t.youth.join}
-              </Link>
-            </Button>
+            {primaryCta && (
+              <Button
+                size="lg"
+                className="rounded-full px-10 text-sm uppercase tracking-widest font-semibold bg-primary text-primary-foreground hover:bg-primary/90"
+                asChild
+              >
+                {isExternalCta ? (
+                  <a href={primaryCta.url} target="_blank" rel="noopener noreferrer">
+                    {primaryCta.label}
+                  </a>
+                ) : (
+                  <Link href={primaryCta.url}>{primaryCta.label}</Link>
+                )}
+              </Button>
+            )}
           </motion.div>
 
           {/* Visual Collage with Parallax */}
@@ -95,8 +127,8 @@ export function YouthSection() {
                 className="col-span-2 h-72 rounded-3xl relative overflow-hidden"
               >
                 <Image
-                  src="/images/youth1.jpg"
-                  alt="Youth Ministry"
+                  src={mainImage}
+                  alt={mainImageAlt}
                   fill
                   className="object-cover transition-transform duration-700 hover:scale-105"
                   sizes="(max-width: 1024px) 100vw, 50vw"
@@ -104,7 +136,7 @@ export function YouthSection() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6 text-center">
                   <span className="text-2xl font-serif font-bold text-white">
-                    Legacy Leaders
+                    {hasCmsContent ? youthSection?.images.main.overlayText : "Legacy Leaders"}
                   </span>
                 </div>
               </motion.div>
@@ -115,8 +147,8 @@ export function YouthSection() {
                 className="h-44 rounded-3xl overflow-hidden relative"
               >
                 <Image
-                  src="/images/youth2.jpg"
-                  alt="Youth Worship"
+                  src={secondaryImage}
+                  alt={secondaryImageAlt}
                   fill
                   className="object-cover transition-transform duration-700 hover:scale-105"
                   sizes="25vw"
@@ -128,8 +160,8 @@ export function YouthSection() {
                 className="h-44 rounded-3xl overflow-hidden relative"
               >
                 <Image
-                  src="/images/youth3.jpg"
-                  alt="Youth Community"
+                  src={tertiaryImage}
+                  alt={tertiaryImageAlt}
                   fill
                   className="object-cover transition-transform duration-700 hover:scale-105"
                   sizes="25vw"
@@ -142,7 +174,9 @@ export function YouthSection() {
             <motion.div
               className="absolute -top-4 -right-4 w-20 h-20 bg-accent/10 rounded-full flex items-center justify-center backdrop-blur-sm"
             >
-              <span className="text-xs uppercase tracking-widest font-bold text-accent">NEW</span>
+              <span className="text-xs uppercase tracking-widest font-bold text-accent">
+                {hasCmsContent ? youthSection?.floatingBadge : "NEW"}
+              </span>
             </motion.div>
           </motion.div>
         </div>

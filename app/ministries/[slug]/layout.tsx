@@ -6,25 +6,27 @@ import {
   normalizeSiteLocale,
   resolveSiteDomain,
 } from "@/lib/site-configuration";
+import { getCmsMinistryContent } from "@/lib/cms-ministry";
 
-interface EventsLayoutProps {
+interface MinistriesLayoutProps {
   children: React.ReactNode;
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata({ params }: EventsLayoutProps): Promise<Metadata> {
-  const { id } = await params;
+export async function generateMetadata({ params }: MinistriesLayoutProps): Promise<Metadata> {
+  const { slug } = await params;
   const cookieStore = await cookies();
   const locale = normalizeSiteLocale(
     cookieStore.get("church-language")?.value || process.env.NEXT_PUBLIC_CMS_LOCALE,
   );
   const payload = await getSiteConfigurationPayload({ locale, preview: false });
-  const seo = payload?.siteConfiguration?.defaultSeoMetadata;
+  const ministryPayload = await getCmsMinistryContent({ slug, locale });
+  const seo = ministryPayload?.ministry?.seoMetadata || payload?.siteConfiguration?.defaultSeoMetadata;
   const siteDomain = resolveSiteDomain();
 
   return {
     alternates: {
-      canonical: buildCanonicalUrl(`/events/${id}`, siteDomain),
+      canonical: buildCanonicalUrl(`/ministries/${slug}`, siteDomain),
     },
     robots: {
       index: !seo?.hideFromSearchEngines,
@@ -33,8 +35,6 @@ export async function generateMetadata({ params }: EventsLayoutProps): Promise<M
   };
 }
 
-export default function EventsLayout({
-  children,
-}: EventsLayoutProps) {
-  return <>{children}</>;
+export default function MinistriesLayout({ children }: MinistriesLayoutProps) {
+  return children;
 }

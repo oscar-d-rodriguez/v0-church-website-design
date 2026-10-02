@@ -5,12 +5,18 @@ import { useRef } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/lib/language-context";
 import { Heart, Target, Sparkles } from "lucide-react";
+import type { CmsAboutSection } from "@/lib/cms-home";
+import { getAboutIcon } from "@/lib/about-icons";
 
-export function AboutSection() {
+interface AboutSectionProps {
+  aboutSection?: CmsAboutSection | null;
+}
+
+export function AboutSection({ aboutSection }: AboutSectionProps) {
   const { t } = useLanguage();
   const ref = useRef<HTMLElement>(null);
 
-  const cards = [
+  const fallbackCards = [
     {
       icon: Target,
       title: t.about.mission,
@@ -30,6 +36,20 @@ export function AboutSection() {
       color: "bg-primary/10 text-primary",
     },
   ];
+  const cards = aboutSection?.cards.length
+    ? aboutSection.cards.map((card, index) => ({
+        icon: getAboutIcon(card.icon),
+        title: card.headline || fallbackCards[index]?.title || "",
+        description: card.description || fallbackCards[index]?.description || "",
+        color: "bg-primary/10 text-primary",
+      }))
+    : fallbackCards;
+  const mainImage = aboutSection?.images.main.image?.url || "/images/community.jpg";
+  const secondaryImage = aboutSection?.images.secondary.image?.url || "/images/prayer.jpg";
+  const tertiaryImage = aboutSection?.images.tertiary.image?.url || "/images/service.jpg";
+  const mainImageAlt = aboutSection?.images.main.altText || "Our Community";
+  const secondaryImageAlt = aboutSection?.images.secondary.altText || "Prayer";
+  const tertiaryImageAlt = aboutSection?.images.tertiary.altText || "Service";
 
   return (
     <section id="about" ref={ref} className="py-32 relative overflow-hidden">
@@ -51,13 +71,13 @@ export function AboutSection() {
           className="text-center mb-20"
         >
           <span className="text-primary font-semibold text-sm uppercase tracking-[0.4em]">
-            {t.about.subtitle}
+            {aboutSection?.eyebrow || t.about.subtitle}
           </span>
           <h2 className="uppercase text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 mb-6 text-balance">
-            {t.about.title}
+            {aboutSection?.headline || t.about.title}
           </h2>
           <p className="text-muted-foreground text-lg max-w-3xl mx-auto text-pretty leading-relaxed">
-            {t.about.description}
+            {aboutSection?.description || t.about.description}
           </p>
         </motion.div>
 
@@ -77,8 +97,8 @@ export function AboutSection() {
               className="col-span-12 md:col-span-7 row-span-2 rounded-3xl overflow-hidden relative group"
             >
               <Image
-                src="/images/community.jpg"
-                alt="Our Community"
+                src={mainImage}
+                alt={mainImageAlt}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, 60vw"
@@ -86,10 +106,10 @@ export function AboutSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
               <div className="absolute bottom-8 left-8 right-8">
                 <span className="text-xs uppercase tracking-[0.2em] text-white/70 mb-2 block font-semibold">
-                  {t.about.overlayBadge}
+                  {aboutSection?.imageOverlay?.badge || t.about.overlayBadge}
                 </span>
                 <h3 className="text-2xl md:text-3xl font-serif font-bold text-white">
-                  {t.about.overlayTitle}
+                  {aboutSection?.imageOverlay?.headline || t.about.overlayTitle}
                 </h3>
               </div>
             </motion.div>
@@ -101,8 +121,8 @@ export function AboutSection() {
               className="col-span-6 md:col-span-5 aspect-[4/5] md:aspect-auto md:h-full rounded-3xl overflow-hidden relative"
             >
               <Image
-                src="/images/prayer.jpg"
-                alt="Prayer"
+                src={secondaryImage}
+                alt={secondaryImageAlt}
                 fill
                 className="object-cover transition-transform duration-700 hover:scale-105"
                 sizes="(max-width: 768px) 50vw, 40vw"
@@ -115,8 +135,8 @@ export function AboutSection() {
               className="col-span-6 md:col-span-5 aspect-[4/5] md:aspect-auto md:h-full rounded-3xl overflow-hidden relative"
             >
               <Image
-                src="/images/service.jpg"
-                alt="Service"
+                src={tertiaryImage}
+                alt={tertiaryImageAlt}
                 fill
                 className="object-cover transition-transform duration-700 hover:scale-105"
                 sizes="(max-width: 768px) 50vw, 40vw"

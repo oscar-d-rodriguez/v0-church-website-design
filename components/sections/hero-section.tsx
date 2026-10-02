@@ -4,18 +4,40 @@ import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/lib/language-context";
 import { Button } from "@/components/ui/button";
+import type { CmsHomeHero } from "@/lib/cms-home";
 
-const heroImages = [
+const fallbackHeroImages = [
   "/images/hero-0.jpg",
   "/images/hero-1.jpg",
   "/images/hero-2.jpg",
   "/images/hero-3.jpg",
 ];
 
-export function HeroSection() {
+interface HeroSectionProps {
+  cmsHero?: CmsHomeHero;
+}
+
+export function HeroSection({ cmsHero }: HeroSectionProps) {
   const { t } = useLanguage();
   const ref = useRef<HTMLElement>(null);
   const [currentImage, setCurrentImage] = useState(0);
+
+  const heroImages =
+    cmsHero?.slides?.length
+      ? cmsHero.slides.map((slide) => slide.imageUrl)
+      : fallbackHeroImages;
+
+  const heroImageAlts =
+    cmsHero?.slides?.length
+      ? cmsHero.slides.map((slide) => slide.imageAlt || "Hosanna Church Community")
+      : fallbackHeroImages.map(() => "Hosanna Church Community");
+
+  const activeSlide = cmsHero?.slides?.[currentImage];
+  const isPerSlideMode = cmsHero?.contentMode === "perSlide";
+  const welcomeText = isPerSlideMode ? activeSlide?.headline : cmsHero?.welcome;
+  const subtitleText = isPerSlideMode ? activeSlide?.subtitle : cmsHero?.subtitle;
+  const ctaLabel = isPerSlideMode ? activeSlide?.ctaLabel : cmsHero?.ctaLabel;
+  const ctaUrl = isPerSlideMode ? activeSlide?.ctaUrl : cmsHero?.ctaUrl;
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -26,7 +48,7 @@ export function HeroSection() {
     }, 7000);
 
     return () => window.clearInterval(interval);
-  }, []);
+  }, [heroImages.length]);
 
   return (
     <section
@@ -35,18 +57,26 @@ export function HeroSection() {
       className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-950"
     >
       <div className="absolute inset-0 z-0">
-        <div key={currentImage} className="absolute inset-0 transition-opacity duration-700 ease-in-out">
-          <Image
-            src={heroImages[currentImage]}
-            alt="Hosanna Church Community"
-            fill
-            className="object-cover parallax-image"
-            priority
-            quality={60}
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-black/60" />
-        </div>
+        {heroImages.map((image, index) => (
+          <div
+            key={`${image}-${index}`}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              index === currentImage ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <Image
+              src={image}
+              alt={heroImageAlts[index] || "Hosanna Church Community"}
+              fill
+              className="object-cover parallax-image"
+              priority={index === 0}
+              quality={60}
+              sizes="100vw"
+            />
+          </div>
+        ))}
+
+        <div className="absolute inset-0 bg-black/60" />
 
         <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 gap-1">
           {heroImages.map((_, index) => (
@@ -88,11 +118,11 @@ export function HeroSection() {
             className="mb-6 font-serif text-5xl font-bold uppercase tracking-wider text-balance md:text-7xl lg:text-8xl"
             style={{ textShadow: "0 2px 12px rgba(0,0,0,0.45)" }}
           >
-            <span className="text-white">{t.hero.welcome}</span>
+            <span className="text-white">{welcomeText || t.hero.welcome}</span>
           </h1>
 
           <p className="mx-auto mb-12 max-w-2xl text-lg uppercase leading-relaxed tracking-[.75rem] text-white text-pretty md:text-3xl">
-            {t.hero.subtitle}
+            {subtitleText || t.hero.subtitle}
           </p>
 
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
@@ -101,7 +131,7 @@ export function HeroSection() {
               className="rounded-full bg-primary px-10 py-6 text-sm font-semibold uppercase tracking-widest text-primary-foreground shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl"
               asChild
             >
-              <a href="#contact">{t.hero.cta}</a>
+              <a href={ctaUrl || "#contact"}>{ctaLabel || t.hero.cta}</a>
             </Button>
           </div>
         </div>

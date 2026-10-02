@@ -5,25 +5,51 @@ import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "@/lib/language-context";
 import { Facebook, Instagram, Youtube } from "lucide-react";
+import { useSiteConfiguration } from "@/components/site-configuration-provider";
 
 export function Footer() {
   const { t } = useLanguage();
+  const siteConfiguration = useSiteConfiguration();
 
-  const quickLinks = [
-    { href: "#home", label: t.nav.home },
-    { href: "#about", label: t.nav.about },
-    { href: "#ministries", label: t.nav.ministries },
-    { href: "#youth", label: t.nav.youth },
-    { href: "#events", label: t.nav.events },
-    { href: "#offering", label: t.nav.offering },
-    { href: "#contact", label: t.nav.contact },
+  const logoUrl = siteConfiguration?.organizationLogo?.url || "/images/logo.png";
+  const logoAlt = siteConfiguration?.organizationLogo?.description || siteConfiguration?.organizationName || t.churchName;
+
+  const sectionHref = (id: string) => `/#${id}`;
+
+  const fallbackQuickLinks = [
+    { href: sectionHref("home"), label: t.nav.home },
+    { href: sectionHref("about"), label: t.nav.about },
+    { href: sectionHref("ministries"), label: t.nav.ministries },
+    { href: sectionHref("youth"), label: t.nav.youth },
+    { href: sectionHref("events"), label: t.nav.events },
+    { href: sectionHref("offering"), label: t.nav.offering },
+    { href: sectionHref("contact"), label: t.nav.contact },
   ];
 
-  const socialLinks = [
+  const socialIconByPlatform = { facebook: Facebook, instagram: Instagram, youtube: Youtube };
+  const fallbackSocialLinks = [
     { icon: Facebook, href: "https://www.facebook.com/iglesiahosannabellevue/", label: "Facebook" },
     { icon: Instagram, href: "https://www.instagram.com/iglesiahosannabellevue/", label: "Instagram" },
     { icon: Youtube, href: "https://www.youtube.com/@IglesiaHosanna", label: "YouTube" },
   ];
+  const footer = siteConfiguration?.footer;
+  const quickLinks = footer?.quickLinks.length
+    ? footer.quickLinks
+    : fallbackQuickLinks;
+  const socialLinks = footer?.socialLinks.length
+    ? footer.socialLinks.map((social) => ({
+        icon: socialIconByPlatform[social.platform],
+        href: social.href,
+        label: social.platform,
+      }))
+    : fallbackSocialLinks;
+  const contactInfo = footer
+    ? [
+        footer.contactInfo.address,
+        footer.contactInfo.phone,
+        footer.contactInfo.email,
+      ].filter((value): value is string => Boolean(value))
+    : ["15220 Main St", "Bellevue, WA 98007", "(425) 644-6356", "iglesia.hosanna@gmail.com"];
 
   return (
     <footer className="bg-foreground text-background relative overflow-hidden">
@@ -41,19 +67,20 @@ export function Footer() {
             transition={{ duration: 0.5 }}
             className="lg:col-span-2"
           >
-            <Link href="#home" className="flex items-center gap-3 mb-6">
+            <Link href={sectionHref("home")} className="flex items-center gap-3 mb-6">
               <div className="relative h-14 w-44">
                 <Image
-                  src="/images/logo.png"
-                  alt={t.churchName}
+                    src={logoUrl}
+                    alt={logoAlt}
                   fill
+                  sizes="176px"
                   className="object-contain brightness-0 invert dark:hidden"
                 />
                 <div
                   className="hidden dark:block absolute inset-0 bg-primary"
                   style={{
-                    WebkitMaskImage: "url('/images/logo.png')",
-                    maskImage: "url('/images/logo.png')",
+                      WebkitMaskImage: `url('${logoUrl}')`,
+                      maskImage: `url('${logoUrl}')`,
                     WebkitMaskRepeat: "no-repeat",
                     maskRepeat: "no-repeat",
                     WebkitMaskPosition: "center",
@@ -66,7 +93,7 @@ export function Footer() {
               </div>
             </Link>
             <p className="text-background/70 text-lg mb-6 max-w-md">
-              {t.footer.tagline}
+              {footer?.tagline || t.footer.tagline}
             </p>
             {/* Social Links */}
             <div className="flex gap-4">
@@ -92,7 +119,7 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <h3 className="text-xs uppercase tracking-[0.2em] font-semibold mb-6">{t.footer.quickLinks}</h3>
+            <h3 className="text-xs uppercase tracking-[0.2em] font-semibold mb-6">{footer?.quickLinksHeading || t.footer.quickLinks}</h3>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.href}>
@@ -114,12 +141,9 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <h3 className="text-xs uppercase tracking-[0.2em] font-semibold mb-6">{t.footer.connect}</h3>
+            <h3 className="text-xs uppercase tracking-[0.2em] font-semibold mb-6">{footer?.connectHeading || t.footer.connect}</h3>
             <address className="not-italic text-background/60 space-y-3 text-sm">
-              <p>15220 Main St</p>
-              <p>Bellevue, WA 98007</p>
-              <p>(555) 123-4567</p>
-              <p>iglesia.hosanna@gmail.com</p>
+              {contactInfo.map((value) => <p key={value}>{value}</p>)}
             </address>
           </motion.div>
         </div>
@@ -129,7 +153,7 @@ export function Footer() {
       <div className="border-t border-background/10">
         <div className="container mx-auto px-4 py-6">
           <p className="text-background/50 text-sm text-center">
-            {new Date().getFullYear()} {t.churchName}. {t.footer.copyright}.
+            {new Date().getFullYear()} {t.churchName}. {footer?.copyright || t.footer.copyright}
           </p>
         </div>
       </div>

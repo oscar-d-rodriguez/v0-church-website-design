@@ -6,8 +6,13 @@ import { useLanguage } from "@/lib/language-context";
 import { Button } from "@/components/ui/button";
 import { MapPin, Phone, Mail, Clock, Send, Heart, Check, Loader2 } from "lucide-react";
 import { submitContactForm } from "@/app/actions/contact";
+import type { CmsContactSection } from "@/lib/cms-home";
 
-export function ContactSection() {
+interface ContactSectionProps {
+  contactSection?: CmsContactSection | null;
+}
+
+export function ContactSection({ contactSection }: ContactSectionProps) {
   const { t, language } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -19,7 +24,7 @@ export function ContactSection() {
     isPrayer: false,
   });
 
-  const contactInfo = [
+  const fallbackContactInfo = [
     {
       icon: MapPin,
       label: t.contact.address,
@@ -28,7 +33,7 @@ export function ContactSection() {
     {
       icon: Phone,
       label: t.contact.phone,
-      value: "(555) 123-4567",
+      value: "(425) 644-6356",
     },
     {
       icon: Mail,
@@ -36,21 +41,35 @@ export function ContactSection() {
       value: "iglesia.hosanna@gmail.com",
     },
   ];
+  const contactInfo = contactSection
+    ? [
+        { icon: MapPin, label: t.contact.address, value: contactSection.contactInfo.address },
+        { icon: Phone, label: t.contact.phone, value: contactSection.contactInfo.phone },
+        { icon: Mail, label: t.contact.email, value: contactSection.contactInfo.email },
+      ].filter((info): info is { icon: typeof MapPin; label: string; value: string } => Boolean(info.value))
+    : fallbackContactInfo;
 
-  const serviceHours = [
+  const fallbackServiceHours = [
     {
       day: language === "en" ? "Friday" : "Viernes",
-      time: language === "en" ? "7:00 PM - Bible Study" : "7:00 PM - Estudio Bíblico",
+      timeDescription: language === "en" ? "7:00 PM - Bible Study" : "7:00 PM - Estudio Bíblico",
     },
     {
       day: language === "en" ? "Sunday" : "Domingo",
-      time: language === "en" ? "2:00 PM - Service" : "2:00 PM - Servicio de Gloria",
+      timeDescription: language === "en" ? "2:00 PM - Service" : "2:00 PM - Servicio de Gloria",
     },
     {
       day: language === "en" ? "Tuesday" : "Martes",
-      time: language === "en" ? "7:00 PM - Prayer" : "7:00 PM - Oración",
+      timeDescription: language === "en" ? "7:00 PM - Prayer" : "7:00 PM - Oración",
     },
   ];
+  const serviceHours = contactSection?.serviceTimes.length
+    ? contactSection.serviceTimes
+    : fallbackServiceHours;
+  const map = contactSection?.map || {
+    embedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2689.4876!2d-122.1467!3d47.6186!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54906c8d2a3b5555%3A0x123456789!2s15220%20Main%20St%2C%20Bellevue%2C%20WA%2098007!5e0!3m2!1sen!2sus!4v1234567890",
+    title: "Hosanna Church Location",
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -87,10 +106,10 @@ export function ContactSection() {
           className="text-center mb-20"
         >
           <span className="text-primary font-semibold text-sm uppercase tracking-[0.4em]">
-            {t.contact.subtitle}
+            {contactSection?.eyebrow || t.contact.subtitle}
           </span>
           <h2 className="uppercase text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 text-balance tracking-wider">
-            {t.contact.title}
+            {contactSection?.headline || t.contact.title}
           </h2>
         </motion.div>
 
@@ -143,14 +162,14 @@ export function ContactSection() {
                     className="flex justify-between items-center"
                   >
                     <span className="font-medium">{schedule.day}</span>
-                    <span className="text-muted-foreground">{schedule.time}</span>
+                    <span className="text-muted-foreground">{schedule.timeDescription}</span>
                   </div>
                 ))}
               </div>
             </motion.div>
 
             {/* Google Map */}
-            <motion.div
+            {map && <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -158,16 +177,16 @@ export function ContactSection() {
               className="mt-6 h-48 rounded-3xl overflow-hidden border border-border"
             >
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2689.4876!2d-122.1467!3d47.6186!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54906c8d2a3b5555%3A0x123456789!2s15220%20Main%20St%2C%20Bellevue%2C%20WA%2098007!5e0!3m2!1sen!2sus!4v1234567890"
+                src={map.embedUrl}
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Hosanna Church Location"
+                title={map.title || "Hosanna Church Location"}
               />
-            </motion.div>
+            </motion.div>}
           </motion.div>
 
           {/* Contact Form */}

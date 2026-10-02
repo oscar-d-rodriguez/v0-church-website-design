@@ -10,22 +10,57 @@ import { ContactSection } from "@/components/sections/contact-section";
 import { Footer } from "@/components/footer";
 import { Marquee } from "@/components/marquee";
 import { NewsletterPopupLoader } from "@/components/newsletter-popup-loader";
+import { getCmsHomeContent } from "@/lib/cms-home";
+import type { Metadata } from "next";
+import { cookies } from "next/headers";
+import {
+  buildCanonicalUrl,
+  getSiteConfigurationPayload,
+  normalizeSiteLocale,
+  resolveSiteDomain,
+} from "@/lib/site-configuration";
 
-export default function HomePage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const locale = normalizeSiteLocale(
+    cookieStore.get("church-language")?.value || process.env.NEXT_PUBLIC_CMS_LOCALE,
+  );
+  const payload = await getSiteConfigurationPayload({ locale, preview: false });
+  const seo = payload?.siteConfiguration?.defaultSeoMetadata;
+  const siteDomain = resolveSiteDomain();
+
+  return {
+    alternates: {
+      canonical: buildCanonicalUrl("/", siteDomain),
+    },
+    robots: {
+      index: !seo?.hideFromSearchEngines,
+      follow: !seo?.hideFromSearchEngines,
+    },
+  };
+}
+
+export default async function HomePage() {
+  const cookieStore = await cookies();
+  const locale = normalizeSiteLocale(
+    cookieStore.get("church-language")?.value || process.env.NEXT_PUBLIC_CMS_LOCALE,
+  );
+  const cmsData = await getCmsHomeContent({ locale, preview: false });
+
   return (
     <main className="min-h-screen">
       <NewsletterPopupLoader />
       <Navigation />
-      <HeroSection />
+      <HeroSection cmsHero={cmsData?.home.hero} />
       <Marquee speed={25} />
-      <AboutSection />
-      <MinistriesSection />
-      <YouthSection />
+      <AboutSection aboutSection={cmsData?.home.about} />
+      <MinistriesSection ministriesSection={cmsData?.home.ministries} />
+      <YouthSection youthSection={cmsData?.home.youth} />
       <Marquee speed={30} direction="right" />
       <EventsSection />
-      <OfferingSection />
-      <ServiceTimesSection />
-      <ContactSection />
+      <OfferingSection offeringSection={cmsData?.home.offering} />
+      <ServiceTimesSection serviceTimesSection={cmsData?.home.serviceTimes} />
+      <ContactSection contactSection={cmsData?.home.contact} />
       <Footer />
     </main>
   );

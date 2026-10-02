@@ -6,12 +6,18 @@ import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "@/lib/language-context";
 import { Music, Baby, Users, UserCircle, Globe, HandHeart } from "lucide-react";
+import type { CmsMinistriesSection } from "@/lib/cms-home";
+import { getMinistryIcon } from "@/lib/ministries-icons";
 
-export function MinistriesSection() {
+interface MinistriesSectionProps {
+  ministriesSection?: CmsMinistriesSection | null;
+}
+
+export function MinistriesSection({ ministriesSection }: MinistriesSectionProps) {
   const { t } = useLanguage();
   const ref = useRef<HTMLElement>(null);
 
-  const ministries = [
+  const fallbackMinistries = [
     {
       icon: Music,
       title: t.ministries.worship,
@@ -49,13 +55,22 @@ export function MinistriesSection() {
       slug: "prayer",
     },
   ];
+  const ministries = ministriesSection?.ministries.length
+    ? ministriesSection.ministries.map((ministry, index) => ({
+        icon: getMinistryIcon(ministry.icon),
+        title: ministry.title || fallbackMinistries[index]?.title || "",
+        description: ministry.shortDescription || fallbackMinistries[index]?.description || "",
+        slug: ministry.slug || fallbackMinistries[index]?.slug || "",
+      }))
+    : fallbackMinistries;
+  const backgroundImage = ministriesSection?.backgroundImage?.url || "/images/worship.jpg";
 
   return (
     <section id="ministries" ref={ref} className="py-32 relative overflow-hidden bg-primary">
       {/* Background Image with fixed position effect */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/worship.jpg"
+          src={backgroundImage}
           alt="Worship background"
           fill
           className="object-cover opacity-10"
@@ -79,10 +94,10 @@ export function MinistriesSection() {
           className="text-center mb-20"
         >
           <span className="text-white/70 font-semibold text-sm uppercase tracking-[0.4em]">
-            {t.ministries.subtitle}
+            {ministriesSection?.eyebrow || t.ministries.subtitle}
           </span>
           <h2 className="uppercase text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 text-balance tracking-wider text-white">
-            {t.ministries.title}
+            {ministriesSection?.headline || t.ministries.title}
           </h2>
         </motion.div>
 

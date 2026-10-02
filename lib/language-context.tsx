@@ -11,6 +11,10 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+function setLanguageCookie(lang: Language) {
+  document.cookie = `church-language=${lang}; path=/; max-age=31536000; samesite=lax`;
+}
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>("es");
 
@@ -18,12 +22,14 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     const saved = localStorage.getItem("church-language") as Language;
     if (saved && (saved === "en" || saved === "es")) {
       setLanguage(saved);
+      setLanguageCookie(saved);
     }
   }, []);
 
   const handleSetLanguage = (lang: Language) => {
     setLanguage(lang);
     localStorage.setItem("church-language", lang);
+    setLanguageCookie(lang);
   };
 
   return (
